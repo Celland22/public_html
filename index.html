@@ -3,129 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>신선식품 수요 예측 및 재고 발주 최적화</title>
+    <title>이종건 - AI 스마트워크 Learning Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+        body { font-family: 'Pretendard', sans-serif; }
+        .card:hover { transform: translateY(-5px); transition: all 0.3s ease; }
+    </style>
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans antialiased p-6 md:p-10">
+<body class="bg-gray-100 text-gray-800">
 
-    <div class="max-w-6xl mx-auto">
-        <!-- 헤더 -->
-        <header class="mb-10 border-b pb-6">
-            <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-2">[분석 보고서] 신선식품 수요 예측 및 재고 발주 최적화</h1>
-            <p class="text-gray-600 text-lg">소속: 한림대학교 경영학과 | 작성자: 이종건</p>
-        </header>
+    <!-- Hero Section -->
+    <header class="bg-blue-900 text-white py-20 text-center shadow-lg">
+        <div class="container mx-auto px-4">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">생성형 AI로 그리는 융합의 궤적</h1>
+            <p class="text-xl font-light mb-8">생명과학과 경영학, 그리고 스마트워크 : 바이오-비즈니스 융합 인재 이종건의 성장기</p>
+            <p class="text-md text-blue-200">2026-2학기 좋은 수업 Learning Portfolio 공모전 출품작 | AI 스마트워크</p>
+        </div>
+    </header>
 
-        <!-- 그리드 레이아웃 시작 -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-12 max-w-6xl">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 
-            <!-- 1. 카테고리별 재고 손실 현황 진단 -->
-            <section class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 col-span-1 lg:col-span-2">
-                <h2 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
-                    <i class="fas fa-chart-pie text-blue-500 mr-2"></i> 1. 카테고리별 재고 손실 현황 진단
-                </h2>
-                <div class="text-gray-700 space-y-3 mb-6">
-                    <p>신선식품 6개 카테고리의 데이터를 분석한 결과, 품목별로 폐기와 품절 양상이 명확히 다르게 나타났습니다.</p>
-                    <ul class="list-disc pl-5 space-y-2">
-                        <li><strong>폐기 손실 심각 품목 (정육, 수산):</strong> 수산물(11.95%)과 정육(10.77%)은 폐기율이 가장 높으며, 두 카테고리에서 발생한 폐기 손실액만 약 7억 1천만 원에 달해 전체 원가 손실의 핵심 원인이 되고 있습니다.</li>
-                        <li><strong>기회 손실 심각 품목 (간편식, 수산):</strong> 간편식은 폐기율은 상대적으로 양호(8.94%)하나, 품절률이 4.83%로 가장 높습니다. 품절로 인한 판매 기회 손실액은 수산(약 4,624만 원)과 간편식(약 4,195만 원)이 전체 카테고리 중 1, 2위를 기록하여 이탈 방지를 위한 발주량 상향 조정이 필요합니다.</li>
-                    </ul>
-                </div>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse">
-                        <thead>
-                            <tr class="bg-gray-100 text-gray-700">
-                                <th class="p-3 border-b border-gray-200 rounded-tl-lg">카테고리</th>
-                                <th class="p-3 border-b border-gray-200">폐기율</th>
-                                <th class="p-3 border-b border-gray-200">품절률</th>
-                                <th class="p-3 border-b border-gray-200">폐기 손실액</th>
-                                <th class="p-3 border-b border-gray-200 rounded-tr-lg">기회 손실액</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-100">
-                            <tr class="hover:bg-gray-50"><td class="p-3 font-semibold">정육</td><td class="p-3">10.8%</td><td class="p-3">1.5%</td><td class="p-3">3.98억 원</td><td class="p-3">0.32억 원</td></tr>
-                            <tr class="hover:bg-gray-50 bg-red-50"><td class="p-3 font-semibold text-red-700">수산</td><td class="p-3 text-red-700">12.0%</td><td class="p-3 text-red-700">2.6%</td><td class="p-3 text-red-700">3.13억 원</td><td class="p-3 text-red-700">0.46억 원</td></tr>
-                            <tr class="hover:bg-gray-50"><td class="p-3 font-semibold">과일</td><td class="p-3">7.4%</td><td class="p-3">2.8%</td><td class="p-3">1.36억 원</td><td class="p-3">0.37억 원</td></tr>
-                            <tr class="hover:bg-gray-50 bg-yellow-50"><td class="p-3 font-semibold text-yellow-800">간편식</td><td class="p-3 text-yellow-800">8.9%</td><td class="p-3 text-yellow-800">4.8%</td><td class="p-3 text-yellow-800">1.14억 원</td><td class="p-3 text-yellow-800">0.42억 원</td></tr>
-                            <tr class="hover:bg-gray-50"><td class="p-3 font-semibold">채소</td><td class="p-3">10.9%</td><td class="p-3">1.4%</td><td class="p-3">0.82억 원</td><td class="p-3">0.06억 원</td></tr>
-                            <tr class="hover:bg-gray-50"><td class="p-3 font-semibold">유제품</td><td class="p-3">9.5%</td><td class="p-3">0.7%</td><td class="p-3">0.44억 원</td><td class="p-3">0.02억 원</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
+            <!-- Card 1 -->
+            <div class="bg-white rounded-xl p-6 shadow-md card cursor-pointer border-t-4 border-blue-500">
+                <h2 class="text-2xl font-bold mb-3">01. 코딩 한계 돌파 & 데이터 분석</h2>
+                <p class="text-gray-600 mb-4"><strong>[신선식품 재고 발주 최적화 분석]</strong><br>비전공자로서 Antigravity IDE 환경 설정 시 직면한 <code class="bg-gray-100 text-red-500 px-1 rounded">ModuleNotFoundError</code>를 AI와 대화하며 디버깅. 머신러닝 최적화 코드를 통해 손실액 31% 절감 시뮬레이션 및 엑셀 이중축(Combo-Chart) 시각화 성공.</p>
+                <span class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full font-semibold">Python</span>
+                <span class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full font-semibold">Gemini</span>
+                <span class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full font-semibold">Claude</span>
+            </div>
 
-            <!-- 2. 기존 시스템의 수요 예측 오차 분석 -->
-            <section class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                <h2 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
-                    <i class="fas fa-chart-line text-green-500 mr-2"></i> 2. 예측 오차(Bias) 분석
-                </h2>
-                <p class="text-gray-700 mb-4">기존 발주 시스템은 평시에는 안정적이나, 수요가 급증하는 이벤트 기간에 심각한 '과소 예측(Under-forecasting)' 문제를 보이고 있습니다.</p>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse text-sm">
-                        <thead>
-                            <tr class="bg-gray-100 text-gray-700">
-                                <th class="p-3 border-b border-gray-200">이벤트 상황</th>
-                                <th class="p-3 border-b border-gray-200">예측 편향(Bias)</th>
-                                <th class="p-3 border-b border-gray-200">MAPE</th>
-                                <th class="p-3 border-b border-gray-200">진단 결과</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-100">
-                            <tr><td class="p-3">평시 (이벤트 없음)</td><td class="p-3">1.78</td><td class="p-3">18.2%</td><td class="p-3 text-green-600 font-semibold">정상 (안정적)</td></tr>
-                            <tr><td class="p-3">프로모션만 진행</td><td class="p-3">-61.49</td><td class="p-3">22.6%</td><td class="p-3 text-yellow-600 font-semibold">과소 예측</td></tr>
-                            <tr><td class="p-3">명절만 진행</td><td class="p-3">-62.58</td><td class="p-3">25.3%</td><td class="p-3 text-yellow-600 font-semibold">과소 예측</td></tr>
-                            <tr class="bg-red-50"><td class="p-3 font-bold">프로모션 + 명절 동시</td><td class="p-3 font-bold text-red-600">-193.73</td><td class="p-3 font-bold text-red-600">44.7%</td><td class="p-3 font-bold text-red-600">심각한 과소 예측</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
+            <!-- Card 2 -->
+            <div class="bg-white rounded-xl p-6 shadow-md card cursor-pointer border-t-4 border-indigo-500">
+                <h2 class="text-2xl font-bold mb-3">02. 비즈니스 문서 자동화</h2>
+                <p class="text-gray-600 mb-4"><strong>[보고서 포맷팅 및 PPT 스킬 커스텀]</strong><br>글로벌 HR 심층 분석 보고서 작성 시 환각(Hallucination)을 제어하는 프롬프트 템플릿 설계. Claude <code class="bg-gray-100 text-indigo-500 px-1 rounded">hallym-edu-pptx</code> 스킬을 직접 제작하여 학번, 이름, SVG 도형이 고정된 25p 분량 발표 자료 자동화 파이프라인 구축.</p>
+                <span class="inline-block bg-indigo-100 text-indigo-800 text-xs px-2 py-1 rounded-full font-semibold">Prompt Engineering</span>
+                <span class="inline-block bg-indigo-100 text-indigo-800 text-xs px-2 py-1 rounded-full font-semibold">Claude Skill</span>
+            </div>
 
-            <!-- 3. 머신러닝 및 최적화 모형 시뮬레이션 성찰 -->
-            <section class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                <h2 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
-                    <i class="fas fa-robot text-purple-500 mr-2"></i> 3. ML/최적화 시뮬레이션 성찰
-                </h2>
-                <div class="overflow-x-auto mb-4">
-                    <table class="w-full text-left border-collapse text-sm">
-                        <thead>
-                            <tr class="bg-gray-100 text-gray-700">
-                                <th class="p-3 border-b border-gray-200">발주 정책</th>
-                                <th class="p-3 border-b border-gray-200">총 폐기 손실액</th>
-                                <th class="p-3 border-b border-gray-200">총 기회 손실액</th>
-                                <th class="p-3 border-b border-gray-200">총 이익</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-100">
-                            <tr><td class="p-3 font-semibold">기존 시스템</td><td class="p-3">1.58억 원</td><td class="p-3">0.39억 원</td><td class="p-3 font-bold text-blue-600">9.46억 원</td></tr>
-                            <tr class="bg-gray-50"><td class="p-3 font-semibold">ML + 신문팔이 최적화</td><td class="p-3 text-red-500">4.24억 원</td><td class="p-3 text-red-500">3.37억 원</td><td class="p-3 text-red-500 font-bold">3.83억 원</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="bg-purple-50 p-4 rounded-lg text-sm text-gray-800">
-                    <p class="font-bold mb-1">💡 원인 성찰 (AI 활용의 한계점 파악):</p>
-                    <p>모델이 예측 오차의 표준편차를 단순 가정했고, Baseline 머신러닝 모델이 신선식품 특유의 시계열 추세와 명절 수요 급증 패턴을 충분히 학습하지 못했습니다. 이로 인해 안전재고가 양극화되며 두 손실이 동시에 상승했습니다.</p>
-                </div>
-            </section>
+            <!-- Card 3 -->
+            <div class="bg-white rounded-xl p-6 shadow-md card cursor-pointer border-t-4 border-emerald-500">
+                <h2 class="text-2xl font-bold mb-3">03. 시간차 렌더링 완벽 통제</h2>
+                <p class="text-gray-600 mb-4"><strong>[상업용 광고 동영상 제작]</strong><br>잭 다니엘스 광고 및 로비 씬 영상 제작. 생성형 영상 AI의 형태 붕괴(Morphing) 한계를 극복하기 위해 0초~20초까지 손 위치와 소품을 강제하는 <code class="bg-gray-100 text-emerald-500 px-1 rounded">ABSOLUTE CONTINUITY LOCK</code> 프롬프트 엔진 설계 및 적용.</p>
+                <span class="inline-block bg-emerald-100 text-emerald-800 text-xs px-2 py-1 rounded-full font-semibold">Google Flow</span>
+                <span class="inline-block bg-emerald-100 text-emerald-800 text-xs px-2 py-1 rounded-full font-semibold">Runway / Kling</span>
+            </div>
 
-            <!-- 4. 결론 및 해결안 방향 -->
-            <section class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 col-span-1 lg:col-span-2">
-                <h2 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
-                    <i class="fas fa-lightbulb text-yellow-500 mr-2"></i> 4. 결론 및 해결안 방향
-                </h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="border-l-4 border-blue-500 pl-4">
-                        <h3 class="font-bold text-lg text-gray-800 mb-2">단기 정책</h3>
-                        <p class="text-gray-700">시스템 고도화 전까지는 프로모션 및 명절 기간에 한정하여 기존 시스템 예측치에 일정한 가중치를 수동으로 부여해 대규모 품절 방어에 주력해야 합니다.</p>
-                    </div>
-                    <div class="border-l-4 border-green-500 pl-4">
-                        <h3 class="font-bold text-lg text-gray-800 mb-2">장기 고도화 (AI 한계 극복)</h3>
-                        <p class="text-gray-700">향후에는 시계열 특화 모델(HistGradientBoosting 등)을 도입하고, 각 SKU별로 과거 수요 변동성을 측정하여 안전재고 산출식(Z-score × 편차)에 정밀하게 반영하는 '인간의 통제와 설계'가 필요합니다.</p>
-                    </div>
-                </div>
-            </section>
+            <!-- Card 4 -->
+            <div class="bg-white rounded-xl p-6 shadow-md card cursor-pointer border-t-4 border-purple-500">
+                <h2 class="text-2xl font-bold mb-3">04. 인터랙티브 AI 시스템 구축</h2>
+                <p class="text-gray-600 mb-4"><strong>[Google GEMS 맞춤형 봇 세팅]</strong><br>단방향 질문을 넘어, PDF를 업로드하면 AI가 스스로 "몇 장으로 구성할까요?"라고 되묻게 만드는 <code class="bg-gray-100 text-purple-500 px-1 rounded">Grill-me</code> 시스템 롤(System Role) 부여. 사용자 답변에 따라 카드뉴스 스토리보드와 타이포그래피 이미지를 연동 출력하도록 자동화.</p>
+                <span class="inline-block bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded-full font-semibold">Google GEMS</span>
+                <span class="inline-block bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded-full font-semibold">Nano Banana</span>
+            </div>
 
         </div>
-    </div>
+
+        <!-- Vision Section -->
+        <div class="mt-16 bg-white rounded-xl p-8 shadow-lg text-center">
+            <h3 class="text-3xl font-bold mb-4">Next Step: 툴 사용자를 넘어 융합 기획자로</h3>
+            <p class="text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                한 학기 전, 프롬프트를 입력해 답변을 받기만 하던 단순 사용자에서, 이제는 에러 코드를 직접 해결하고 여러 도구를 오케스트레이션(Orchestration)하는 기획자로 성장했습니다.<br><br>
+                현재는 이번 수업에서 배운 정적 웹사이트 배포(Netlify) 경험을 확장하여, Python과 Streamlit, Supabase를 연동한 <strong>'단백질 분석 랩(Protein Analysis Lab)'</strong> 동적 웹 애플리케이션을 구축하고 있습니다. AI와 데이터 역량을 무기 삼아 제약·바이오 산업의 디지털 전환(DX)을 이끄는 핵심 인재가 되겠습니다.
+            </p>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 text-gray-400 text-center py-6 mt-8">
+        <p>&copy; 2026 Jonggeon Lee. All rights reserved. | Hallym University Learning Portfolio</p>
+    </footer>
 
 </body>
 </html>
