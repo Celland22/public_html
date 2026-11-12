@@ -18,26 +18,166 @@
     <header class="bg-gradient-to-br from-slate-950 via-emerald-950 to-slate-900 py-14 text-white">
         <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
             <div class="inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-900/50 px-3 py-1 text-xs font-bold text-emerald-200">
-                PART 3 · GENERATIVE VIDEO &amp; TEMPORAL CONTINUITY
+                PART 3 · GENERATIVE VIDEO &amp; INTERACTIVE MOTION INFOGRAPHICS
             </div>
             <h1 class="mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl">
-                AI 영상 콘텐츠 제작 및 시간차 렌더링 통제
+                AI 영상 콘텐츠 제작 &amp; HTML5 모션 인포그래픽
             </h1>
             <p class="mt-3 max-w-3xl text-sm leading-relaxed text-slate-300 sm:text-base">
-                잭 다니엘스 상업용 광고 영상, 현대 오피스 로비·보안 게이트 출입 시퀀스, 그리고 생성형 AI의 형태 붕괴(Morphing)를 막기 위해 설계한 <code class="rounded bg-white/10 px-1.5 py-0.5 font-mono text-xs text-emerald-300">ABSOLUTE CONTINUITY LOCK</code> 프롬프트 엔진과 Claude Motion 웹 모션 그래픽 결과물입니다.
+                <code class="rounded bg-white/10 px-1.5 py-0.5 font-mono text-xs text-emerald-300">ABSOLUTE CONTINUITY LOCK</code> 기반의 시간차 렌더링 통제(오피스 출입 20초 시퀀스 · 잭 다니엘스 광고)와, Grill-me 기획안(<code class="font-mono text-xs text-amber-200">.md</code>)을 단일 HTML5 Canvas/SVG + Web Audio 엔진으로 구현한 <strong>한림대학교 생명과학과 · 로켓프레시 PBL 04 30초 Motion Effect</strong>를 직접 실행할 수 있습니다.
             </p>
         </div>
     </header>
 
     <main class="mx-auto max-w-6xl space-y-12 px-4 py-12 sm:px-6 lg:px-8">
 
-        <!-- Section 1: ABSOLUTE CONTINUITY LOCK Engine -->
+        <!-- Section 1: LIVE Embedded Motion Effect Player (한림대 생명과학과 & P4 로켓프레시) -->
+        <section id="motion-showcase" class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+            <div class="flex flex-col justify-between gap-4 border-b border-slate-100 pb-5 lg:flex-row lg:items-end">
+                <div>
+                    <span class="text-xs font-bold uppercase tracking-wider text-emerald-700">Interactive HTML5 Motion Player · Live Embed</span>
+                    <h2 class="mt-1 text-2xl font-extrabold text-slate-900">Claude Motion 30초 인터랙티브 모션 인포그래픽</h2>
+                    <p class="mt-1 text-sm text-slate-600">
+                        외부 영상·라이브러리 없이 HTML5 Canvas/SVG + Web Audio API로 구동되는 30초(6장면 × 5초) 모션 콘텐츠입니다. 아래 탭으로 작품을 전환해 바로 재생해 보세요.
+                    </p>
+                </div>
+                <div class="flex flex-wrap gap-2 text-xs font-bold">
+                    <button type="button" data-motion-tab="bio" class="motion-tab-btn rounded-xl bg-slate-900 px-3.5 py-2 text-white shadow-sm">
+                        한림대 생명과학과 (30s)
+                    </button>
+                    <button type="button" data-motion-tab="p4" class="motion-tab-btn rounded-xl bg-slate-100 px-3.5 py-2 text-slate-700 hover:bg-slate-200">
+                        P4 로켓프레시 PBL 04 (30s)
+                    </button>
+                </div>
+            </div>
+
+            <!-- Live Player Frame -->
+            <div class="mt-6 overflow-hidden rounded-2xl border border-slate-800 bg-slate-950 shadow-lg">
+                <div class="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 bg-slate-900 px-4 py-2.5 text-xs text-slate-300">
+                    <span id="motion-frame-title" class="font-mono font-bold text-emerald-300">
+                        Claude Motion/한림대학교_생명과학과_30초_Motion_Effect.html
+                    </span>
+                    <div class="flex items-center gap-2">
+                        <a id="motion-plan-link" href="Claude Motion/한림대학교_생명과학과_Motion_Effect_30초_최종제작계획.md" target="_blank" class="rounded-md bg-white/10 px-2.5 py-1 font-semibold text-amber-200 hover:bg-white/20">
+                            기획안 MD 보기 ↗
+                        </a>
+                        <a id="motion-open-link" href="Claude Motion/한림대학교_생명과학과_30초_Motion_Effect.html" target="_blank" class="rounded-md bg-emerald-500 px-2.5 py-1 font-bold text-slate-950 hover:bg-emerald-400">
+                            새 창으로 크게 열기 ↗
+                        </a>
+                    </div>
+                </div>
+                <iframe
+                    id="motion-iframe"
+                    src="Claude Motion/한림대학교_생명과학과_30초_Motion_Effect.html"
+                    title="30초 Motion Effect 라이브 플레이어"
+                    class="h-[640px] w-full border-0 bg-[#040c16] sm:h-[760px]"
+                    loading="lazy"
+                ></iframe>
+            </div>
+
+            <!-- 6-Scene Breakdown from 한림대학교_생명과학과_Motion_Effect_30초_최종제작계획.md -->
+            <div class="mt-8 space-y-5">
+                <div class="flex flex-col justify-between gap-2 sm:flex-row sm:items-end">
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-teal-700">Production Blueprint · 6 Scenes (30s)</span>
+                        <h3 class="mt-0.5 text-lg font-extrabold text-slate-900">한림대학교 생명과학과 Motion Effect 6장면 연출 상세</h3>
+                    </div>
+                    <span class="rounded-lg bg-teal-50 px-3 py-1 text-xs font-semibold text-teal-800">
+                        연출 비율: 과학 비주얼 50% · 모션 인포그래픽 30% · 타이포그래피 20%
+                    </span>
+                </div>
+
+                <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+                    <div class="rounded-2xl border border-slate-200 bg-slate-50/70 p-4">
+                        <div class="flex items-center justify-between text-xs">
+                            <span class="font-mono font-bold text-teal-700">SCENE 01 · 0~5s</span>
+                            <span class="rounded bg-slate-200 px-2 py-0.5 text-[10px] font-bold text-slate-700">helix()</span>
+                        </div>
+                        <h4 class="mt-2 font-bold text-slate-900">생명의 시작 · Life begins with wonder</h4>
+                        <p class="mt-1 text-xs text-slate-600">3D 느낌 DNA 이중나선 회전 + 분자 입자 부유, 패드형 시네마틱 BGM 시작</p>
+                        <p class="mt-2 rounded-lg bg-white p-2 text-[11px] font-medium text-slate-700">“보이지 않는 분자의 세계에서, 생명의 경이로움은 시작됩니다.”</p>
+                    </div>
+
+                    <div class="rounded-2xl border border-slate-200 bg-slate-50/70 p-4">
+                        <div class="flex items-center justify-between text-xs">
+                            <span class="font-mono font-bold text-teal-700">SCENE 02 · 5~10s</span>
+                            <span class="rounded bg-slate-200 px-2 py-0.5 text-[10px] font-bold text-slate-700">cell()</span>
+                        </div>
+                        <h4 class="mt-2 font-bold text-slate-900">세포와 구조 · Cell · Molecule · System</h4>
+                        <p class="mt-1 text-xs text-slate-600">세포막·핵·미토콘드리아 단면 줌인 및 HUD 라벨 라인 스캔 연출</p>
+                        <p class="mt-2 rounded-lg bg-white p-2 text-[11px] font-medium text-slate-700">“한림대학교 생명과학과는 세포와 분자, 그리고 생명 시스템의 원리를 깊이 있게 탐구합니다.”</p>
+                    </div>
+
+                    <div class="rounded-2xl border border-slate-200 bg-slate-50/70 p-4">
+                        <div class="flex items-center justify-between text-xs">
+                            <span class="font-mono font-bold text-teal-700">SCENE 03 · 10~15s</span>
+                            <span class="rounded bg-slate-200 px-2 py-0.5 text-[10px] font-bold text-slate-700">fields()</span>
+                        </div>
+                        <h4 class="mt-2 font-bold text-slate-900">전공과 배움 · Explore the Science of Life</h4>
+                        <p class="mt-1 text-xs text-slate-600">유전학·생화학·미생물학·생리학 4분할 카드 순차 슬라이드 및 아이콘 애니메이션</p>
+                        <p class="mt-2 rounded-lg bg-white p-2 text-[11px] font-medium text-slate-700">“기초 생명과학부터 다양한 세부 전공까지, 우리는 생명을 다각도로 배우고 이해합니다.”</p>
+                    </div>
+
+                    <div class="rounded-2xl border border-slate-200 bg-slate-50/70 p-4">
+                        <div class="flex items-center justify-between text-xs">
+                            <span class="font-mono font-bold text-teal-700">SCENE 04 · 15~20s</span>
+                            <span class="rounded bg-slate-200 px-2 py-0.5 text-[10px] font-bold text-slate-700">lab()</span>
+                        </div>
+                        <h4 class="mt-2 font-bold text-slate-900">연구와 실험 · Research in Action</h4>
+                        <p class="mt-1 text-xs text-slate-600">피펫 액체 분주 모션, 시험관 랙 수위 변화, 현미경·분광 파형 그래프 시각화</p>
+                        <p class="mt-2 rounded-lg bg-white p-2 text-[11px] font-medium text-slate-700">“실험과 분석, 그리고 질문을 통해 우리는 새로운 지식을 만들고 더 나은 답을 찾아갑니다.”</p>
+                    </div>
+
+                    <div class="rounded-2xl border border-slate-200 bg-slate-50/70 p-4">
+                        <div class="flex items-center justify-between text-xs">
+                            <span class="font-mono font-bold text-teal-700">SCENE 05 · 20~25s</span>
+                            <span class="rounded bg-slate-200 px-2 py-0.5 text-[10px] font-bold text-slate-700">network()</span>
+                        </div>
+                        <h4 class="mt-2 font-bold text-slate-900">미래와 진로 · From Lab to Future</h4>
+                        <p class="mt-1 text-xs text-slate-600">LIFE SCIENCE 허브 중심에서 의약·바이오산업·환경·연구·데이터 5개 노드로 연결선 확장</p>
+                        <p class="mt-2 rounded-lg bg-white p-2 text-[11px] font-medium text-slate-700">“생명과학은 연구실에 머무르지 않습니다. 의약, 바이오산업, 환경, 데이터 기반 미래 분야로 넓게 연결됩니다.”</p>
+                    </div>
+
+                    <div class="rounded-2xl border border-emerald-200 bg-emerald-50/60 p-4">
+                        <div class="flex items-center justify-between text-xs">
+                            <span class="font-mono font-bold text-emerald-800">SCENE 06 · 25~30s</span>
+                            <span class="rounded bg-emerald-200 px-2 py-0.5 text-[10px] font-bold text-emerald-900">finale()</span>
+                        </div>
+                        <h4 class="mt-2 font-bold text-slate-900">브랜딩 마무리 · From Life to Future</h4>
+                        <p class="mt-1 text-xs text-slate-600">오비탈 링·입자 정렬 후 최종 슬로건 <code class="font-mono">Hallym Life Science</code> 정착(30초 자동 정지)</p>
+                        <p class="mt-2 rounded-lg bg-white p-2 text-[11px] font-medium text-slate-700">“생명을 이해하고, 미래를 향해 나아가는 곳. 한림대학교 생명과학과입니다.”</p>
+                    </div>
+                </div>
+
+                <!-- Additional Motion Deliverables -->
+                <div class="grid grid-cols-1 gap-3 border-t border-slate-100 pt-5 sm:grid-cols-2 lg:grid-cols-4">
+                    <a href="Claude Motion/한림대학교_생명과학과_30초_Motion_Effect.html" target="_blank" class="rounded-xl border border-emerald-200 bg-emerald-50/50 p-3.5 text-xs transition hover:bg-emerald-50">
+                        <span class="font-mono font-bold text-emerald-800">HTML · BIO</span>
+                        <p class="mt-1 font-bold text-slate-900">생명과학과 30초 Motion ↗</p>
+                    </a>
+                    <a href="Claude Motion/P4_로켓프레시_30초_Motion_Effect.html" target="_blank" class="rounded-xl border border-sky-200 bg-sky-50/50 p-3.5 text-xs transition hover:bg-sky-50">
+                        <span class="font-mono font-bold text-sky-800">HTML · PBL 04</span>
+                        <p class="mt-1 font-bold text-slate-900">P4 로켓프레시 30초 Motion ↗</p>
+                    </a>
+                    <a href="Claude Motion/Claude_Motion_택배 라스트마일.html" target="_blank" class="rounded-xl border border-slate-200 bg-slate-50 p-3.5 text-xs transition hover:bg-white">
+                        <span class="font-mono font-bold text-indigo-700">HTML · P2</span>
+                        <p class="mt-1 font-bold text-slate-900">택배 라스트마일 Motion ↗</p>
+                    </a>
+                    <a href="Claude Motion/FC_인력계획_30초.mp4" target="_blank" class="rounded-xl border border-slate-200 bg-slate-50 p-3.5 text-xs transition hover:bg-white">
+                        <span class="font-mono font-bold text-slate-700">MP4 · P1</span>
+                        <p class="mt-1 font-bold text-slate-900">FC 인력계획 30초 영상 ↗</p>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: ABSOLUTE CONTINUITY LOCK Engine -->
         <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
             <div class="border-b border-slate-100 pb-5">
-                <span class="text-xs font-bold uppercase tracking-wider text-emerald-700">Core Prompt Engine</span>
+                <span class="text-xs font-bold uppercase tracking-wider text-emerald-700">Generative Video Control</span>
                 <h2 class="mt-1 text-2xl font-extrabold text-slate-900"><code class="font-mono text-emerald-700">ABSOLUTE CONTINUITY LOCK</code> 시간차 렌더링 통제 로직</h2>
                 <p class="mt-2 text-sm leading-relaxed text-slate-600">
-                    생성형 이미지·영상 AI는 시간 경과나 카메라 이동 시 손가락 개수 변화, 소품 위치 뒤바뀜, 얼굴 변형(Morphing)이 빈번하게 발생합니다. 이를 제어하기 위해 <strong>0초 → 3초 → 6초 → 10초 → 12초 → 14초 → 16초 → 18초 → 20초</strong>의 9단계 순차 생성 규칙과 불변 잠금 계층을 설계했습니다.
+                    생성형 이미지·영상 AI에서 발생하는 손가락 증식, 소품 위치 변경, 얼굴 형태 붕괴(Morphing)를 통제하기 위해 <strong>0초 → 3초 → 6초 → 10초 → 12초 → 14초 → 16초 → 18초 → 20초</strong>의 9단계 순차 생성 규칙과 불변 잠금 계층을 설계했습니다.
                 </p>
             </div>
 
@@ -45,29 +185,27 @@
                 <div class="rounded-2xl border border-emerald-200 bg-emerald-50/50 p-5">
                     <span class="font-mono text-xs font-bold text-emerald-800">LOCK 01 · 왼손 &amp; 어깨 불변</span>
                     <h3 class="mt-1.5 font-bold text-slate-900">고정 소품 물리 위치 잠금</h3>
-                    <p class="mt-1.5 text-xs leading-relaxed text-slate-600">0초부터 20초 끝까지 <strong>왼손</strong>은 동일한 스타벅스 커피컵 1개만 들고, <strong>왼쪽 어깨</strong>에는 동일한 검정 토트백 1개만 착용하도록 강제해 소품 증식·소멸을 차단했습니다.</p>
+                    <p class="mt-1.5 text-xs leading-relaxed text-slate-600">0~20초 전 구간에서 <strong>왼손</strong>은 동일한 스타벅스 커피컵 1개만 들고, <strong>왼쪽 어깨</strong>에는 동일한 검정 토트백 1개만 착용하도록 강제했습니다.</p>
                 </div>
                 <div class="rounded-2xl border border-emerald-200 bg-emerald-50/50 p-5">
                     <span class="font-mono text-xs font-bold text-emerald-800">LOCK 02 · 오른손 타임라인</span>
                     <h3 class="mt-1.5 font-bold text-slate-900">동작 주체 분리 제어</h3>
-                    <p class="mt-1.5 text-xs leading-relaxed text-slate-600">오직 <strong>오른손</strong>만 시간대별 액션(0~3s 사원증 태그 → 6~10s 자연스러운 스윙 → 12s 버튼 접근 → 14s UP 버튼 클릭 → 16~20s 정지 대기)을 수행하도록 역할을 분리했습니다.</p>
+                    <p class="mt-1.5 text-xs leading-relaxed text-slate-600">오직 <strong>오른손</strong>만 시간대별 액션(0~3s 사원증 태그 → 6~10s 스윙 → 12s 버튼 접근 → 14s 클릭 → 16~20s 대기)을 수행하도록 역할을 분리했습니다.</p>
                 </div>
                 <div class="rounded-2xl border border-emerald-200 bg-emerald-50/50 p-5">
                     <span class="font-mono text-xs font-bold text-emerald-800">LOCK 03 · 직전 프레임 승계</span>
                     <h3 class="mt-1.5 font-bold text-slate-900">Primary Temporal Reference</h3>
-                    <p class="mt-1.5 text-xs leading-relaxed text-slate-600">각 단계 생성 시 캐릭터 시트·컵 레퍼런스와 함께 <strong>바로 직전 정상 검증 프레임</strong>을 주 레퍼런스로 투입해 카메라 축과 인체 비율의 연속성을 유지했습니다.</p>
+                    <p class="mt-1.5 text-xs leading-relaxed text-slate-600">매 단계마다 캐릭터 시트·컵 레퍼런스와 함께 <strong>바로 직전 정상 검증 프레임</strong>을 주 레퍼런스로 투입해 카메라 축과 인체 비율을 유지했습니다.</p>
                 </div>
             </div>
         </section>
 
-        <!-- Section 2: 9-Stage 4K Keyframes Gallery -->
+        <!-- Section 3: 9-Stage 4K Keyframes Gallery -->
         <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
-            <div class="flex flex-col justify-between gap-3 border-b border-slate-100 pb-5 sm:flex-row sm:items-end">
-                <div>
-                    <span class="text-xs font-bold uppercase tracking-wider text-emerald-700">Project 1 · Office Security Gate Sequence</span>
-                    <h2 class="mt-1 text-2xl font-extrabold text-slate-900">오피스 출입 20초 시퀀스: 4K 키프레임 9단계</h2>
-                    <p class="mt-1 text-sm text-slate-600">이미지를 클릭하면 4K 원본 해상도 미리보기로 상세 연속성을 확인할 수 있습니다.</p>
-                </div>
+            <div class="border-b border-slate-100 pb-5">
+                <span class="text-xs font-bold uppercase tracking-wider text-emerald-700">Project 1 · Office Security Gate Sequence</span>
+                <h2 class="mt-1 text-2xl font-extrabold text-slate-900">오피스 출입 20초 시퀀스: 4K 키프레임 9단계</h2>
+                <p class="mt-1 text-sm text-slate-600">이미지를 클릭하면 4K 원본 해상도 미리보기로 시간차 연속성을 확인할 수 있습니다.</p>
             </div>
 
             <div class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -110,9 +248,8 @@
             </div>
         </section>
 
-        <!-- Section 3: Rendered Videos (Jack Daniel's & Office Sequence) -->
+        <!-- Section 4: Rendered Videos (Jack Daniel's & Office Sequence) -->
         <section class="grid grid-cols-1 gap-8 lg:grid-cols-2">
-            <!-- Jack Daniel's Commercial -->
             <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
                 <span class="text-xs font-bold uppercase tracking-wider text-amber-700">Project 2 · Commercial Ad Video</span>
                 <h2 class="mt-1 text-xl font-extrabold text-slate-900">잭 다니엘스 상업용 광고 영상 (Google Flow)</h2>
@@ -131,7 +268,6 @@
                 </div>
             </div>
 
-            <!-- Office Lobby Sequence Video -->
             <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
                 <span class="text-xs font-bold uppercase tracking-wider text-emerald-700">Project 3 · Multi-Model Rendering</span>
                 <h2 class="mt-1 text-xl font-extrabold text-slate-900">오피스 로비 출입 시퀀스 (Google Flow / Kling)</h2>
@@ -150,37 +286,49 @@
             </div>
         </section>
 
-        <!-- Section 4: Claude Motion Interactive HTML -->
-        <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
-            <h2 class="text-xl font-extrabold text-slate-900">Claude Motion · HTML5 인터랙티브 모션 그래픽</h2>
-            <p class="mt-1 text-sm text-slate-600">Grill-me 방식으로 제작 계획(`.md`)을 수립한 뒤 30초 장면 전환·하단 스크립트·더빙이 통합된 웹 모션 플레이어를 구현했습니다.</p>
-            <div class="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                <a href="Claude Motion/한림대학교_생명과학과_30초_Motion_Effect.html" target="_blank" class="rounded-2xl border border-emerald-200 bg-emerald-50/50 p-4 transition hover:bg-emerald-50">
-                    <span class="rounded bg-emerald-100 px-2 py-0.5 text-[11px] font-bold text-emerald-800">BIO · HTML</span>
-                    <h3 class="mt-2 text-sm font-bold text-slate-900">한림대 생명과학과 30초 모션</h3>
-                    <p class="mt-1 text-xs text-slate-600">브라우저에서 바로 실행 ↗</p>
-                </a>
-                <a href="Claude Motion/P4_로켓프레시_Motion_Effect_30초.html" target="_blank" class="rounded-2xl border border-slate-200 bg-slate-50 p-4 transition hover:bg-white">
-                    <span class="rounded bg-sky-100 px-2 py-0.5 text-[11px] font-bold text-sky-800">P4 · HTML</span>
-                    <h3 class="mt-2 text-sm font-bold text-slate-900">P4 로켓프레시 모션 해설</h3>
-                    <p class="mt-1 text-xs text-slate-600">브라우저에서 바로 실행 ↗</p>
-                </a>
-                <a href="Claude Motion/Claude_Motion_택배 라스트마일.html" target="_blank" class="rounded-2xl border border-slate-200 bg-slate-50 p-4 transition hover:bg-white">
-                    <span class="rounded bg-indigo-100 px-2 py-0.5 text-[11px] font-bold text-indigo-800">P2 · HTML</span>
-                    <h3 class="mt-2 text-sm font-bold text-slate-900">택배 라스트마일 모션</h3>
-                    <p class="mt-1 text-xs text-slate-600">브라우저에서 바로 실행 ↗</p>
-                </a>
-                <a href="Claude Motion/FC_인력계획_30초.mp4" target="_blank" class="rounded-2xl border border-slate-200 bg-slate-50 p-4 transition hover:bg-white">
-                    <span class="rounded bg-slate-200 px-2 py-0.5 text-[11px] font-bold text-slate-700">P1 · MP4</span>
-                    <h3 class="mt-2 text-sm font-bold text-slate-900">FC 인력계획 30초 영상</h3>
-                    <p class="mt-1 text-xs text-slate-600">MP4 영상 열기 ↗</p>
-                </a>
-            </div>
-        </section>
-
     </main>
 
     <div id="site-footer"></div>
     <script src="assets/shared.js"></script>
+    <script>
+        (function () {
+            const MOTION_SOURCES = {
+                bio: {
+                    src: 'Claude Motion/한림대학교_생명과학과_30초_Motion_Effect.html',
+                    plan: 'Claude Motion/한림대학교_생명과학과_Motion_Effect_30초_최종제작계획.md',
+                    title: 'Claude Motion/한림대학교_생명과학과_30초_Motion_Effect.html'
+                },
+                p4: {
+                    src: 'Claude Motion/P4_로켓프레시_30초_Motion_Effect.html',
+                    plan: 'Claude Motion/P4_로켓프레시_Motion_Effect_30초_최종제작계획.md',
+                    title: 'Claude Motion/P4_로켓프레시_30초_Motion_Effect.html'
+                }
+            };
+
+            const iframe = document.getElementById('motion-iframe');
+            const titleEl = document.getElementById('motion-frame-title');
+            const planLink = document.getElementById('motion-plan-link');
+            const openLink = document.getElementById('motion-open-link');
+            const buttons = document.querySelectorAll('.motion-tab-btn');
+
+            buttons.forEach((btn) => {
+                btn.addEventListener('click', () => {
+                    const key = btn.getAttribute('data-motion-tab');
+                    const item = MOTION_SOURCES[key];
+                    if (!item) return;
+
+                    iframe.src = item.src;
+                    titleEl.textContent = item.title;
+                    planLink.href = item.plan;
+                    openLink.href = item.src;
+
+                    buttons.forEach((b) => {
+                        b.className = 'motion-tab-btn rounded-xl bg-slate-100 px-3.5 py-2 text-slate-700 hover:bg-slate-200';
+                    });
+                    btn.className = 'motion-tab-btn rounded-xl bg-slate-900 px-3.5 py-2 text-white shadow-sm';
+                });
+            });
+        })();
+    </script>
 </body>
 </html>
