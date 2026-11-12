@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>P4 로켓프레시 Motion Effect (30초)</title>
+<style>
+:root{
+  --bg:#0C1733;
+  --bg-deep:#070E22;
+  --ink:#F5F7FB;
+  --muted:#9AA8C7;
+  --line:rgba(245,247,251,.16);
+  --waste:#E9B872;   /* 폐기: 저채도 샌드 앰버 */
+  --short:#8FB8E8;   /* 품절: 저채도 스틸 블루 */
+  --font:"Pretendard","Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic","Segoe UI",system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  background:var(--bg-deep);color:var(--ink);font-family:var(--font);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:14px;padding:12px;
+}
+
+/* ---------- Stage (16:9) ---------- */
+.stage{
+  position:relative;overflow:hidden;background:var(--bg);
+  width:min(100%, calc((100vh - 168px) * 16 / 9));
+  aspect-ratio:16/9;container-type:size;border-radius:6px;
+}
+.scene{
+  position:absolute;inset:0;opacity:0;visibility:hidden;
+  transition:opacity .5s ease, visibility 0s linear .5s;
+}
+.scene.active{opacity:1;visibility:visible;transition:opacity .5s ease}
+.box{position:absolute;inset:0 0 19cqh 0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+
+/* ---------- Animation primitives ---------- */
+.fx{opacity:0;transition:opacity .9s ease, transform .9s cubic-bezier(.2,.7,.2,1)}
+.fx.up{transform:translateY(3cqw)}
+.fx.down{transform:translateY(-3cqw)}
+.fx.left{transform:translateX(-9cqw)}
+.fx.right{transform:translateX(9cqw)}
+.fx.scale{transform:scale(.55)}
+.fx.grow{transform:scaleY(0);transform-origin:center}
+.fx.fast{transition-duration:.45s}
+.fx.slow{transition-duration:1.4s}
+.fx.in{opacity:1;transform:none}
+.pop{display:inline-block;transition:transform .9s cubic-bezier(.2,.7,.2,1)}
+.pop.in{transform:scale(1.16)}
+.pulse{display:inline-block}
+.fx.in .pulse{animation:pulse 2.4s ease-in-out .9s infinite}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.05);opacity:.82}}
+body.paused .stage *{animation-play-state:paused !important}
+
+.waste{color:var(--waste)}
+.short{color:var(--short)}
+.muted{color:var(--muted)}
+.w{display:inline-block;margin:0 .14em}
+
+/* ---------- Scene 1 ---------- */
+.s1 .brand{font-size:2.3cqw;letter-spacing:.42em;color:var(--muted);font-weight:500;margin-bottom:3.2cqw;padding-left:.42em}
+.s1 .headline{font-size:6.2cqw;font-weight:700;letter-spacing:-.02em;line-height:1.2}
+.s1 .shelf{display:flex;align-items:baseline;gap:2cqw;margin-top:3.4cqw}
+.s1 .shelf .lab{font-size:2.6cqw;color:var(--muted);font-weight:500}
+.s1 .shelf .num{font-size:12.5cqw;font-weight:800;letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
+
+/* ---------- Scene 2 ---------- */
+.s2 .box{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr auto;padding:0 5cqw}
+.s2 .col{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.4cqw}
+.s2 .col .sub{font-size:2.8cqw;color:var(--muted);font-weight:500}
+.s2 .col .big{font-size:8.4cqw;font-weight:800;letter-spacing:-.03em;line-height:1.1}
+.s2 .divider{position:absolute;left:50%;top:9cqh;bottom:35cqh;width:1px;background:var(--line)}
+.s2 .base{grid-column:1/3;display:flex;align-items:baseline;justify-content:center;gap:1.2cqw;padding-bottom:3cqw}
+.s2 .base .a{font-size:2.8cqw;color:var(--muted);font-weight:500}
+.s2 .base .b{font-size:5cqw;font-weight:800}
+
+/* ---------- Scene 3 ---------- */
+.s3 .tag{font-size:2.8cqw;color:var(--muted);font-weight:500;margin-bottom:2.6cqw}
+.s3 .formula{font-size:6.4cqw;font-weight:700;letter-spacing:-.02em;min-height:1.3em;font-variant-numeric:tabular-nums}
+.s3 .caret{display:inline-block;width:.07em;height:.9em;background:var(--ink);margin-left:.12em;vertical-align:-.1em;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.s3 .turn{font-size:3.6cqw;font-weight:500;margin-top:4.4cqw}
+.s3 .turn .pop{font-weight:800;margin-left:.3em}
+
+/* ---------- Scene 4 ---------- */
+.s4 .box{align-items:stretch;justify-content:center;padding:0 8cqw;gap:2.6cqw}
+.s4 .l1{align-self:flex-start;font-size:7.2cqw;font-weight:800;letter-spacing:-.03em;line-height:1.15}
+.s4 .l2{align-self:flex-end;font-size:7.2cqw;font-weight:800;letter-spacing:-.03em;line-height:1.15;text-align:right}
+.s4 .sub{align-self:center;margin-top:2cqw;font-size:2.5cqw;color:var(--muted);font-weight:500}
+.s4 .l1 .p,.s4 .l2 .p{font-weight:500;color:var(--ink)}
+
+/* ---------- Scene 5 ---------- */
+.s5 .pre{font-size:3cqw;color:var(--muted);font-weight:500;margin-bottom:2.2cqw}
+.s5 .q{font-size:8.4cqw;font-weight:800;letter-spacing:-.035em;line-height:1.15}
+.s5 .q2{font-size:3.6cqw;font-weight:500;margin-top:3.6cqw}
+
+/* ---------- Scene 6 ---------- */
+.s6 .box{display:block}
+.s6 .clue{position:absolute;left:0;right:0;top:7%;text-align:center;font-size:2.4cqw;color:var(--muted);font-weight:500}
+.s6 .kw{position:absolute;left:0;right:0;top:50%;margin-top:0;display:flex;justify-content:center;align-items:center;gap:5cqw;
+  transform:translateY(-50%);transition:top 1s cubic-bezier(.5,0,.2,1)}
+.s6 .kw .k{font-size:7.4cqw;font-weight:800;letter-spacing:-.03em;transition:font-size 1s cubic-bezier(.5,0,.2,1), opacity .9s ease, transform .9s cubic-bezier(.2,.7,.2,1)}
+.s6 .kw .bar{width:1px;height:6cqw;background:var(--line);transition:height 1s}
+.s6.compact .kw{top:24%}
+.s6.compact .kw .k{font-size:3.6cqw;opacity:.75 !important}
+.s6.compact .kw .bar{height:3cqw}
+.s6 .final{position:absolute;left:0;right:0;top:66%;transform:translateY(-50%);text-align:center;font-size:6.8cqw;font-weight:800;letter-spacing:-.035em;line-height:1.28}
+.s6 .final.fx.up{transform:translateY(calc(-50% + 3cqw))}
+.s6 .final.fx.in{transform:translateY(-50%)}
+
+/* ---------- Caption ---------- */
+.caption{
+  position:absolute;left:0;right:0;bottom:0;min-height:19cqh;
+  padding:1.8cqw 7cqw 2cqw;background:rgba(4,9,26,.66);border-top:1px solid var(--line);
+  display:flex;align-items:center;justify-content:center;
+}
+.caption p{font-size:1.78cqw;line-height:1.62;text-align:center;color:#E3E9F6;font-weight:400;max-width:84cqw;word-break:keep-all}
+.caption p.swap{animation:capin .6s ease both}
+@keyframes capin{from{opacity:0;transform:translateY(.8cqw)}to{opacity:1;transform:none}}
+
+/* ---------- Controls ---------- */
+.panel{width:min(100%, calc((100vh - 168px) * 16 / 9));display:flex;flex-direction:column;gap:10px}
+.scenes{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+button{
+  font:inherit;color:var(--ink);background:rgba(245,247,251,.06);border:1px solid var(--line);
+  border-radius:8px;padding:10px 8px;cursor:pointer;min-height:44px;font-size:.92rem;line-height:1.25;
+  transition:background .2s,border-color .2s,opacity .2s;
+}
+button:hover:not(:disabled){background:rgba(245,247,251,.12)}
+button:disabled{opacity:.38;cursor:default}
+button:focus-visible{outline:2px solid var(--short);outline-offset:2px}
+.scenes button[aria-current="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink);font-weight:700}
+.bar-row{display:flex;align-items:center;gap:10px}
+.bar-row button{padding:10px 18px;white-space:nowrap}
+#btnStart{background:var(--ink);color:var(--bg);border-color:var(--ink);font-weight:700}
+#btnStart:hover:not(:disabled){background:#fff}
+.track{position:relative;flex:1;height:8px;background:rgba(245,247,251,.12);border-radius:4px;min-width:80px}
+.fill{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--ink);border-radius:4px}
+.tick{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--bg-deep)}
+.time{font-variant-numeric:tabular-nums;color:var(--muted);font-size:.9rem;min-width:5.6em;text-align:right}
+
+@media (max-width:720px){
+  .scenes{grid-template-columns:repeat(3,1fr)}
+  .bar-row{flex-wrap:wrap}
+  .track{order:5;flex-basis:100%}
+}
+@media (prefers-reduced-motion:reduce){
+  .fx.up,.fx.down,.fx.left,.fx.right,.fx.scale{transform:none}
+  .fx.grow{transform:none}
+  .fx.in .pulse{animation:none}
+  .caption p.swap{animation:none}
+}
+</style>
+</head>
+<body class="paused">
+
+<main class="stage" id="stage" aria-label="로켓프레시 신선식품 발주 딜레마 모션 자료">
+
+  <!-- Scene 1 : 0~5s -->
+  <section class="scene s1" data-i="0">
+    <div class="box">
+      <div class="brand fx" data-at="0.2">로켓프레시</div>
+      <h2 class="headline" data-words data-at="0.9">신선식품은 시간이 짧다</h2>
+      <div class="shelf">
+        <span class="lab fx up" data-at="2.6">유통기한</span>
+        <span class="num fx scale slow" data-at="3.0">2~10일</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Scene 2 : 5~10s -->
+  <section class="scene s2" data-i="1">
+    <div class="divider fx grow slow" data-at="0.1"></div>
+    <div class="box">
+      <div class="col fx left" data-at="0.4">
+        <div class="sub">많이 주문하면</div>
+        <div class="big waste"><span class="pulse">폐기 증가</span></div>
+      </div>
+      <div class="col fx right" data-at="0.4">
+        <div class="sub">적게 주문하면</div>
+        <div class="big short"><span class="pulse">품절 발생</span></div>
+      </div>
+      <div class="base">
+        <span class="a fx up" data-at="2.2">발주량은 항상</span>
+        <span class="b fx scale fast" data-at="3.4">딜레마다</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Scene 3 : 10~15s -->
+  <section class="scene s3" data-i="2">
+    <div class="box">
+      <div class="tag fx" data-at="0.2">현재 방식</div>
+      <div class="formula fx" data-at="0.7" data-type="기존 시스템 예측값 + 12%" data-type-at="0.9"><span class="typed"></span><i class="caret"></i></div>
+      <div class="turn fx up slow" data-at="2.6">하지만, 이 규칙은 <span class="pop" data-at="3.9">단순하다</span></div>
+    </div>
+  </section>
+
+  <!-- Scene 4 : 15~20s -->
+  <section class="scene s4" data-i="3">
+    <div class="box">
+      <div class="l1 fx left slow" data-at="0.3"><span class="p">평소에는</span> <span class="waste"><span class="pulse">폐기</span></span></div>
+      <div class="l2 fx right fast" data-at="1.6"><span class="p">이벤트 기간에는</span> <span class="short"><span class="pulse">품절</span></span></div>
+      <div class="sub fx" data-at="3.0">프로모션 · 명절 수요 급증 반영 부족</div>
+    </div>
+  </section>
+
+  <!-- Scene 5 : 20~25s -->
+  <section class="scene s5" data-i="4">
+    <div class="box">
+      <div class="pre fx" data-at="0.2">그렇다면</div>
+      <div class="q fx scale slow" data-at="0.9">어떻게 발주해야 할까?</div>
+      <div class="q2 fx up slow" data-at="2.6"><span class="waste">폐기</span>와 <span class="short">품절</span>을 함께 줄이려면?</div>
+    </div>
+  </section>
+
+  <!-- Scene 6 : 25~30s -->
+  <section class="scene s6" data-i="5">
+    <div class="box">
+      <div class="clue fx" data-at="0.1">해결의 실마리</div>
+      <div class="kw">
+        <span class="k fx up" data-at="0.6"><span class="pulse">수요 예측</span></span>
+        <span class="bar"></span>
+        <span class="k fx up" data-at="1.4"><span class="pulse">Newsvendor</span></span>
+      </div>
+      <div class="final fx up slow" data-at="3.0"><span class="waste">폐기</span>와 <span class="short">품절</span>,<br>동시에 줄일 수 있을까?</div>
+    </div>
+  </section>
+
+  <div class="caption" aria-live="polite"><p id="cap"></p></div>
+</main>
+
+<div class="panel">
+  <nav class="scenes" id="scenes" aria-label="장면 선택"></nav>
+  <div class="bar-row">
+    <button id="btnStart" type="button">시작</button>
+    <button id="btnPause" type="button" disabled>일시정지</button>
+    <button id="btnStop" type="button">종료</button>
+    <div class="track" id="track" role="progressbar" aria-valuemin="0" aria-valuemax="30" aria-valuenow="0" aria-label="재생 진행률"><div class="fill" id="fill"></div></div>
+    <span class="time" id="time">0.0s / 30s</span>
+    <button id="btnMute" type="button" aria-pressed="false">소리 켜짐</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  var TOTAL = 30, SCENE_LEN = 5;
+  var SCENES = [
+    {name:"문제 도입", cap:"먼저 이 문제의 출발점은 신선식품입니다. 신선식품은 유통기한이 짧기 때문에, 일반 재고 문제보다 훨씬 민감하게 발주를 결정해야 합니다."},
+    {name:"딜레마", cap:"여기서 가장 중요한 딜레마가 등장합니다. 많이 주문하면 남아서 폐기되고, 적게 주문하면 팔 수 없어서 품절이 발생합니다. 즉, 발주량은 늘 양쪽 손실 사이에서 결정됩니다."},
+    {name:"현재 방식", cap:"문제는 현재 발주 방식이 기존 시스템 예측값에 12퍼센트를 더하는 단순 규칙이라는 점입니다. 평소에는 그럭저럭 작동할 수 있어도, 수요가 크게 바뀌는 상황에는 약할 수 있습니다."},
+    {name:"이벤트 실패", cap:"특히 이 단순 규칙은 상황별로 다른 실패를 만듭니다. 평소에는 남는 재고가 늘어 폐기가 생기고, 프로모션이나 명절처럼 수요가 급증할 때는 오히려 품절이 발생합니다."},
+    {name:"핵심 질문", cap:"이제 분석의 핵심 질문이 나옵니다. 우리는 어떻게 발주량을 정해야 폐기와 품절을 동시에 줄일 수 있을까요? 바로 여기서 데이터 분석과 모델링이 필요해집니다."},
+    {name:"해결 실마리", cap:"이 문제의 해결 방향은 마지막 5초에 제시됩니다. 첫째는 수요를 더 정확하게 예측하는 것이고, 둘째는 Newsvendor 모형처럼 폐기 비용과 품절 비용을 함께 고려해 적정 발주량을 정하는 것입니다. 결국 질문은 이것입니다. 폐기와 품절, 동시에 줄일 수 있을까요?"}
+  ];
+
+  var stage = document.getElementById("stage");
+  var sceneEls = Array.prototype.slice.call(stage.querySelectorAll(".scene"));
+  var cap = document.getElementById("cap");
+  var btnStart = document.getElementById("btnStart");
+  var btnPause = document.getElementById("btnPause");
+  var btnStop = document.getElementById("btnStop");
+  var btnMute = document.getElementById("btnMute");
+  var fill = document.getElementById("fill");
+  var track = document.getElementById("track");
+  var timeEl = document.getElementById("time");
+  var nav = document.getElementById("scenes");
+
+  /* ---- Word stagger (split headline into words) ---- */
+  Array.prototype.forEach.call(stage.querySelectorAll("[data-words]"), function(el){
+    var base = parseFloat(el.dataset.at) || 0;
+    var words = el.textContent.trim().split(/\s+/);
+    el.textContent = "";
+    words.forEach(function(w, i){
+      var s = document.createElement("span");
+      s.className = "w fx up";
+      s.dataset.at = (base + i * 0.38).toFixed(2);
+      s.textContent = w;
+      el.appendChild(s);
+    });
+  });
+
+  /* ---- Collect timed elements per scene ---- */
+  var timed = sceneEls.map(function(sc){
+    return Array.prototype.slice.call(sc.querySelectorAll("[data-at]")).map(function(el){
+      return {el: el, at: parseFloat(el.dataset.at)};
+    });
+  });
+  var typers = sceneEls.map(function(sc){
+    return Array.prototype.slice.call(sc.querySelectorAll("[data-type]")).map(function(el){
+      return {el: el.querySelector(".typed"), text: el.dataset.type, at: parseFloat(el.dataset.typeAt), last: -1};
+    });
+  });
+
+  /* ---- Scene buttons + progress ticks ---- */
+  var navBtns = SCENES.map(function(s, i){
+    var b = document.createElement("button");
+    b.type = "button";
+    b.textContent = (i + 1) + "  " + s.name;
+    b.addEventListener("click", function(){ seek(i * SCENE_LEN); });
+    nav.appendChild(b);
+    return b;
+  });
+  for (var k = 1; k < 6; k++){
+    var tk = document.createElement("i");
+    tk.className = "tick";
+    tk.style.left = (k / 6 * 100) + "%";
+    track.appendChild(tk);
+  }
+
+  /* ---- State ---- */
+  var t = 0, playing = false, ended = false, cur = -1, lastNow = 0, prevT = 0, muted = false;
+
+  function sceneIndex(time){ return Math.min(5, Math.floor(time / SCENE_LEN)); }
+
+  function switchScene(idx){
+    var prev = cur;
+    cur = idx;
+    sceneEls.forEach(function(sc, i){ sc.classList.toggle("active", i === idx); });
+    timed.forEach(function(list){ list.forEach(function(o){ o.el.classList.remove("in"); }); });
+    typers.forEach(function(list){ list.forEach(function(o){ o.last = -1; o.el.textContent = ""; }); });
+    sceneEls[5].classList.remove("compact");
+    void stage.offsetWidth; /* reflow so entrance animations replay */
+    navBtns.forEach(function(b, i){ if (i === idx) b.setAttribute("aria-current","true"); else b.removeAttribute("aria-current"); });
+    cap.classList.remove("swap");
+    void cap.offsetWidth;
+    cap.textContent = SCENES[idx].cap;
+    cap.classList.add("swap");
+    if (playing && prev !== -1 && prev !== idx) sfxTransition();
+  }
+
+  function render(){
+    var idx = sceneIndex(t);
+    if (idx !== cur) switchScene(idx);
+    var local = t - idx * SCENE_LEN;
+    timed[idx].forEach(function(o){ o.el.classList.toggle("in", local >= o.at); });
+    typers[idx].forEach(function(o){
+      var n = Math.max(0, Math.min(o.text.length, Math.floor((local - o.at) / 0.09)));
+      if (local < o.at) n = 0;
+      if (n !== o.last){ o.el.textContent = o.text.slice(0, n); o.last = n; }
+    });
+    if (idx === 5) sceneEls[5].classList.toggle("compact", local >= 3.0);
+    fill.style.width = (t / TOTAL * 100) + "%";
+    track.setAttribute("aria-valuenow", t.toFixed(1));
+    timeEl.textContent = t.toFixed(1) + "s / " + TOTAL + "s";
+  }
+
+  function setUI(){
+    document.body.classList.toggle("paused", !playing);
+    btnStart.disabled = playing;
+    btnPause.disabled = !playing;
+    btnStart.textContent = ended ? "다시 시작" : (t > 0 ? "계속" : "시작");
+  }
+
+  function tick(now){
+    if (!playing) return;
+    var dt = Math.min(0.1, (now - lastNow) / 1000);
+    lastNow = now;
+    prevT = t;
+    t += dt;
+    if (prevT < 28 && t >= 28) sfxChime();
+    if (t >= TOTAL){
+      t = TOTAL; playing = false; ended = true;
+      render(); setUI(); musicTo(0, 2.5);
+      return;
+    }
+    render();
+    requestAnimationFrame(tick);
+  }
+
+  function play(){
+    if (playing) return;
+    initAudio();
+    if (ended || t >= TOTAL){ t = 0; ended = false; cur = -1; }
+    playing = true;
+    lastNow = performance.now();
+    musicTo(1, 1.2);
+    setUI();
+    requestAnimationFrame(tick);
+  }
+  function pause(){
+    if (!playing) return;
+    playing = false;
+    musicTo(0, .6);
+    setUI();
+  }
+  function stop(){
+    playing = false; ended = false; t = 0; cur = -1;
+    musicTo(0, .4);
+    render(); setUI();
+  }
+  function seek(time){
+    var wasPlaying = playing;
+    playing = false; ended = false;
+    t = time; cur = -1;
+    musicTo(0, .4);
+    render(); setUI();
+  }
+
+  btnStart.addEventListener("click", play);
+  btnPause.addEventListener("click", pause);
+  btnStop.addEventListener("click", stop);
+  btnMute.addEventListener("click", function(){
+    muted = !muted;
+    btnMute.setAttribute("aria-pressed", String(muted));
+    btnMute.textContent = muted ? "음소거됨" : "소리 켜짐";
+    if (out) out.gain.setTargetAtTime(muted ? 0 : 1, ac.currentTime, .05);
+  });
+  document.addEventListener("keydown", function(e){
+    if (e.code === "Space" && e.target.tagName !== "BUTTON"){
+      e.preventDefault();
+      if (playing) pause(); else play();
+    }
+  });
+
+  /* ---------- Audio (Web Audio, 외부 파일 없음) ---------- */
+  var ac = null, out = null, music = null;
+
+  function initAudio(){
+    if (ac) { if (ac.state === "suspended") ac.resume(); return; }
+    try{
+      var AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return;
+      ac = new AC();
+      out = ac.createGain(); out.gain.value = muted ? 0 : 1; out.connect(ac.destination);
+      music = ac.createGain(); music.gain.value = 0; music.connect(out);
+
+      var lp = ac.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 780; lp.Q.value = .4;
+      var pad = ac.createGain(); pad.gain.value = .075;
+      lp.connect(pad); pad.connect(music);
+
+      /* A 메이저 계열의 잔잔한 앰비언트 패드 */
+      [[110,"sine",-3],[164.81,"sine",4],[220,"triangle",-5],[277.18,"sine",3],[329.63,"sine",-2]].forEach(function(f){
+        var o = ac.createOscillator(); o.type = f[1]; o.frequency.value = f[0]; o.detune.value = f[2];
+        var g = ac.createGain(); g.gain.value = f[0] < 200 ? 1 : .55;
+        o.connect(g); g.connect(lp); o.start();
+      });
+      var lfo = ac.createOscillator(); lfo.frequency.value = .08;
+      var lg = ac.createGain(); lg.gain.value = 220;
+      lfo.connect(lg); lg.connect(lp.frequency); lfo.start();
+      if (ac.state === "suspended") ac.resume();
+    }catch(err){ ac = null; }
+  }
+  function musicTo(v, sec){
+    if (!ac || !music) return;
+    var now = ac.currentTime;
+    music.gain.cancelScheduledValues(now);
+    music.gain.setValueAtTime(music.gain.value, now);
+    music.gain.linearRampToValueAtTime(v, now + sec);
+  }
+  function sfxTransition(){
+    if (!ac) return;
+    var now = ac.currentTime;
+    var o = ac.createOscillator(); o.type = "sine";
+    o.frequency.setValueAtTime(440, now);
+    o.frequency.exponentialRampToValueAtTime(660, now + .5);
+    var g = ac.createGain();
+    g.gain.setValueAtTime(0, now);
+    g.gain.linearRampToValueAtTime(.05, now + .12);
+    g.gain.exponentialRampToValueAtTime(.0005, now + .7);
+    o.connect(g); g.connect(out); o.start(now); o.stop(now + .75);
+  }
+  function sfxChime(){
+    if (!ac) return;
+    var now = ac.currentTime;
+    [659.25, 987.77].forEach(function(f, i){
+      var o = ac.createOscillator(); o.type = "sine"; o.frequency.value = f;
+      var g = ac.createGain();
+      g.gain.setValueAtTime(0, now + i * .12);
+      g.gain.linearRampToValueAtTime(.035, now + i * .12 + .05);
+      g.gain.exponentialRampToValueAtTime(.0004, now + i * .12 + 1.8);
+      o.connect(g); g.connect(out); o.start(now + i * .12); o.stop(now + i * .12 + 1.9);
+    });
+  }
+
+  /* ---------- Init ---------- */
+  render(); setUI();
+})();
+</script>
+</body>
+</html>

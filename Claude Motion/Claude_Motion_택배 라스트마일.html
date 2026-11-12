@@ -1,0 +1,265 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>택배 라스트마일</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: one 16:9 stage like a video player, transport controls and narration underneath */
+:root{
+  --bg:#E7ECF0; --panel:#F6F8FA; --ink:#17232E; --muted:#5B6874; --line:#B9C4CE;
+  --route:#E2570F; --hub:#0E7A6B; --label:#F2C230; --stage:#FDFEFF;
+  --display:"Black Han Sans","Noto Sans KR",system-ui,sans-serif;
+  --body:"Noto Sans KR",system-ui,-apple-system,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0F161C; --panel:#18222B; --ink:#E6EDF2; --muted:#93A2AF; --line:#34434F;
+  --route:#FF7A3A; --hub:#3FC2AE; --label:#F2C230; --stage:#131C24; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0F161C; --panel:#18222B; --ink:#E6EDF2; --muted:#93A2AF; --line:#34434F;
+  --route:#FF7A3A; --hub:#3FC2AE; --label:#F2C230; --stage:#131C24; color-scheme:dark}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 32px}
+.wrap{max-width:1100px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+.stage{position:relative;width:100%;max-width:100%;aspect-ratio:16/9;background:var(--stage);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+canvas{display:block;width:100%;height:100%}
+.bar{height:4px;background:var(--line);border-radius:2px;overflow:hidden;cursor:pointer}
+.bar i{display:block;height:100%;width:0;background:var(--route)}
+.ctrl{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+button{font:500 14px var(--body);color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:7px 12px;cursor:pointer}
+button:hover{border-color:var(--ink)}
+button:focus-visible{outline:2px solid var(--route);outline-offset:2px}
+button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.time{font:500 13px var(--mono);color:var(--muted);margin-left:auto;font-variant-numeric:tabular-nums}
+.rate{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted)}
+select{font:500 13px var(--body);color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:6px 8px}
+.vstat{font-size:12px;color:var(--muted)}
+#voice.on{background:var(--route);border-color:var(--route);color:#fff}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips button{font-size:13px;padding:5px 10px}
+.narr{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:12px 16px;min-height:3.2em;line-height:1.7;font-size:15px;max-width:none}
+.narr b{font-family:var(--mono);font-weight:500;font-size:12px;letter-spacing:.06em;color:var(--route);display:block;margin-bottom:2px}
+</style>
+
+<div class="wrap">
+  <div class="stage"><canvas id="cv" aria-label="택배 라스트마일 설명 애니메이션"></canvas></div>
+  <div class="bar" id="bar"><i id="fill"></i></div>
+  <div class="ctrl">
+    <button id="play" aria-label="재생/일시정지">❚❚ 일시정지</button>
+    <button id="restart">처음부터</button>
+    <button id="voice" aria-pressed="false">내레이션 켜기</button>
+    <label class="rate" for="rate">속도
+      <select id="rate"><option value="0.9">0.9×</option><option value="1" selected>1.0×</option><option value="1.15">1.15×</option><option value="1.3">1.3×</option></select>
+    </label>
+    <span class="vstat" id="vstat"></span>
+    <span class="time" id="time">0:00 / 0:00</span>
+  </div>
+  <div class="chips" id="chips"></div>
+  <div class="narr" id="narr"></div>
+</div>
+
+<script>
+const W=1600,H=900;
+const cv=document.getElementById('cv'),ctx=cv.getContext('2d');
+let C={};
+function readColors(){const s=getComputedStyle(document.documentElement);
+  ['bg','panel','ink','muted','line','route','hub','label','stage'].forEach(k=>C[k]=s.getPropertyValue('--'+k).trim());}
+function resize(){const r=cv.getBoundingClientRect(),d=window.devicePixelRatio||1;
+  cv.width=Math.round(r.width*d);cv.height=Math.round(r.height*d);}
+const clamp=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const seg=(t,a,b)=>clamp((t-a)/(b-a));
+const ease=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+const lerp=(a,b,t)=>a+(b-a)*t;
+const DF='"Black Han Sans","Noto Sans KR",sans-serif',BF='"Noto Sans KR",sans-serif',MF='"IBM Plex Mono",monospace';
+function txt(s,x,y,size,col,{w=500,al='left',f=BF,a=1}={}){ctx.globalAlpha=a;ctx.fillStyle=col;ctx.textAlign=al;ctx.textBaseline='middle';ctx.font=`${f===DF?400:w} ${size}px ${f}`;ctx.fillText(s,x,y);ctx.globalAlpha=1;}
+function rr(x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
+function box(x,y,s=40){ctx.fillStyle='#C98A4B';ctx.fillRect(x-s/2,y-s/2,s,s);ctx.fillStyle=C.label;ctx.fillRect(x-s*.08,y-s/2,s*.16,s);ctx.strokeStyle='#8A5A2B';ctx.lineWidth=2;ctx.strokeRect(x-s/2,y-s/2,s,s);}
+function van(x,y,k=1,col){col=col||C.route;ctx.save();ctx.translate(x,y);ctx.scale(k,k);
+  ctx.fillStyle=col;rr(-70,-50,100,60,6);ctx.fill();rr(30,-32,40,42,6);ctx.fill();
+  ctx.fillStyle=C.stage;rr(40,-26,22,16,3);ctx.fill();
+  ctx.fillStyle=C.ink;[-40,45].forEach(wx=>{ctx.beginPath();ctx.arc(wx,12,13,0,7);ctx.fill();});
+  ctx.fillStyle=C.stage;[-40,45].forEach(wx=>{ctx.beginPath();ctx.arc(wx,12,5,0,7);ctx.fill();});
+  ctx.restore();}
+function truck(x,y,k=1){ctx.save();ctx.translate(x,y);ctx.scale(k,k);
+  ctx.fillStyle=C.hub;rr(-130,-70,170,80,6);ctx.fill();ctx.fillStyle=C.muted;rr(44,-46,50,56,6);ctx.fill();
+  ctx.fillStyle=C.ink;[-100,-60,70].forEach(wx=>{ctx.beginPath();ctx.arc(wx,14,14,0,7);ctx.fill();});ctx.restore();}
+function house(x,y,s=1,col){ctx.save();ctx.translate(x,y);ctx.scale(s,s);ctx.fillStyle=col||C.ink;
+  ctx.beginPath();ctx.moveTo(-22,-4);ctx.lineTo(0,-24);ctx.lineTo(22,-4);ctx.closePath();ctx.fill();ctx.fillRect(-16,-4,32,24);
+  ctx.fillStyle=C.stage;ctx.fillRect(-5,6,10,14);ctx.restore();}
+function eyebrow(s,a=1){txt(s,90,80,22,C.route,{f:MF,a});}
+
+/* ---------- seeded points for route optimization ---------- */
+let seed=7;const rnd=()=>(seed=(seed*16807)%2147483647)/2147483647;
+const DEPOT={x:180,y:500};
+const PTS=Array.from({length:16},()=>({x:Math.round(260+rnd()*620),y:Math.round(200+rnd()*580)}));
+const dist=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y);
+const tourLen=o=>{let s=0,p=DEPOT;o.forEach(i=>{s+=dist(p,PTS[i]);p=PTS[i]});return s+dist(p,DEPOT);};
+const naive=PTS.map((_,i)=>i);
+function optimize(){let left=new Set(naive),o=[],p=DEPOT;
+  while(left.size){let best=null,bd=1e9;left.forEach(i=>{const d=dist(p,PTS[i]);if(d<bd){bd=d;best=i}});o.push(best);left.delete(best);p=PTS[best];}
+  let imp=true;while(imp){imp=false;for(let i=0;i<o.length-1;i++)for(let j=i+1;j<o.length;j++){
+    const n=o.slice(0,i).concat(o.slice(i,j+1).reverse(),o.slice(j+1));if(tourLen(n)<tourLen(o)-1e-6){o=n;imp=true;}}}
+  return o;}
+const opt=optimize();
+const KM=.03; // 1 px ≈ 30 m on this mock map
+const naiveKm=tourLen(naive)*KM, optKm=tourLen(opt)*KM;
+function drawRoute(order,p,col,wd){const pts=[DEPOT,...order.map(i=>PTS[i]),DEPOT];
+  const L=[];let tot=0;for(let i=1;i<pts.length;i++){const d=dist(pts[i-1],pts[i]);L.push(d);tot+=d;}
+  let rem=tot*p;ctx.strokeStyle=col;ctx.lineWidth=wd;ctx.lineJoin='round';ctx.beginPath();ctx.moveTo(pts[0].x,pts[0].y);
+  let head=pts[0];
+  for(let i=1;i<pts.length&&rem>0;i++){const f=Math.min(1,rem/L[i-1]);head={x:lerp(pts[i-1].x,pts[i].x,f),y:lerp(pts[i-1].y,pts[i].y,f)};ctx.lineTo(head.x,head.y);rem-=L[i-1];}
+  ctx.stroke();return head;}
+
+/* ---------- scenes ---------- */
+const S=[
+{name:'라스트마일이란',d:8,narr:'라스트마일(Last Mile)은 택배가 마지막 물류 거점을 떠나 고객의 문 앞에 도착하기까지의 마지막 배송 구간입니다. 거리는 가장 짧지만, 고객이 직접 체감하는 유일한 구간입니다.',
+ r(t,d){const p=t/d;
+  ctx.strokeStyle=C.line;ctx.lineWidth=4;ctx.setLineDash([24,18]);ctx.beginPath();ctx.moveTo(0,700);ctx.lineTo(W,700);ctx.stroke();ctx.setLineDash([]);
+  house(1380,690,2.4,C.ink);
+  const vx=lerp(-120,1230,ease(seg(p,.05,.75)));van(vx,668,1.3);box(vx-30,610,34);
+  txt('LAST MILE DELIVERY',90,150,26,C.route,{f:MF});
+  txt('택배의 라스트마일',90,250,104,C.ink,{f:DF});
+  txt('물류 거점에서 우리 집 문 앞까지, 마지막 한 구간',94,360,36,C.muted,{a:clamp(.35+seg(p,0,.3))});
+  if(p>.78){const a=seg(p,.78,.9);ctx.globalAlpha=a;ctx.fillStyle=C.route;rr(1300,520,190,52,26);ctx.fill();ctx.globalAlpha=1;txt('배송 완료',1395,546,26,'#fff',{w:700,al:'center',a});}
+ }},
+{name:'택배의 여정',d:12,narr:'택배는 집하 → 허브 터미널 → 서브 터미널을 거쳐 배송 기사에게 넘어갑니다. 여기까지는 대형 트럭이 정해진 노선으로 대량 운송합니다. 서브 터미널을 떠나는 순간부터가 라스트마일입니다.',
+ r(t,d){const p=t/d;eyebrow('02 · 택배의 여정');
+  const N=[{x:170,l:'집하',s:'판매자 출고'},{x:520,l:'허브 터미널',s:'전국 단위 분류'},{x:870,l:'서브 터미널',s:'지역 단위 분류'},{x:1170,l:'배송 기사',s:'구역별 상차'},{x:1450,l:'고객 문 앞',s:'인계·완료'}];
+  const Y=470;
+  for(let i=0;i<4;i++){const last=i>=2;ctx.strokeStyle=last?C.route:C.line;ctx.lineWidth=last?8:12;ctx.setLineDash(last?[18,12]:[]);
+    ctx.beginPath();ctx.moveTo(N[i].x,Y);ctx.lineTo(N[i+1].x,Y);ctx.stroke();ctx.setLineDash([]);}
+  N.forEach((n,i)=>{const last=i>=2;ctx.fillStyle=C.stage;ctx.strokeStyle=last?C.route:C.hub;ctx.lineWidth=6;ctx.beginPath();ctx.arc(n.x,Y,30,0,7);ctx.fill();ctx.stroke();
+    txt(n.l,n.x,Y+75,30,C.ink,{w:700,al:'center'});txt(n.s,n.x,Y+115,22,C.muted,{al:'center'});});
+  // moving box
+  const q=ease(seg(p,.08,.82))*4,i=Math.min(3,Math.floor(q)),f=q-i;const bx=lerp(N[i].x,N[i+1].x,f);
+  box(bx,Y-62,38);
+  // brackets
+  const a1=seg(p,.15,.3),a2=seg(p,.5,.65);
+  ctx.globalAlpha=a1;ctx.strokeStyle=C.hub;ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(170,330);ctx.lineTo(170,310);ctx.lineTo(860,310);ctx.lineTo(860,330);ctx.stroke();ctx.globalAlpha=1;
+  txt('간선·미들마일',515,240,34,C.hub,{w:700,al:'center',a:a1});txt('대형 트럭 · 대량 · 정해진 노선',515,282,24,C.muted,{al:'center',a:a1});
+  ctx.globalAlpha=a2;ctx.strokeStyle=C.route;ctx.beginPath();ctx.moveTo(880,330);ctx.lineTo(880,310);ctx.lineTo(1450,310);ctx.lineTo(1450,330);ctx.stroke();ctx.globalAlpha=1;
+  txt('라스트마일',1165,240,40,C.route,{f:DF,al:'center',a:a2});txt('소형 차량 · 소량 · 집집마다',1165,282,24,C.muted,{al:'center',a:a2});
+  txt('같은 박스 1개, 여정의 끝에서 이동 방식이 완전히 바뀝니다',W/2,800,30,C.ink,{al:'center',a:seg(p,.8,.92)});
+ }},
+{name:'왜 비싼가',d:11,narr:'간선은 트럭 한 대가 수천 개 박스를 한 목적지로 옮깁니다. 라스트마일은 차량 한 대가 수백 곳에 한두 개씩 내려놓습니다. 정차할 때마다 주차·하차·계단·인계 시간이 더해져, 박스 1개당 비용이 가장 큰 구간이 됩니다.',
+ r(t,d){const p=t/d;eyebrow('03 · 왜 가장 비싼 구간인가');
+  ctx.fillStyle=C.panel;rr(70,140,700,620,14);ctx.fill();rr(830,140,700,620,14);ctx.fill();
+  txt('간선 운송',110,200,38,C.hub,{f:DF});txt('트럭 1대 → 목적지 1곳',110,250,26,C.ink,{w:700});
+  ctx.strokeStyle=C.line;ctx.lineWidth=6;ctx.beginPath();ctx.moveTo(140,520);ctx.lineTo(700,520);ctx.stroke();
+  const tx=lerp(240,600,ease(seg(p,.05,.5)));truck(tx,500,1.2);
+  ctx.fillStyle=C.hub;ctx.beginPath();ctx.arc(700,520,14,0,7);ctx.fill();
+  txt('박스 수천 개 · 정차 1회',110,640,28,C.ink,{w:700});txt('정차당 박스 수가 많아 개당 비용이 낮음',110,685,22,C.muted);
+  txt('라스트마일',870,200,38,C.route,{f:DF});txt('차량 1대 → 목적지 수백 곳',870,250,26,C.ink,{w:700});
+  const cx=1180,cy=450;seed=21;const n=Math.floor(lerp(0,42,ease(seg(p,.25,.8))));
+  for(let k=0;k<42;k++){const ang=rnd()*6.283,rad=60+rnd()*170,x=cx+Math.cos(ang)*rad*1.5,y=cy+Math.sin(ang)*rad*.62;
+    if(k<n){ctx.strokeStyle=C.line;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(x,y);ctx.stroke();house(x,y,.55,C.route);}}
+  van(cx,cy+10,.8);
+  txt('박스 1~2개 · 정차 수백 회',870,640,28,C.ink,{w:700});txt('정차마다 주차·하차·계단·인계 시간이 더해짐',870,685,22,C.muted);
+  txt('→ 박스 1개당 시간·비용이 가장 큰 구간',W/2,825,32,C.route,{w:700,al:'center',a:seg(p,.82,.94)});
+ }},
+{name:'다섯 가지 난제',d:10,narr:'라스트마일을 어렵게 만드는 요인은 크게 다섯 가지입니다. 흩어진 배송지, 고객 부재와 재배송, 도심 교통과 주차, 도착 시간 약속, 그리고 반품 회수입니다.',
+ r(t,d){const p=t/d;eyebrow('04 · 라스트마일의 난제');
+  txt('비용과 품질을 동시에 흔드는 5가지 요인',90,160,48,C.ink,{f:DF});
+  const it=[['흩어진 배송지','목적지가 많고 넓게 퍼질수록 정차당 이동거리 증가'],['부재·재배송','한 번에 못 건네면 같은 길을 다시 가야 함'],['교통·주차','도심 정체, 주정차 단속, 엘리베이터 대기'],['도착 시간 약속','당일·새벽배송, 시간창(time window) 준수 압박'],['반품 회수','역방향 물류: 수거 일정까지 경로에 끼워 넣어야 함']];
+  it.forEach((v,i)=>{const a=ease(seg(p,.08+i*.13,.2+i*.13));const y=260+i*112;const x=90+(1-a)*-60;
+    ctx.globalAlpha=a;ctx.fillStyle=C.panel;rr(x,y,1420,92,10);ctx.fill();ctx.fillStyle=C.route;ctx.fillRect(x,y,8,92);ctx.globalAlpha=1;
+    txt(v[0],x+44,y+46,34,C.ink,{w:700,a});txt(v[1],x+420,y+46,26,C.muted,{a});});
+ }},
+{name:'경로 최적화',d:15,narr:'같은 16곳을 방문하더라도 순서만 바꾸면 이동거리가 크게 줄어듭니다. 이것이 차량 경로 문제(VRP)입니다. 여기서는 최근접 이웃 휴리스틱으로 초기 경로를 만들고 2-opt로 교차 구간을 풀었습니다. 실무에서는 적재량, 시간창, 기사 수 같은 제약을 함께 넣어 풉니다.',
+ r(t,d){const p=t/d;eyebrow('05 · 경로 최적화 (VRP)');
+  ctx.fillStyle=C.panel;rr(90,140,880,700,14);ctx.fill();
+  ctx.strokeStyle=C.line;ctx.lineWidth=1;ctx.globalAlpha=.6;for(let x=130;x<960;x+=60){ctx.beginPath();ctx.moveTo(x,160);ctx.lineTo(x,820);ctx.stroke();}
+  for(let y=180;y<830;y+=60){ctx.beginPath();ctx.moveTo(110,y);ctx.lineTo(950,y);ctx.stroke();}ctx.globalAlpha=1;
+  const p1=ease(seg(p,.04,.38)),p2=ease(seg(p,.46,.8));
+  const fade=1-seg(p,.42,.5)*.75;
+  ctx.globalAlpha=fade;const h1=drawRoute(naive,p1,C.muted,4);ctx.globalAlpha=1;
+  let h2=null;if(p2>0)h2=drawRoute(opt,p2,C.route,7);
+  PTS.forEach((q,i)=>{house(q.x,q.y,.75,C.ink);});
+  ctx.fillStyle=C.hub;rr(DEPOT.x-34,DEPOT.y-34,68,68,8);ctx.fill();txt('출발',DEPOT.x,DEPOT.y,22,'#fff',{w:700,al:'center'});
+  const hd=h2||h1;if(p1>0&&p1<1||p2>0&&p2<1){ctx.fillStyle=h2?C.route:C.muted;ctx.beginPath();ctx.arc(hd.x,hd.y,12,0,7);ctx.fill();}
+  // stats
+  const k1=naiveKm*p1,k2=optKm*p2;
+  txt('정차 지점 16곳 · 차량 1대',1030,190,26,C.muted);
+  txt('주문 접수 순서대로',1030,280,28,C.ink,{w:700});txt(k1.toFixed(1)+' km',1030,345,64,C.muted,{f:MF});
+  txt('최적화한 순서',1030,460,28,C.ink,{w:700,a:clamp(.3+seg(p,.44,.48))});txt(k2.toFixed(1)+' km',1030,525,64,C.route,{f:MF,a:clamp(.3+seg(p,.44,.48))});
+  const red=Math.round((1-optKm/naiveKm)*100),a3=seg(p,.82,.9);
+  ctx.globalAlpha=a3;ctx.fillStyle=C.route;rr(1030,610,470,90,10);ctx.fill();ctx.globalAlpha=1;
+  txt(`이동거리 ${red}% 감소`,1265,655,38,'#fff',{f:DF,al:'center',a:a3});
+  txt('최근접 이웃 + 2-opt 휴리스틱',1030,760,22,C.muted,{f:MF,a:a3});
+  txt('실무: 적재량·시간창·기사 수 제약 추가',1030,800,22,C.muted,{a:a3});
+ }},
+{name:'해결 전략',d:12,say:'업계는 여섯 가지 방향으로 라스트마일을 줄이고 있습니다. 거점 수령으로 받는 방식을 바꾸고, 도심 풀필먼트로 거리를 줄이고, 경로 최적화로 방문 순서를 똑똑하게 정합니다. 머신러닝으로 수요와 도착 시간을 미리 예측하고, 공동배송으로 함께 나르며, 드론과 로봇으로 사람의 일을 덜어 줍니다.',narr:'업계는 여섯 가지 방향으로 라스트마일을 줄이고 있습니다. 받는 방식을 바꾸고(거점 수령), 거리를 줄이고(도심 풀필먼트), 순서를 똑똑하게 하고(경로 최적화), 미리 알고(예측), 함께 나르고(공동배송), 사람의 일을 덜어 줍니다(드론·로봇).',
+ r(t,d){const p=t/d;eyebrow('06 · 해결 전략');
+  txt('어떤 난제를 줄이는가',90,160,48,C.ink,{f:DF});
+  const it=[['거점 수령·무인택배함','부재·재배송 ↓'],['도심형 마이크로 풀필먼트','이동거리 ↓'],['경로 최적화·동적 배차','정차당 시간 ↓'],['수요·도착시간 예측 (ML)','시간 약속 정확도 ↑'],['공동배송·야간배송','교통·차량 수 ↓'],['드론·배송 로봇','인력 부담 ↓ (시범 단계)']];
+  it.forEach((v,i)=>{const a=ease(seg(p,.06+i*.1,.18+i*.1));const c=i%3,r=Math.floor(i/3);const x=90+c*480,y=250+r*270+(1-a)*30;
+    ctx.globalAlpha=a;ctx.fillStyle=C.panel;rr(x,y,450,230,12);ctx.fill();ctx.strokeStyle=C.line;ctx.lineWidth=2;ctx.stroke();ctx.globalAlpha=1;
+    txt(v[0],x+30,y+70,31,C.ink,{w:700,a});
+    ctx.globalAlpha=a;ctx.fillStyle=i===2||i===3?C.route:C.hub;
+    ctx.font=`700 26px ${BF}`;const w=ctx.measureText(v[1]).width+48;rr(x+30,y+130,w,58,29);ctx.fill();ctx.globalAlpha=1;
+    txt(v[1],x+54,y+159,26,'#fff',{w:700,a});});
+ }},
+{name:'정리',d:8,narr:'정리하면, 라스트마일은 가장 짧지만 가장 비싸고, 고객 경험이 결정되는 구간입니다. 데이터로 수요와 경로를 최적화하는 것이 경쟁력의 핵심입니다.',
+ r(t,d){const p=t/d;eyebrow('07 · 정리');
+  txt('가장 짧지만, 가장 비싸고,',90,240,72,C.ink,{f:DF});
+  txt('고객 경험이 결정되는 구간',90,340,72,C.route,{f:DF,a:clamp(.2+seg(p,.1,.25))});
+  const it=['박스 1개당 비용이 가장 큰 이유: 많은 정차, 적은 물량','핵심 지렛대: 받는 방식 · 거점 위치 · 방문 순서','데이터 분석: 수요 예측과 경로 최적화가 경쟁력'];
+  it.forEach((s,i)=>{const a=seg(p,.3+i*.12,.42+i*.12);ctx.globalAlpha=a;ctx.fillStyle=C.hub;ctx.fillRect(94,486+i*80,14,14);ctx.globalAlpha=1;txt(s,130,494+i*80,32,C.ink,{a});});
+  house(1400,760,2.2,C.ink);box(1350,790,40);
+ }}
+];
+const TOTAL=S.reduce((s,x)=>s+x.d,0);const START=[];S.reduce((s,x,i)=>(START[i]=s,s+x.d),0);
+
+/* ---------- player ---------- */
+let T=0,playing=!matchMedia('(prefers-reduced-motion: reduce)').matches,last=null,cur=-1;
+if(!playing)T=S[0].d-0.01;
+const chips=document.getElementById('chips'),narr=document.getElementById('narr'),fill=document.getElementById('fill'),tm=document.getElementById('time'),pb=document.getElementById('play');
+S.forEach((s,i)=>{const b=document.createElement('button');b.id='sc'+i;b.textContent=(i+1)+'. '+s.name;b.onclick=()=>{T=START[i];last=null;stopSpeech();};chips.appendChild(b);});
+const fmt=s=>Math.floor(s/60)+':'+String(Math.floor(s%60)).padStart(2,'0');
+/* ---------- narration (browser speech synthesis) ---------- */
+const SS=window.speechSynthesis,vb=document.getElementById('voice'),vs=document.getElementById('vstat'),rateSel=document.getElementById('rate');
+let voiceOn=false,speaking=false,spokenScene=-1,tok=0,voice=null;
+const SAY={'(Last Mile)':'','(VRP)':'','(ML)':'','2-opt':'투 옵트','→':', ','·':', ','(':', ',')':', '};
+function clean(t){Object.keys(SAY).forEach(k=>{t=t.split(k).join(SAY[k])});return t.replace(/\s+,/g,',').replace(/,\s*,/g,',').replace(/\s{2,}/g,' ').replace(/,\s*\./g,'.');}
+function pickVoice(){if(!SS)return;const ko=SS.getVoices().filter(v=>/^ko/i.test(v.lang));
+  voice=ko.find(v=>/natural|online|google/i.test(v.name))||ko[0]||null;
+  if(voiceOn)vs.textContent=voice?('음성: '+voice.name):'이 기기에 한국어 음성이 없어 기본 음성으로 읽습니다';}
+if(SS){pickVoice();SS.addEventListener?SS.addEventListener('voiceschanged',pickVoice):(SS.onvoiceschanged=pickVoice);}
+else{vb.disabled=true;vb.textContent='음성 미지원 브라우저';rateSel.disabled=true;}
+function stopSpeech(){tok++;try{SS&&SS.cancel()}catch(e){}speaking=false;spokenScene=-1;}
+function speakScene(i){if(!SS)return;stopSpeech();const my=tok;spokenScene=i;speaking=true;
+  const parts=clean(S[i].say||S[i].narr).split(/(?<=[.?!])\s+/).filter(x=>x.trim());
+  parts.forEach((txt,k)=>{const u=new SpeechSynthesisUtterance(txt);u.lang='ko-KR';if(voice)u.voice=voice;u.rate=+rateSel.value;
+    u.onend=u.onerror=()=>{if(my===tok&&k===parts.length-1)speaking=false;};SS.speak(u);});}
+vb.onclick=()=>{voiceOn=!voiceOn;vb.classList.toggle('on',voiceOn);vb.setAttribute('aria-pressed',voiceOn);vb.textContent=voiceOn?'내레이션 끄기':'내레이션 켜기';
+  if(voiceOn){pickVoice();if(T>=TOTAL-0.01)T=0;else T=START[cur<0?0:cur];setPlay(true);}else{stopSpeech();vs.textContent='';}};
+rateSel.onchange=()=>{if(voiceOn&&speaking){T=START[cur];spokenScene=-1;}};
+function setPlay(v){playing=v;pb.textContent=v?'❚❚ 일시정지':'▶ 재생';last=null;if(voiceOn){stopSpeech();}}
+pb.onclick=()=>{if(T>=TOTAL-0.01)T=0;else if(voiceOn&&!playing&&cur>=0)T=START[cur];setPlay(!playing)};
+document.getElementById('restart').onclick=()=>{T=0;setPlay(true)};
+document.getElementById('bar').onclick=e=>{const r=e.currentTarget.getBoundingClientRect();T=clamp((e.clientX-r.left)/r.width)*TOTAL;last=null;stopSpeech();};
+setPlay(playing);
+function frame(now){
+  const sceneAt=x=>{for(let k=0;k<S.length;k++)if(x<START[k]+S[k].d)return k;return S.length-1;};
+  if(playing){const i0=sceneAt(T);if(voiceOn&&spokenScene!==i0)speakScene(i0);
+    if(last!=null){T+=(now-last)/1000;
+      // hold on the scene's last frame until its narration finishes
+      if(voiceOn&&speaking){const end=START[i0]+S[i0].d;if(T>=end)T=end-0.001;}}
+    last=now;if(T>=TOTAL){T=TOTAL-0.001;if(!(voiceOn&&speaking))setPlay(false);}}
+  let i=sceneAt(T);
+  if(i!==cur){cur=i;narr.innerHTML='<b>SCENE '+(i+1)+' / '+S.length+'</b>'+S[i].narr;chips.querySelectorAll('button').forEach((b,k)=>b.classList.toggle('on',k===i));}
+  const sc=cv.width/W;ctx.setTransform(sc,0,0,sc,0,0);ctx.fillStyle=C.stage;ctx.fillRect(0,0,W,H);
+  const lt=T-START[i];const fadeIn=i===0?1:clamp(lt/0.4);
+  ctx.globalAlpha=1;S[i].r(lt,S[i].d);
+  if(fadeIn<1){ctx.globalAlpha=1-fadeIn;ctx.fillStyle=C.stage;ctx.fillRect(0,0,W,H);ctx.globalAlpha=1;}
+  fill.style.width=(T/TOTAL*100)+'%';tm.textContent=fmt(T)+' / '+fmt(TOTAL);
+  requestAnimationFrame(frame);}
+readColors();resize();
+addEventListener('resize',resize);
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change',readColors);
+new MutationObserver(readColors).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+let started=false;const go=()=>{if(!started){started=true;requestAnimationFrame(frame);}};
+(document.fonts?document.fonts.ready:Promise.resolve()).then(go);setTimeout(go,1500);
+</script>
+
+</body></html>

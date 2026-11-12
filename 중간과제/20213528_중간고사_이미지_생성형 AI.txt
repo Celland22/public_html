@@ -1,0 +1,112 @@
+﻿﻿AI 스마트 워크 중간고사 | 생성형 AI 활용 설명서
+──────────────────────────────────────────────────────────────
+학과 : 생명과학과
+학번 : 20213528
+성명 : 이종건
+학기 : 2026년 2학기
+제출 시작일 : 2026년 10월 21일 00:00
+제출물 표기일 : 2026년 10월 21일
+분석에 사용된 공개자료의 확인 기준 : 2026년 10월 18일까지 (출처별 발표일은 본문 참조)
+
+[기록 성격]
+이 문서는 최종 결과물의 제작 목적, 실제 결과물의 구성 및 사용 도구를
+바탕으로 상세 프롬프트를 일관된 형식으로 '재구성'한 활용 설명서입니다.
+각 프롬프트는 작업 방향을 충실히 설명하는 재구성 예시이며,
+서비스에 실제로 입력된 문자 그대로의 대화 기록이라고 주장하지 않습니다.
+──────────────────────────────────────────────────────────────
+
+01. 제출 결과물
+  • 파일명 : 20213528_중간고사_이미지.png
+  • 생성 도구 : Google Gemini (이미지 생성 기능, 세부 모델명 미확인)
+  • 활용 목적 : 보고서·PPT 표지, Google Flow 영상 생성의 참조 이미지
+  • 최종 콘셉트 : 다크 네이비 회로 기판 위의 실사형 실버-블루 메모리 칩
+  • 화면 배치 : 칩은 오른쪽, 제목을 넣을 여백은 왼쪽
+  • 2026년 2학기 제출용. 원본 생성 이미지에는 날짜/학기 텍스트가 없으므로 원본 PNG는 변형하지 않음
+
+02. 프롬프트 ① — 메인 이미지 생성 (재구성 / English)
+
+ROLE
+You are a world-class commercial technology photographer and an art director
+specializing in premium institutional equity research publications.
+
+TASK
+Create one photorealistic, visually restrained, premium-quality cover image
+for an academic Korean semiconductor investment outlook report published
+under the fictional research brand "Hallym Investment".
+
+The same image will be used for:
+(1) the opening page of an editable Microsoft Word investment report,
+(2) the cover slide of a 16:9 PowerPoint presentation,
+(3) the first visual reference for an eight-second semiconductor promotional video.
+
+SUBJECT AND PHYSICAL REALISM
+Depict a credible advanced memory semiconductor package resting on a dark,
+realistic multilayer printed circuit board. The main package consists of
+refined metallic silver and cool-blue semiconductor surfaces, precisely
+engineered layered edges, densely routed copper traces, tiny components,
+fine pin structures, subtle microscopic surface detail, and studio-quality
+materials. Make the object believable as modern semiconductor hardware;
+do not depict a magical glowing cube or an unrecognizable science-fiction prop.
+
+COMPOSITION
+Use a cinematic horizontal 16:9 composition. Position the main semiconductor
+slightly right of center, around two thirds across the frame, viewed from a
+subtle elevated three-quarter angle. The right section should contain the
+most visually detailed parts of the chip and circuit board. Reserve at least
+the left 35–40% as clean, gently graded, dark negative space for a title that
+will later be added as editable text in Word and PowerPoint.
+
+LIGHTING AND COLOR
+Use deep midnight navy (#0D1B33), near-black (#07101F), controlled cobalt
+blue (#2777D6), muted cyan (#44BCED), and realistic brushed silver.
+Light the upper metal surfaces with soft edge reflections and balanced cool
+studio highlights. Retain a cinematic low-key atmosphere without making the
+hardware excessively luminous or unrealistic. Keep the semiconductor details
+sharp while allowing a gentle background depth-of-field falloff.
+
+VISUAL TONE
+Elegant, authoritative, understated, sophisticated, technically precise,
+and appropriate for a professional institutional equity research cover.
+The viewer should perceive advanced Korean memory semiconductor technology
+and analytical credibility rather than a science-fiction action scene.
+
+MOTION-FRIENDLY COMPOSITION
+Design the chip and adjacent PCB traces so a video model can later perform
+a subtle push-in and animate faint light pulses along EXISTING circuit paths
+without disturbing the architecture. Avoid floating particles or elements
+that would make image-to-video consistency difficult.
+
+STRICT NEGATIVE REQUIREMENTS
+No lettering, captions, numbers, company names, logos, trademarks,
+watermarks, invented device labels, financial tickers, stock arrows,
+candlestick charts, coins, banknotes, human hands, people, flags, city
+skyline, distorted pins, melting structures, unphysical wire routing,
+neon overload, purple haze, comic style, or advertisements.
+Do not insert the words Hallym Investment in the image itself.
+
+OUTPUT
+Produce one clean, ultra-detailed, high-resolution, photorealistic image
+suitable for saving as PNG. No presentation mockup, no surrounding borders,
+no explanatory text, no multiple design options.
+
+03. 프롬프트 ② — 후속 이미지 수정용 요청 예시 (재구성 / English)
+
+Please refine the image into a cleaner institutional report-cover composition.
+Keep the same chip geometry and three-quarter camera angle, but ensure that
+at least 35–40% of the LEFT side remains unobstructed and dark enough for
+white Korean title text added afterward. Reduce unrealistic neon bloom,
+retain crisp metallic layering, emphasize physically plausible PCB traces,
+and ensure the final appearance is suitable for an investment analysis
+publication instead of a speculative sci-fi poster.
+Do not generate any text or logos in the pixels. Return a single final PNG.
+
+04. 결과물의 활용 및 편집
+  • 이미지 원본을 PNG 파일로 저장하고 보고서 표지에 삽입.
+  • 동일 이미지를 16:9 PPTX의 타이틀 슬라이드에 활용.
+  • Google Flow 영상 제작 시 참조 이미지로 사용.
+  • 보고서 제목·회사명·작성자명은 이미지 자체가 아니라
+    Word/PPT 편집 가능한 텍스트로 배치.
+
+05. 작성 시 유의사항
+  • 위 영어 프롬프트는 최종 이미지의 시각적 특성을 재구성해 작성한 예시입니다.
+  • Gemini 화면에서 실제 사용한 이미지 생성 모델 세부명은 확인되지 않았습니다.

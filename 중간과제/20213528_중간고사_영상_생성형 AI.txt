@@ -1,0 +1,137 @@
+﻿﻿AI 스마트 워크 중간고사 | 생성형 AI 활용 설명서
+──────────────────────────────────────────────────────────────
+학과 : 생명과학과
+학번 : 20213528
+성명 : 이종건
+학기 : 2026년 2학기
+제출 시작일 : 2026년 10월 21일 00:00
+제출물 표기일 : 2026년 10월 21일
+분석에 사용된 공개자료의 확인 기준 : 2026년 10월 18일까지 (출처별 발표일은 본문 참조)
+
+[기록 성격]
+이 문서는 최종 결과물의 제작 목적, 실제 결과물의 구성 및 사용 도구를
+바탕으로 상세 프롬프트를 일관된 형식으로 '재구성'한 활용 설명서입니다.
+각 프롬프트는 작업 방향을 충실히 설명하는 재구성 예시이며,
+서비스에 실제로 입력된 문자 그대로의 대화 기록이라고 주장하지 않습니다.
+──────────────────────────────────────────────────────────────
+
+01. 제출 결과물
+  • 파일명 : 20213528_중간고사_영상.mp4
+  • 사용 도구 : Google Flow (동영상 생성 기능; 세부 Veo 모델명 미확인)
+  • 입력 이미지 : 20213528_중간고사_이미지.png (Gemini 제작)
+  • 길이 / 규격 : 약 8초, Full HD 1920×1080, 16:9, MP4
+  • 화면 내용 : 푸른 회로 발광, 반도체 칩 확대, 한국어 홍보 자막,
+    HALLYM INVESTMENT 브랜딩, 오디오 트랙
+
+02. 프롬프트 ① — 이미지 기반 영상 생성 (재구성 / English)
+
+Create a single continuous 8-second premium cinematic corporate video using
+the UPLOADED GEMINI SEMICONDUCTOR IMAGE as its principal visual reference.
+The project promotes a 2026 Korean memory semiconductor investment outlook
+research report by the fictional institution Hallym Investment.
+
+SCENE AND VISUAL FIDELITY
+Preserve the image's dark navy circuit board, realistic silver-blue
+semiconductor package positioned on the right, macro photography angle,
+fine PCB traces, and clean negative space on the left. Use physically
+plausible surfaces and camera motion, not science-fiction transformations.
+
+ANIMATION TIMELINE
+0.0–1.0 s — Begin with the semiconductor chip and its PCB under calm,
+subtle, low-key blue studio lighting. No jump cut.
+1.0–3.0 s — Introduce an extremely slow, smooth camera push-in with a small
+change of framing. Keep the semiconductor rigid and precisely detailed.
+3.0–5.2 s — Add restrained cyan and cobalt-blue data pulses running along
+several EXISTING circuit traces. Let the chip remain sharp and stable.
+5.2–6.7 s — Add a natural, gentle cool light sweep across the metal edges,
+emphasizing precision packaging and advanced memory technology.
+6.7–8.0 s — Ease the camera movement to a nearly stationary hero shot,
+with room on the left for a concluding brand message.
+
+VISUAL STYLE
+Institutional financial research, dark navy and cobalt blue,
+photorealistic macro cinematography, crisp engineered materials,
+soft cinematic depth of field, smooth restrained movement, high contrast,
+professional lighting, polished but understated technology imagery.
+
+EXCLUSIONS
+No rapid camera moves, shaking, abrupt cuts, surreal morphing,
+unphysical chip movement, people, floating holograms, financial return
+promises, speculative stock charts, coins, fantasy effects, distracting
+color transitions, or unrelated visual elements.
+
+OUTPUT
+One coherent 8-second horizontal 16:9 corporate investment-research clip,
+at the highest available quality, suitable for MP4 export.
+
+03. 프롬프트 ② — 한국어 광고 자막·내레이션 구성 (재구성 / English)
+
+Create a final Korean-language promotional version of the semiconductor
+investment research clip. Preserve the existing visual concept, lighting,
+chip position, blue circuit pulses, and smooth cinematic movement.
+
+VOICEOVER
+Use one composed, professional, natural-sounding Korean female voice.
+Standard Korean pronunciation, clear articulation, assured but restrained
+corporate advertising style. The narration must be in Korean, not English.
+
+Requested narration script:
+"AI가 바꾸는 메모리 반도체 시장. 삼성전자와 SK하이닉스, 투자 전망을 분석합니다."
+
+Speak smoothly and naturally within approximately eight seconds, leaving
+brief breathing room at the beginning and end. Pronounce SK하이닉스 clearly
+as '에스케이 하이닉스'. No conversational dialogue or visible speaker.
+
+ON-SCREEN TEXT
+Display high-contrast white or pale-blue editable-looking Korean typography
+within the negative space on the LEFT side, without covering the chip.
+Keep lettering crisp, correctly spelled, aligned, and uncluttered.
+
+At approximately 0.7–3.3 seconds, show:
+"AI가 바꾸는 메모리 반도체 시장"
+
+At approximately 3.3–7.8 seconds, show:
+"삼성전자·SK하이닉스 투자 전망"
+
+In the final 1.5–2.0 seconds, add a smaller brand line:
+"HALLYM INVESTMENT"
+
+Avoid exaggerated animated lettering, line wrapping in awkward positions,
+extra captions, visual clutter, logos or claims of guaranteed returns.
+
+AUDIO DESIGN
+Include very subtle electronic corporate ambient music and delicate
+nonverbal digital sounds. The sound bed must remain comfortably quieter
+than the Korean narrator. Keep dialogue intelligible and natural.
+
+FINAL INSTRUCTIONS
+Maintain an approximately 8-second single-scene 16:9 promotional film.
+Do not distort the chip, change the core scene, or generate unrelated imagery.
+Generate smooth movement, synchronized Korean narration and captions,
+and conclude with an elegant Hallym Investment brand impression.
+
+04. 프롬프트 ③ — 마무리 검수용 지시 예시 (재구성)
+
+Check the rendered promotional clip against these requirements:
+• At least 5 seconds, target 8 seconds, landscape 16:9 MP4.
+• Semiconductor image remains central throughout the animation.
+• Text spelling must be "AI가 바꾸는 메모리 반도체 시장",
+  "삼성전자·SK하이닉스 투자 전망", and "HALLYM INVESTMENT".
+• The Korean narrator should speak clearly without being masked by music.
+• Company names and Korean particles should sound natural.
+• The clip must avoid stock-return guarantees, distorted technology
+  hardware, unrelated transitions or advertising clutter.
+• The final export should be playable with synchronized audio.
+
+05. 결과물 확인 항목
+  • 8초 분량의 Full HD 반도체 투자 홍보 영상
+  • 생성한 반도체 이미지와 연결되는 네이비/블루 색감
+  • 한국어 타이틀 및 삼성전자·SK하이닉스 투자 전망 홍보 문구
+  • HALLYM INVESTMENT 브랜드 표시
+  • 오디오 트랙 포함 MP4 출력
+  • 2026년 2학기 제출용. 영상 화면에 없는 날짜/학기 표시는 원본을 훼손하지 않고 TXT 기록에 반영
+
+06. 작성 시 유의사항
+  • ①~③은 최종 영상을 설명하는 일관된 재구성 프롬프트입니다.
+  • 실제 사용한 Google Flow 모델 버전과 세부 음성 생성 모드는 확인되지 않았습니다.
+  • 생성 영상의 실제 음성 발음과 위 '요청 대본'의 일치는 별도 청취 확인이 필요합니다.
