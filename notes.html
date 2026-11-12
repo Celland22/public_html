@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>강의 필기 &amp; 학습 노트 | 20213528 이종건</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+    <style>
+        body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; background-color: #f8fafc; color: #0f172a; }
+    </style>
+</head>
+<body data-page="notes" class="antialiased">
+
+    <div id="site-nav"></div>
+
+    <!-- Page Header -->
+    <header class="bg-gradient-to-br from-slate-950 via-slate-900 to-amber-950 py-14 text-white">
+        <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+            <div class="inline-flex items-center gap-2 rounded-full border border-amber-400/30 bg-amber-900/40 px-3 py-1 text-xs font-bold text-amber-200">
+                LECTURE ARCHIVE · REAL CLASS NOTES &amp; INSIGHTS
+            </div>
+            <h1 class="mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl">
+                강의 필기 &amp; 학습 노트 아카이브
+            </h1>
+            <p class="mt-3 max-w-3xl text-sm leading-relaxed text-slate-300 sm:text-base">
+                황현석 교수님의 'AI 스마트워크' 수업 시간 중 직접 기록한 프롬프트 템플릿, 도구별 실행 순서, 오류 디버깅 패턴과 생명과학 주전공 관점에서의 융합 인사이트를 주제별로 아카이빙했습니다.
+            </p>
+        </div>
+    </header>
+
+    <main class="mx-auto max-w-6xl space-y-8 px-4 py-12 sm:px-6 lg:px-8">
+
+        <!-- Search & Filter Controls -->
+        <section class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
+            <div class="flex flex-col justify-between gap-4 md:flex-row md:items-center">
+                <div class="flex flex-wrap gap-1.5 text-xs font-semibold">
+                    <button type="button" data-note-filter="all" class="note-filter-btn rounded-lg bg-slate-900 px-3 py-1.5 text-white">전체 (10)</button>
+                    <button type="button" data-note-filter="doc" class="note-filter-btn rounded-lg bg-slate-100 px-3 py-1.5 text-slate-700 hover:bg-slate-200">문서·스킬 (2)</button>
+                    <button type="button" data-note-filter="data" class="note-filter-btn rounded-lg bg-slate-100 px-3 py-1.5 text-slate-700 hover:bg-slate-200">코드·엑셀 (2)</button>
+                    <button type="button" data-note-filter="media" class="note-filter-btn rounded-lg bg-slate-100 px-3 py-1.5 text-slate-700 hover:bg-slate-200">이미지·영상·모션 (4)</button>
+                    <button type="button" data-note-filter="agent" class="note-filter-btn rounded-lg bg-slate-100 px-3 py-1.5 text-slate-700 hover:bg-slate-200">GEMS·웹배포 (2)</button>
+                </div>
+                <div class="relative w-full md:w-72">
+                    <input id="note-search" type="search" placeholder="키워드 검색 (예: Grill-me, SVG, Python)..." class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-2 text-xs text-slate-900 placeholder:text-slate-400 focus:border-slate-900 focus:bg-white focus:outline-none">
+                </div>
+            </div>
+        </section>
+
+        <!-- Notes Grid -->
+        <section id="notes-container" class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+
+            <!-- Note 1: 발표자료 생성 & Claude Skill -->
+            <article id="note-skill" data-cat="doc" class="note-card rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+                <div class="flex items-center justify-between gap-2">
+                    <span class="rounded-full bg-blue-50 px-3 py-1 text-xs font-bold text-blue-700">문서 · 스킬 | 발표자료 생성.docx</span>
+                    <span class="font-mono text-[11px] text-slate-400">NOTE #01</span>
+                </div>
+                <h2 class="mt-3 text-xl font-extrabold text-slate-900">Claude Skill 구조와 커스텀 PPTX 제작</h2>
+                <div class="mt-4 space-y-3 text-xs leading-relaxed text-slate-600">
+                    <div class="rounded-xl bg-slate-50 p-3.5">
+                        <p class="font-bold text-slate-900">핵심 필기 요약</p>
+                        <ul class="mt-1.5 space-y-1">
+                            <li>• <strong>Claude Skill 정의:</strong> <code class="font-mono text-blue-700">Prompt + 일의 순서 + 주의사항</code>의 재사용 가능한 결합체</li>
+                            <li>• <strong>내장 vs 사용자 스킬:</strong> 기본(<code class="font-mono">docx, pptx, xlsx, pdf, skill-creator</code>) 외에 <code class="font-mono">SKILL.md + assets + references + scripts</code> 패키징(<code class="font-mono">.zip</code>)으로 나만의 스킬(<code class="font-mono">hallym-edu-pptx</code>, <code class="font-mono">my_pptx_skill</code>) 등록</li>
+                            <li>• <strong>도식화 핵심 원칙:</strong> 이미지 캡처가 아닌 수정 가능한 <code class="font-mono">pptx-native</code> 도형 및 MS PowerPoint 2018+ 편집 가능 SVG 파일 삽입</li>
+                            <li>• <strong>연동 확장:</strong> Gamma, Felo, Google NotebookLM 비교 및 Gmail MCP(외부 세계 연결 도구) 학습</li>
+                        </ul>
+                    </div>
+                    <div class="rounded-xl border border-emerald-200 bg-emerald-50/50 p-3.5">
+                        <p class="font-bold text-emerald-900">생명과학 융합 인사이트</p>
+                        <p class="mt-1">생명과학 세미나·저널 클럽 발표 시 매번 슬라이드 마스터를 재편집하는 대신, 학과 브랜딩과 실험 프로토콜 도식 규칙을 Skill로 고정하면 연구 내용 자체에만 집중할 수 있습니다.</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Note 2: 보고서 작성 AI -->
+            <article data-cat="doc" class="note-card rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+                <div class="flex items-center justify-between gap-2">
+                    <span class="rounded-full bg-indigo-50 px-3 py-1 text-xs font-bold text-indigo-700">문서 · 스킬 | 보고서 작성 AI.docx</span>
+                    <span class="font-mono text-[11px] text-slate-400">NOTE #02</span>
+                </div>
+                <h2 class="mt-3 text-xl font-extrabold text-slate-900">고신뢰 보고서 작성 프로토콜과 Hallucination 방지</h2>
+                <div class="mt-4 space-y-3 text-xs leading-relaxed text-slate-600">
+                    <div class="rounded-xl bg-slate-50 p-3.5">
+                        <p class="font-bold text-slate-900">핵심 필기 요약</p>
+                        <ul class="mt-1.5 space-y-1">
+                            <li>• <strong>계층적 문서 구성:</strong> <code class="font-mono">1-Page 핵심 요약</code> 선행 후 <code class="font-mono">5-Page 상세 보고서</code> 전개</li>
+                            <li>• <strong>문체 및 포맷 통제:</strong> '-습니다' 어조 또는 개조식 어미 지정, <code class="font-mono">.docx</code> 및 공공·국내 실무용 <code class="font-mono">.hwpx</code> 출력 호환</li>
+                            <li>• <strong>환각 방지 규칙:</strong> 본문 내 각주·인용 표기(<code class="font-mono">[1]</code>) 강제 및 보고서 말미 참고문헌 일괄 정리, 도식화는 <code class="font-mono">pptx-native</code> 도형으로 생성 후 삽입</li>
+                        </ul>
+                    </div>
+                    <div class="rounded-xl border border-emerald-200 bg-emerald-50/50 p-3.5">
+                        <p class="font-bold text-emerald-900">생명과학 융합 인사이트</p>
+                        <p class="mt-1">실험 결과 보고서나 바이오 기술 동향 리포트에서도 1-Page Executive Summary와 정확한 참고문헌 매핑 규칙을 적용해 과학적 근거 기반 문서 품질을 보장할 수 있습니다.</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Note 3: 코드 작성 AI -->
+            <article id="note-code" data-cat="data" class="note-card rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+                <div class="flex items-center justify-between gap-2">
+                    <span class="rounded-full bg-sky-50 px-3 py-1 text-xs font-bold text-sky-700">코드 · 데이터 | 코드 작성 AI.docx</span>
+                    <span class="font-mono text-[11px] text-slate-400">NOTE #03</span>
+                </div>
+                <h2 class="mt-3 text-xl font-extrabold text-slate-900">Antigravity IDE 환경 구축 및 Python 분석 루프</h2>
+                <div class="mt-4 space-y-3 text-xs leading-relaxed text-slate-600">
+                    <div class="rounded-xl bg-slate-50 p-3.5">
+                        <p class="font-bold text-slate-900">핵심 필기 요약</p>
+                        <ul class="mt-1.5 space-y-1">
+                            <li>• <strong>환경 세팅:</strong> Python 3.14.7(PATH 체크 필수) + Google Antigravity IDE 설치</li>
+                            <li>• <strong>대용량 데이터 프롬프팅 전략:</strong> 전체 CSV 대신 <strong>상위 10개 행 샘플 + <code class="font-mono">data_description.txt</code></strong>를 AI에 먼저 제공해 스키마 이해 및 가능한 통계 분석 방법 추천 유도</li>
+                            <li>• <strong>실행 루프:</strong> <code class="font-mono">코드 생성 → 실행 → 오류 수정 반복 → result.txt 수치·표 저장 → LLM 해석·DOCX 보고서화 → 인간 최종 검증</code></li>
+                            <li>• <strong>응용 실습:</strong> 다중회귀분석(<code class="font-mono">Salary ~ Experience + Age + IQ</code>) 및 HTML5 Tetris 웹 게임 구현</li>
+                        </ul>
+                    </div>
+                    <div class="rounded-xl border border-emerald-200 bg-emerald-50/50 p-3.5">
+                        <p class="font-bold text-emerald-900">생명과학 융합 인사이트</p>
+                        <p class="mt-1">생물정보학(Bioinformatics)이나 단백질 정량 데이터를 다룰 때도 상위 샘플 10행 + 변수 정의서를 AI에 넘겨 회귀·분류 스크립트를 생성하고 오류를 반복 디버깅하는 패턴을 그대로 활용합니다.</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Note 4: Claude 엑셀 시각화 프롬프트 -->
+            <article data-cat="data" class="note-card rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+                <div class="flex items-center justify-between gap-2">
+                    <span class="rounded-full bg-cyan-50 px-3 py-1 text-xs font-bold text-cyan-700">코드 · 데이터 | Claude 엑셀 시각화 프롬프트.docx</span>
+                    <span class="font-mono text-[11px] text-slate-400">NOTE #04</span>
+                </div>
+                <h2 class="mt-3 text-xl font-extrabold text-slate-900">단위 격차 해결을 위한 엑셀 이중축(Combo-Chart) 설계</h2>
+                <div class="mt-4 space-y-3 text-xs leading-relaxed text-slate-600">
+                    <div class="rounded-xl bg-slate-50 p-3.5">
+                        <p class="font-bold text-slate-900">핵심 필기 요약</p>
+                        <ul class="mt-1.5 space-y-1">
+                            <li>• <strong>1단계 테스트 데이터 생성:</strong> Claude에게 <code class="font-mono">기업명, 매출액, 영업이익률</code> 5행 CSV 샘플 생성 요청</li>
+                            <li>• <strong>2단계 차트 설계 프롬프트:</strong> "매출액과 영업이익률은 단위 차이가 매우 크므로 두 그래프가 한눈에 보이도록 차트를 제안해 선택하게 해달라"고 지시 → <strong>이중축(Combo-Chart)</strong> 도출</li>
+                            <li>• <strong>3단계 파일 출력:</strong> 시각화 결과를 즉시 다운로드 가능한 <code class="font-mono">.xlsx</code> 통합 문서로 생성</li>
+                        </ul>
+                    </div>
+                    <div class="rounded-xl border border-emerald-200 bg-emerald-50/50 p-3.5">
+                        <p class="font-bold text-emerald-900">생명과학 융합 인사이트</p>
+                        <p class="mt-1">세포 성장 곡선(OD600)과 단백질 발현량(ng/mL)처럼 스케일이 다른 두 생물학적 지표를 하나의 실험 그래프에 직관적으로 표현할 때 동일한 이중축 설계가 유효합니다.</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Note 5: 인물 생성 프롬프트 -->
+            <article data-cat="media" class="note-card rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+                <div class="flex items-center justify-between gap-2">
+                    <span class="rounded-full bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-700">영상 · 이미지 | 인물 생성 프롬프트.docx</span>
+                    <span class="font-mono text-[11px] text-slate-400">NOTE #05</span>
+                </div>
+                <h2 class="mt-3 text-xl font-extrabold text-slate-900">일관된 캐릭터 시트(Character Sheet) 생성 규칙</h2>
+                <div class="mt-4 space-y-3 text-xs leading-relaxed text-slate-600">
+                    <div class="rounded-xl bg-slate-50 p-3.5">
+                        <p class="font-bold text-slate-900">핵심 필기 요약</p>
+                        <ul class="mt-1.5 space-y-1">
+                            <li>• <strong>다각도 시트 구성:</strong> 정면 전신(팔·다리 어깨너비), 상반신, 얼굴 클로즈업, 좌/우 측면, 후면, 45도 상·하향 뷰를 동일 인물로 일관 생성</li>
+                            <li>• <strong>기술 사양 고정:</strong> 4K 포토리얼리스틱, <code class="font-mono">3:4</code> 비율, 완전 투명/백색 배경(머리카락·손가락 잘림 방지)</li>
+                            <li>• <strong>네거티브/제외 조건 명시:</strong> 비대칭 눈, 손가락 추가·누락, 과도한 뷰티 필터, 로고·워터마크 배제</li>
+                        </ul>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Note 6: 이미지 생성 후 영상 만들기 + 20초 연속 -->
+            <article data-cat="media" class="note-card rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+                <div class="flex items-center justify-between gap-2">
+                    <span class="rounded-full bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-700">영상 · 이미지 | 이미지 생성 후 영상 만들기.docx</span>
+                    <span class="font-mono text-[11px] text-slate-400">NOTE #06</span>
+                </div>
+                <h2 class="mt-3 text-xl font-extrabold text-slate-900">Grill-me 기반 키프레임 설계 &amp; 20초 연속성 잠금</h2>
+                <div class="mt-4 space-y-3 text-xs leading-relaxed text-slate-600">
+                    <div class="rounded-xl bg-slate-50 p-3.5">
+                        <p class="font-bold text-slate-900">핵심 필기 요약</p>
+                        <ul class="mt-1.5 space-y-1">
+                            <li>• <strong>Start &amp; End 프레임 전략:</strong> 캐릭터 시트 + 시작 이미지를 업로드하고 ChatGPT <code class="font-mono">Grill-me</code> 질문으로 5~8초 뒤 변화할 End 프레임 프롬프트 완성</li>
+                            <li>• <strong>20초 연속 이미지 생성(<code class="font-mono">0s→20s</code>):</strong> 직전 정상 이미지를 Primary Temporal Reference로 삼고, <code class="font-mono">ABSOLUTE CONTINUITY LOCK</code>으로 왼손 커피컵·어깨 토트백을 전 구간 고정</li>
+                        </ul>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Note 7: Google Flow / Kling AI 영상 생성 -->
+            <article data-cat="media" class="note-card rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+                <div class="flex items-center justify-between gap-2">
+                    <span class="rounded-full bg-teal-50 px-3 py-1 text-xs font-bold text-teal-700">영상 · 이미지 | Goolge Flow AI 영상 생성.docx</span>
+                    <span class="font-mono text-[11px] text-slate-400">NOTE #07</span>
+                </div>
+                <h2 class="mt-3 text-xl font-extrabold text-slate-900">Google Flow · Kling · Runway 타임라인 비디오 디렉팅</h2>
+                <div class="mt-4 space-y-3 text-xs leading-relaxed text-slate-600">
+                    <div class="rounded-xl bg-slate-50 p-3.5">
+                        <p class="font-bold text-slate-900">핵심 필기 요약</p>
+                        <ul class="mt-1.5 space-y-1">
+                            <li>• <strong>플랫폼 비교 실습:</strong> Kling AI, Google Flow, Runway, Seedance를 동일 시나리오로 테스트</li>
+                            <li>• <strong>초 단위 타임스탬프 제어:</strong> <code class="font-mono">0-2s</code> 사원증 태그 → <code class="font-mono">2-5s</code> 로비 트래킹 샷 + 한국어 대사(<code class="font-mono">"다들 즐거운 하루되세요."</code>) → <code class="font-mono">5-7s</code> 버튼 단발 클릭 → <code class="font-mono">8-10s</code> 문 개방</li>
+                            <li>• <strong>상업 광고 응용:</strong> 잭 다니엘스 오크통 셀러 10초 씬에서 잔·구형 얼음·로고 페이드인 정밀 제어</li>
+                        </ul>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Note 8: Claude Motion -->
+            <article data-cat="media" class="note-card rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+                <div class="flex items-center justify-between gap-2">
+                    <span class="rounded-full bg-teal-50 px-3 py-1 text-xs font-bold text-teal-700">영상 · 모션 | Claude Motion.docx</span>
+                    <span class="font-mono text-[11px] text-slate-400">NOTE #08</span>
+                </div>
+                <h2 class="mt-3 text-xl font-extrabold text-slate-900">2단계 MD 제작계획 → HTML5 30초 모션 플레이어</h2>
+                <div class="mt-4 space-y-3 text-xs leading-relaxed text-slate-600">
+                    <div class="rounded-xl bg-slate-50 p-3.5">
+                        <p class="font-bold text-slate-900">핵심 필기 요약</p>
+                        <ul class="mt-1.5 space-y-1">
+                            <li>• <strong>1단계 (ChatGPT + Grill-me):</strong> Word 문제집 첨부 후 시간대별 30초 모션 구성을 질문으로 합의하고 <code class="font-mono">.md</code> 계획서로 다운로드</li>
+                            <li>• <strong>2단계 (Claude HTML 구현):</strong> 확정된 <code class="font-mono">.md</code>를 기반으로 장면 선택 버튼, 시작/종료 제어, 하단 자막 스크립트, 여성 더빙 음성이 통합된 실행형 HTML 생성</li>
+                        </ul>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Note 9: Google GEMS -->
+            <article id="note-gems" data-cat="agent" class="note-card rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+                <div class="flex items-center justify-between gap-2">
+                    <span class="rounded-full bg-violet-50 px-3 py-1 text-xs font-bold text-violet-700">GEMS · 웹 | Google GEMS.docx</span>
+                    <span class="font-mono text-[11px] text-slate-400">NOTE #09</span>
+                </div>
+                <h2 class="mt-3 text-xl font-extrabold text-slate-900">Strict Process Rule 기반 PDF 카드뉴스 에이전트</h2>
+                <div class="mt-4 space-y-3 text-xs leading-relaxed text-slate-600">
+                    <div class="rounded-xl bg-slate-50 p-3.5">
+                        <p class="font-bold text-slate-900">핵심 필기 요약</p>
+                        <ul class="mt-1.5 space-y-1">
+                            <li>• <strong>System Role:</strong> PDF 핵심을 추출해 시각화하는 '타이포그래피 디자이너' 페르소나 부여</li>
+                            <li>• <strong>진행 잠금(Gatekeeping):</strong> PDF 분석 후 반드시 장수를 묻고 사용자 응답 전까지 다음 단계 금지</li>
+                            <li>• <strong>스토리보드 → 렌더링:</strong> <code class="font-mono">[페이지/텍스트/컨셉]</code> 표 작성 후 Nano Banana 2로 통일 팔레트 카드뉴스 생성</li>
+                        </ul>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Note 10: 웹페이지 AI -->
+            <article data-cat="agent" class="note-card rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+                <div class="flex items-center justify-between gap-2">
+                    <span class="rounded-full bg-amber-50 px-3 py-1 text-xs font-bold text-amber-800">GEMS · 웹 | 웹페이지 AI.docx</span>
+                    <span class="font-mono text-[11px] text-slate-400">NOTE #10</span>
+                </div>
+                <h2 class="mt-3 text-xl font-extrabold text-slate-900">Grill-me 웹 기획서 작성부터 Git · Netlify 배포까지</h2>
+                <div class="mt-4 space-y-3 text-xs leading-relaxed text-slate-600">
+                    <div class="rounded-xl bg-slate-50 p-3.5">
+                        <p class="font-bold text-slate-900">핵심 필기 요약</p>
+                        <ul class="mt-1.5 space-y-1">
+                            <li>• <strong>기획 단계:</strong> 폴더 내 이력·과제 파일을 읽게 한 뒤, <code class="font-mono">Grill-me</code> 방식으로 구조·페이지 분리·콘텐츠 우선순위를 인터뷰하여 <code class="font-mono">.md</code> 구축 계획 완성</li>
+                            <li>• <strong>구현 및 배포:</strong> Tailwind CSS 반응형 멀티 페이지 구현 → Git 커밋 → GitHub <code class="font-mono">origin/main</code> 푸시 → Netlify 자동 배포(CI/CD) 완주</li>
+                        </ul>
+                    </div>
+                    <div class="rounded-xl border border-emerald-200 bg-emerald-50/50 p-3.5">
+                        <p class="font-bold text-emerald-900">생명과학 융합 인사이트</p>
+                        <p class="mt-1">정적 웹 배포(Netlify) 경험은 이후 Python·Streamlit·Supabase를 연동한 <strong>Protein Analysis Lab</strong> 바이오 웹앱 구축으로 직접 확장되었습니다.</p>
+                    </div>
+                </div>
+            </article>
+
+        </section>
+
+    </main>
+
+    <div id="site-footer"></div>
+    <script src="assets/shared.js"></script>
+    <script>
+        (function () {
+            const buttons = document.querySelectorAll('.note-filter-btn');
+            const searchInput = document.getElementById('note-search');
+            const cards = document.querySelectorAll('.note-card');
+            let currentFilter = 'all';
+
+            function applyFilters() {
+                const q = (searchInput.value || '').trim().toLowerCase();
+                cards.forEach((card) => {
+                    const matchesCat = currentFilter === 'all' || card.dataset.cat === currentFilter;
+                    const matchesQuery = !q || card.textContent.toLowerCase().includes(q);
+                    card.classList.toggle('hidden', !(matchesCat && matchesQuery));
+                });
+            }
+
+            buttons.forEach((btn) => {
+                btn.addEventListener('click', () => {
+                    currentFilter = btn.getAttribute('data-note-filter');
+                    buttons.forEach((b) => {
+                        b.className = 'note-filter-btn rounded-lg bg-slate-100 px-3 py-1.5 text-slate-700 hover:bg-slate-200';
+                    });
+                    btn.className = 'note-filter-btn rounded-lg bg-slate-900 px-3 py-1.5 text-white';
+                    applyFilters();
+                });
+            });
+
+            searchInput.addEventListener('input', applyFilters);
+        })();
+    </script>
+</body>
+</html>

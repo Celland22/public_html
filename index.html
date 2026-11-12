@@ -3,136 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI 스마트워크 한 학기 종합 결과물 | 20213528 이종건</title>
+    <title>Home / Profile | 이종건 (20213528) · AI 스마트워크 최종 포트폴리오</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://cdn.jsdelivr.net">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'Roboto', 'sans-serif'],
-                        mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
-                    },
-                },
-            },
-        };
-    </script>
     <style>
-        body {
-            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-            background-color: #f8fafc;
-            color: #0f172a;
-        }
-        .hero-grid {
+        body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; background-color: #f8fafc; color: #0f172a; }
+        .hero-pattern {
             background-image:
-                linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-            background-size: 36px 36px;
+                radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.08) 1px, transparent 0);
+            background-size: 28px 28px;
         }
-        .module-card {
-            transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.25s ease;
-        }
-        .module-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 35px -12px rgba(15, 23, 42, 0.12);
-        }
-        details > summary {
-            list-style: none;
-        }
-        details > summary::-webkit-details-marker {
-            display: none;
-        }
-        details[open] .chevron-icon {
-            transform: rotate(180deg);
-        }
-        .chevron-icon {
-            transition: transform 0.2s ease;
-        }
+        .hover-lift { transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease; }
+        .hover-lift:hover { transform: translateY(-3px); box-shadow: 0 16px 32px -12px rgba(15, 23, 42, 0.12); }
     </style>
 </head>
-<body class="antialiased selection:bg-blue-600 selection:text-white">
+<body data-page="home" class="antialiased selection:bg-emerald-600 selection:text-white">
 
-    <!-- Top Navigation -->
-    <nav class="sticky top-0 z-50 border-b border-slate-200/80 bg-white/85 backdrop-blur-md">
-        <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3.5 sm:px-6 lg:px-8">
-            <a href="#top" class="flex items-center gap-2.5">
-                <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-900 text-xs font-bold tracking-tight text-amber-400 shadow-sm">
-                    AI
-                </span>
-                <div class="leading-tight">
-                    <span class="block text-sm font-bold text-slate-900">AI 스마트워크</span>
-                    <span class="block text-[11px] font-medium text-slate-500">기말 과제 종합 결과물</span>
-                </div>
-            </a>
+    <div id="site-nav"></div>
 
-            <div class="hidden items-center gap-6 text-sm font-medium text-slate-600 md:flex">
-                <a href="#overview" class="transition-colors hover:text-slate-900">성과 요약</a>
-                <a href="#modules" class="transition-colors hover:text-slate-900">4대 핵심 파트</a>
-                <a href="#reflection" class="transition-colors hover:text-slate-900">소감 및 비전</a>
-            </div>
+    <!-- Hero Section: Bio-Business Profile -->
+    <header class="relative overflow-hidden bg-slate-950 text-white">
+        <div class="hero-pattern absolute inset-0"></div>
+        <div class="pointer-events-none absolute -left-24 top-0 h-96 w-96 rounded-full bg-emerald-500/15 blur-3xl"></div>
+        <div class="pointer-events-none absolute -bottom-24 right-0 h-96 w-96 rounded-full bg-blue-600/20 blur-3xl"></div>
 
-            <div class="flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-700">
-                <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
-                <span>20213528 이종건</span>
-            </div>
-        </div>
-    </nav>
-
-    <!-- 1. Hero Section (프로필 및 과제 정보 영역) -->
-    <header id="top" class="relative overflow-hidden bg-slate-950 text-white">
-        <div class="hero-grid absolute inset-0"></div>
-        <div class="pointer-events-none absolute -left-24 -top-24 h-96 w-96 rounded-full bg-blue-600/20 blur-3xl"></div>
-        <div class="pointer-events-none absolute -bottom-24 right-0 h-96 w-96 rounded-full bg-amber-500/10 blur-3xl"></div>
-
-        <div class="relative mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
-            <div class="flex flex-col gap-10 lg:flex-row lg:items-end lg:justify-between">
-                <div class="max-w-3xl">
-                    <div class="mb-5 inline-flex flex-wrap items-center gap-2 rounded-full border border-blue-400/30 bg-blue-950/70 px-3.5 py-1.5 text-xs font-semibold tracking-wide text-blue-200">
-                        <span class="h-1.5 w-1.5 rounded-full bg-amber-400"></span>
-                        <span>황현석 교수님 · AI 스마트워크 기말 과제 제출용 최종 페이지</span>
+        <div class="relative mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-20 lg:px-8">
+            <div class="grid grid-cols-1 items-start gap-10 lg:grid-cols-12">
+                <div class="lg:col-span-8">
+                    <div class="inline-flex flex-wrap items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-950/60 px-3.5 py-1.5 text-xs font-semibold text-emerald-200">
+                        <span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
+                        <span>황현석 교수님 · AI 스마트워크 최종 포트폴리오 웹사이트</span>
                     </div>
 
-                    <h1 class="text-3xl font-extrabold tracking-tight text-white sm:text-5xl sm:leading-[1.15]">
-                        AI 스마트워크<br class="sm:hidden"> 한 학기 종합 결과물
+                    <h1 class="mt-5 text-3xl font-extrabold tracking-tight text-white sm:text-5xl sm:leading-[1.16]">
+                        생명과학 연구 역량과 경영 분석을<br class="hidden sm:block">
+                        <span class="bg-gradient-to-r from-emerald-300 via-teal-200 to-sky-300 bg-clip-text text-transparent">AI 워크플로우로 연결하다</span>
                     </h1>
 
-                    <p class="mt-4 text-base font-normal leading-relaxed text-slate-300 sm:text-xl">
-                        생성형 AI를 활용한 비즈니스 업무 자동화 및 콘텐츠·분석 역량 구현
+                    <p class="mt-4 max-w-2xl text-base leading-relaxed text-slate-300 sm:text-lg">
+                        주전공 <strong class="text-white">생명과학</strong>의 실험·연구 문해력과 복수전공 <strong class="text-white">경영학</strong>의 정량적 의사결정 역량 위에, 한 학기 동안 체득한 프롬프트 설계·커스텀 스킬·데이터 최적화·멀티모달 AI·에이전틱 봇 구축 스택을 통합한 종합 결과물입니다.
                     </p>
 
-                    <div class="mt-7 flex flex-wrap gap-2.5 text-xs font-medium text-slate-300">
-                        <span class="rounded-md border border-white/10 bg-white/5 px-3 py-1.5">환각 방지 프롬프트</span>
-                        <span class="rounded-md border border-white/10 bg-white/5 px-3 py-1.5">Claude Custom Skill</span>
-                        <span class="rounded-md border border-white/10 bg-white/5 px-3 py-1.5">Python ML &amp; Excel 최적화</span>
-                        <span class="rounded-md border border-white/10 bg-white/5 px-3 py-1.5">AI 영상 연속성 제어</span>
-                        <span class="rounded-md border border-white/10 bg-white/5 px-3 py-1.5">Google GEMS 에이전트</span>
+                    <div class="mt-7 flex flex-wrap gap-3">
+                        <a href="#cv-section" class="inline-flex items-center gap-2 rounded-xl bg-emerald-500 px-4 py-2.5 text-sm font-bold text-slate-950 shadow-sm transition hover:bg-emerald-400">
+                            <span>CV &amp; 연구 이력 보기</span>
+                            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                        </a>
+                        <a href="#credentials-section" class="inline-flex items-center gap-2 rounded-xl border border-white/20 bg-white/10 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-white/15">
+                            <span>자격증 · 이수증 (42건)</span>
+                        </a>
+                        <a href="notes.html" class="inline-flex items-center gap-2 rounded-xl border border-sky-400/30 bg-sky-500/15 px-4 py-2.5 text-sm font-semibold text-sky-200 transition hover:bg-sky-500/25">
+                            <span>강의 필기 아카이브 →</span>
+                        </a>
                     </div>
                 </div>
 
-                <!-- Student Profile Card -->
-                <aside class="w-full shrink-0 rounded-2xl border border-white/15 bg-white/10 p-6 backdrop-blur-md lg:w-80">
+                <!-- Academic Profile Card -->
+                <aside class="rounded-2xl border border-white/15 bg-white/10 p-6 backdrop-blur-md lg:col-span-4">
                     <div class="mb-4 flex items-center justify-between border-b border-white/15 pb-3">
-                        <span class="text-xs font-bold uppercase tracking-wider text-amber-300">Submitter Profile</span>
-                        <span class="rounded bg-white/10 px-2 py-0.5 text-[11px] font-medium text-slate-200">Final Submission</span>
+                        <span class="text-xs font-bold uppercase tracking-wider text-emerald-300">Academic Profile</span>
+                        <span class="rounded bg-white/10 px-2 py-0.5 font-mono text-[11px] font-semibold text-slate-200">GPA 4.37 / 4.5</span>
                     </div>
                     <dl class="space-y-3 text-sm">
-                        <div class="flex items-start justify-between gap-4">
-                            <dt class="shrink-0 text-slate-400">소속</dt>
-                            <dd class="text-right font-semibold text-white">경영학과<span class="block text-xs font-normal text-blue-200">(복수전공 생명과학)</span></dd>
-                        </div>
-                        <div class="flex items-center justify-between gap-4">
-                            <dt class="text-slate-400">학번</dt>
-                            <dd class="font-mono font-semibold text-white">20213528</dd>
-                        </div>
-                        <div class="flex items-center justify-between gap-4">
+                        <div class="flex items-center justify-between gap-3">
                             <dt class="text-slate-400">이름</dt>
-                            <dd class="font-semibold text-white">이종건</dd>
+                            <dd class="font-bold text-white">이종건 (Jonggeon Lee)</dd>
                         </div>
-                        <div class="flex items-center justify-between gap-4 border-t border-white/10 pt-3">
-                            <dt class="text-slate-400">담당교수</dt>
-                            <dd class="font-semibold text-amber-200">황현석 교수님</dd>
+                        <div class="flex items-center justify-between gap-3">
+                            <dt class="text-slate-400">학번</dt>
+                            <dd class="font-mono font-bold text-white">20213528</dd>
+                        </div>
+                        <div class="flex items-start justify-between gap-3">
+                            <dt class="shrink-0 text-slate-400">주전공</dt>
+                            <dd class="text-right font-semibold text-emerald-300">생명과학<span class="block text-[11px] font-normal text-slate-300">Dept. of Life Science</span></dd>
+                        </div>
+                        <div class="flex items-start justify-between gap-3">
+                            <dt class="shrink-0 text-slate-400">복수전공</dt>
+                            <dd class="text-right font-semibold text-sky-300">경영학과<span class="block text-[11px] font-normal text-slate-300">Business Administration</span></dd>
+                        </div>
+                        <div class="flex items-center justify-between gap-3 border-t border-white/10 pt-3">
+                            <dt class="text-slate-400">수강 과목</dt>
+                            <dd class="font-semibold text-amber-200">AI 스마트워크 (황현석 교수님)</dd>
                         </div>
                     </dl>
                 </aside>
@@ -140,385 +91,367 @@
         </div>
     </header>
 
-    <!-- Overview Strip -->
-    <section id="overview" class="border-b border-slate-200 bg-white">
-        <div class="mx-auto grid max-w-6xl grid-cols-2 divide-y divide-slate-100 px-4 sm:px-6 md:grid-cols-4 md:divide-x md:divide-y-0 lg:px-8">
-            <div class="py-5 md:pr-6">
-                <p class="text-xs font-semibold uppercase tracking-wider text-blue-600">PART 1 &amp; 2</p>
-                <p class="mt-1 text-lg font-bold text-slate-900">문서·발표 자동화</p>
-                <p class="mt-0.5 text-xs text-slate-500">환각 제어 및 hallym-edu-pptx</p>
+    <!-- Quick Navigation Hub to Dedicated Pages -->
+    <section class="border-b border-slate-200 bg-white py-10">
+        <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+            <div class="mb-6 flex flex-col justify-between gap-2 sm:flex-row sm:items-end">
+                <div>
+                    <span class="text-xs font-bold uppercase tracking-widest text-emerald-700">Multi-Page Portfolio Navigation</span>
+                    <h2 class="mt-1 text-xl font-extrabold text-slate-900 sm:text-2xl">과제 파트별 상세 페이지 바로가기</h2>
+                </div>
+                <p class="text-xs text-slate-500">상단 메뉴 또는 아래 카드를 클릭해 각 프로젝트 전용 페이지로 이동합니다.</p>
             </div>
-            <div class="py-5 pl-4 md:px-6">
-                <p class="text-xs font-semibold uppercase tracking-wider text-indigo-600">PART 3 · DATA</p>
-                <p class="mt-1 text-lg font-bold text-slate-900">폐기 손실 25.3%↓</p>
-                <p class="mt-0.5 text-xs text-slate-500">ML 수요예측 &amp; Newsvendor</p>
-            </div>
-            <div class="py-5 md:px-6">
-                <p class="text-xs font-semibold uppercase tracking-wider text-emerald-600">PART 3 · VIDEO</p>
-                <p class="mt-1 text-lg font-bold text-slate-900">시간차 렌더링 통제</p>
-                <p class="mt-0.5 text-xs text-slate-500">ABSOLUTE CONTINUITY LOCK</p>
-            </div>
-            <div class="py-5 pl-4 md:pl-6">
-                <p class="text-xs font-semibold uppercase tracking-wider text-violet-600">PART 3 · AGENT</p>
-                <p class="mt-1 text-lg font-bold text-slate-900">인터랙티브 AI 봇</p>
-                <p class="mt-0.5 text-xs text-slate-500">Google GEMS &amp; Grill-me</p>
+
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
+                <a href="reports.html" class="hover-lift group rounded-2xl border border-slate-200 bg-slate-50/70 p-4 hover:border-blue-300 hover:bg-white">
+                    <span class="inline-block rounded-md bg-blue-100 px-2 py-0.5 text-[11px] font-bold text-blue-800">PART 1 &amp; 2</span>
+                    <h3 class="mt-2.5 text-base font-bold text-slate-900 group-hover:text-blue-700">보고서 자동화 →</h3>
+                    <p class="mt-1 text-xs leading-relaxed text-slate-600">환각 방지 프롬프트 &amp; <code class="font-mono">hallym-edu-pptx</code> 커스텀 스킬</p>
+                </a>
+
+                <a href="data.html" class="hover-lift group rounded-2xl border border-slate-200 bg-slate-50/70 p-4 hover:border-sky-300 hover:bg-white">
+                    <span class="inline-block rounded-md bg-sky-100 px-2 py-0.5 text-[11px] font-bold text-sky-800">PART 3 · DATA</span>
+                    <h3 class="mt-2.5 text-base font-bold text-slate-900 group-hover:text-sky-700">쿠팡 수요예측 &amp; 분석 →</h3>
+                    <p class="mt-1 text-xs leading-relaxed text-slate-600">ML 발주 최적화(폐기 25.3%↓) &amp; 엑셀 이중축 시각화</p>
+                </a>
+
+                <a href="video.html" class="hover-lift group rounded-2xl border border-slate-200 bg-slate-50/70 p-4 hover:border-emerald-300 hover:bg-white">
+                    <span class="inline-block rounded-md bg-emerald-100 px-2 py-0.5 text-[11px] font-bold text-emerald-800">PART 3 · VIDEO</span>
+                    <h3 class="mt-2.5 text-base font-bold text-slate-900 group-hover:text-emerald-700">AI 영상 제작 →</h3>
+                    <p class="mt-1 text-xs leading-relaxed text-slate-600">광고·오피스 시퀀스 &amp; ABSOLUTE CONTINUITY LOCK</p>
+                </a>
+
+                <a href="agent.html" class="hover-lift group rounded-2xl border border-slate-200 bg-slate-50/70 p-4 hover:border-violet-300 hover:bg-white">
+                    <span class="inline-block rounded-md bg-violet-100 px-2 py-0.5 text-[11px] font-bold text-violet-800">PART 3 · AGENT</span>
+                    <h3 class="mt-2.5 text-base font-bold text-slate-900 group-hover:text-violet-700">인터랙티브 AI 봇 →</h3>
+                    <p class="mt-1 text-xs leading-relaxed text-slate-600">Google GEMS + Grill-me 기반 카드뉴스 자동 생성</p>
+                </a>
+
+                <a href="notes.html" class="hover-lift group rounded-2xl border border-slate-200 bg-slate-50/70 p-4 hover:border-amber-300 hover:bg-white">
+                    <span class="inline-block rounded-md bg-amber-100 px-2 py-0.5 text-[11px] font-bold text-amber-800">ARCHIVE</span>
+                    <h3 class="mt-2.5 text-base font-bold text-slate-900 group-hover:text-amber-700">강의 필기 &amp; 노트 →</h3>
+                    <p class="mt-1 text-xs leading-relaxed text-slate-600">실제 수업 중 기록한 프롬프트·워크플로우 아카이브</p>
+                </a>
             </div>
         </div>
     </section>
 
-    <!-- 2. Main Content (4가지 파트별 카드 그리드) -->
-    <main id="modules" class="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-20 lg:px-8">
-        <div class="mb-10 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+    <main class="mx-auto max-w-6xl space-y-16 px-4 py-14 sm:px-6 lg:px-8">
+
+        <!-- CV & Research Experience Section -->
+        <section id="cv-section" class="space-y-8">
             <div>
-                <span class="text-xs font-bold uppercase tracking-widest text-blue-700">Curriculum Deliverables</span>
-                <h2 class="mt-1.5 text-2xl font-extrabold tracking-tight text-slate-900 sm:text-3xl">
-                    한 학기 4대 핵심 실습 포트폴리오
-                </h2>
-                <p class="mt-2 text-sm text-slate-600 sm:text-base">
-                    프롬프트 설계부터 커스텀 스킬, 데이터 분석·최적화, 멀티모달 영상 제작, 에이전틱 봇 구축까지의 전체 구현 내역입니다.
-                </p>
+                <span class="text-xs font-bold uppercase tracking-widest text-emerald-700">Curriculum Vitae</span>
+                <h2 class="mt-1 text-2xl font-extrabold text-slate-900 sm:text-3xl">학력 · 연구 이력 및 융합 기술 스택</h2>
+                <p class="mt-1.5 text-sm text-slate-600">생명과학 실험실 연구 경험, 해외 교환학생 수학, 그리고 AI 기반 데이터·웹 개발 역량을 정리한 전체 CV입니다.</p>
             </div>
-            <div class="inline-flex items-center gap-2 self-start rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-600 shadow-sm sm:self-auto">
-                <svg class="h-4 w-4 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                </svg>
-                <span>각 카드 하단에서 세부 파이프라인을 펼쳐볼 수 있습니다</span>
-            </div>
-        </div>
 
-        <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
-
-            <!-- Card 1: [PART 1 & 2] 프롬프트 엔지니어링 및 보고서 자동화 -->
-            <article class="module-card flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-                <div>
-                    <div class="h-1.5 w-full bg-gradient-to-r from-blue-700 via-indigo-600 to-blue-500"></div>
-                    <div class="p-6 sm:p-8">
-                        <div class="flex items-center justify-between gap-3">
-                            <span class="inline-flex items-center rounded-full bg-blue-50 px-3 py-1 text-xs font-bold text-blue-700 ring-1 ring-inset ring-blue-700/15">
-                                PART 1 &amp; 2
-                            </span>
-                            <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-blue-700">
-                                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                                </svg>
-                            </div>
+            <div class="grid grid-cols-1 gap-6 lg:grid-cols-12">
+                <!-- Left Column: Education, Research, Leadership -->
+                <div class="space-y-6 lg:col-span-7">
+                    <!-- Education -->
+                    <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+                        <div class="mb-4 flex items-center gap-2.5">
+                            <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-900 text-xs font-bold text-emerald-400">EDU</span>
+                            <h3 class="text-lg font-extrabold text-slate-900">학력 (Education)</h3>
                         </div>
-
-                        <h3 class="mt-4 text-xl font-extrabold text-slate-900 sm:text-2xl">
-                            프롬프트 엔지니어링 및 보고서 자동화
-                        </h3>
-                        <p class="mt-1.5 text-sm font-medium text-blue-700">
-                            환각 방지 프롬프트 설계 · Claude 커스텀 스킬 hallym-edu-pptx 파이프라인
-                        </p>
-
-                        <div class="mt-5 space-y-3 text-sm leading-relaxed text-slate-600">
-                            <div class="rounded-xl bg-slate-50 p-3.5">
-                                <p class="font-semibold text-slate-900">1. 환각 방지(Anti-Hallucination) 프롬프트 설계</p>
-                                <p class="mt-1">
-                                    산업·기업 심층 보고서 작성 시 DART 공시 및 공식 IR 기준일 통일, 확정/잠정 실적 및 연결/사업부 수치 구분, 근거 없는 추정 차단 규칙을 구조화하여 보고서의 사실 검증력을 확보했습니다.
-                                </p>
-                            </div>
-                            <div class="rounded-xl bg-slate-50 p-3.5">
-                                <p class="font-semibold text-slate-900">2. <code class="rounded bg-blue-100/80 px-1.5 py-0.5 font-mono text-xs text-blue-800">hallym-edu-pptx</code> 커스텀 스킬 구현</p>
-                                <p class="mt-1">
-                                    황현석 교수님 전용 템플릿(<code class="font-mono text-xs text-slate-700">template.pptx</code>)의 XML 구조를 직접 제어하는 Claude 커스텀 스킬을 제작하여, Navy/Gold 테마·SVG 도형·학과 푸터가 고정된 25페이지 발표 자료와 DOCX/HWPX 보고서 자동 생성 파이프라인을 구축했습니다.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="border-t border-slate-100 bg-slate-50/70 px-6 py-4 sm:px-8">
-                    <details class="group">
-                        <summary class="flex cursor-pointer items-center justify-between text-xs font-bold text-slate-700 hover:text-blue-700">
-                            <span>핵심 자동화 파이프라인 상세 보기</span>
-                            <svg class="chevron-icon h-4 w-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
-                            </svg>
-                        </summary>
-                        <div class="mt-3 rounded-lg border border-slate-200 bg-white p-3 text-xs leading-relaxed text-slate-600">
-                            <p class="font-semibold text-slate-800">Workflow Architecture</p>
-                            <p class="mt-1 font-mono text-[11px] text-slate-700">
-                                PDF/리서치 원문 → 환각 제어 구조화 프롬프트 → XML 슬라이드 복제(add_slide.py) → 플레이스홀더 치환 &amp; 검증(validate.py) → 25p PPTX · 보고서 출력
-                            </p>
-                        </div>
-                    </details>
-                    <div class="mt-3 flex flex-wrap gap-1.5">
-                        <span class="rounded-full bg-blue-100 px-2.5 py-0.5 text-[11px] font-semibold text-blue-800">Prompt Engineering</span>
-                        <span class="rounded-full bg-indigo-100 px-2.5 py-0.5 text-[11px] font-semibold text-indigo-800">Claude Custom Skill</span>
-                        <span class="rounded-full bg-slate-200 px-2.5 py-0.5 text-[11px] font-semibold text-slate-700">hallym-edu-pptx</span>
-                        <span class="rounded-full bg-slate-200 px-2.5 py-0.5 text-[11px] font-semibold text-slate-700">PPTX / DOCX / HWPX</span>
-                    </div>
-                </div>
-            </article>
-
-            <!-- Card 2: [PART 3] 데이터 분석 및 코딩 자동화 -->
-            <article class="module-card flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-                <div>
-                    <div class="h-1.5 w-full bg-gradient-to-r from-indigo-600 via-sky-500 to-cyan-500"></div>
-                    <div class="p-6 sm:p-8">
-                        <div class="flex items-center justify-between gap-3">
-                            <span class="inline-flex items-center rounded-full bg-sky-50 px-3 py-1 text-xs font-bold text-sky-700 ring-1 ring-inset ring-sky-700/15">
-                                PART 3 · DATA &amp; CODE
-                            </span>
-                            <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-50 text-sky-700">
-                                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-                                </svg>
-                            </div>
-                        </div>
-
-                        <h3 class="mt-4 text-xl font-extrabold text-slate-900 sm:text-2xl">
-                            데이터 분석 및 코딩 자동화
-                        </h3>
-                        <p class="mt-1.5 text-sm font-medium text-sky-700">
-                            신선식품 수요 예측·재고 발주 최적화 · 머신러닝 시뮬레이션 &amp; 엑셀 이중축 시각화
-                        </p>
-
-                        <div class="mt-5 space-y-3 text-sm leading-relaxed text-slate-600">
-                            <div class="rounded-xl bg-slate-50 p-3.5">
-                                <p class="font-semibold text-slate-900">1. ML 수요 예측 및 신문팔이(Newsvendor) 최적화</p>
-                                <p class="mt-1">
-                                    Python 환경에서 시계열 Lag·이동평균 파생변수를 설계하고 <code class="rounded bg-sky-100/80 px-1.5 py-0.5 font-mono text-xs text-sky-800">HistGradientBoostingRegressor</code> 예측치와 임계비율(Critical Ratio)·Z-score 안전재고를 결합해 최적 발주량을 도출했습니다.
-                                </p>
-                            </div>
-                            <div class="rounded-xl bg-slate-50 p-3.5">
-                                <p class="font-semibold text-slate-900">2. 시뮬레이션 검증 및 엑셀 이중축 시각화</p>
-                                <p class="mt-1">
-                                    시뮬레이션 결과 기존 발주 시스템 대비 <strong>폐기 손실 25.3% 절감</strong>(1억 5,760만원 → 1억 1,765만원) 및 순이익 개선을 입증했으며, Antigravity IDE 디버깅(<code class="font-mono text-xs text-rose-600">ModuleNotFoundError</code> 해결)과 기업 실적 엑셀 이중축(Combo-Chart) 자동화를 완료했습니다.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="border-t border-slate-100 bg-slate-50/70 px-6 py-4 sm:px-8">
-                    <details class="group">
-                        <summary class="flex cursor-pointer items-center justify-between text-xs font-bold text-slate-700 hover:text-sky-700">
-                            <span>최적화 모델 및 시뮬레이션 수치 보기</span>
-                            <svg class="chevron-icon h-4 w-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
-                            </svg>
-                        </summary>
-                        <div class="mt-3 rounded-lg border border-slate-200 bg-white p-3 text-xs leading-relaxed text-slate-600">
-                            <div class="grid grid-cols-2 gap-2 text-center">
-                                <div class="rounded bg-slate-50 p-2">
-                                    <span class="block text-[11px] text-slate-500">기존 발주 시스템 폐기손실</span>
-                                    <span class="font-mono font-bold text-slate-800">157,597,320원</span>
+                        <div class="space-y-5">
+                            <div class="border-l-2 border-emerald-500 pl-4">
+                                <div class="flex flex-wrap items-center justify-between gap-2">
+                                    <h4 class="font-bold text-slate-900">한림대학교 (Hallym University)</h4>
+                                    <span class="rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-semibold text-emerald-800">2021.03 – 2027.02 (졸업예정)</span>
                                 </div>
-                                <div class="rounded bg-sky-50 p-2">
-                                    <span class="block text-[11px] text-sky-700">ML+최적화 모델 폐기손실</span>
-                                    <span class="font-mono font-bold text-sky-800">117,652,450원 (25.3%↓)</span>
+                                <p class="mt-1 text-sm font-semibold text-slate-700">주전공: 생명과학 · 복수전공: 경영학과 | 학점 <span class="font-mono text-emerald-700">4.37 / 4.5</span></p>
+                                <p class="mt-2 text-xs leading-relaxed text-slate-600">
+                                    <strong>수상 (Brilliance Awards for Academic Excellence):</strong> Computing &amp; Convergence, Environment &amp; Literature, Global English Competency 3개 부문 수상
+                                </p>
+                                <p class="mt-1.5 text-xs leading-relaxed text-slate-500">
+                                    <strong>주요 전공 이수:</strong> 분자유전학 및 실험, 세포생물학 및 실험, 생화학, 후성유전학(Epigenetics), 단백질체학(Proteomics), 발생생물학, 조직학, 분자종양학(Molecular Oncology), 유전자·세포치료(Gene &amp; Cell Therapy), 바이오헬스산업동향
+                                </p>
+                            </div>
+
+                            <div class="border-l-2 border-slate-300 pl-4">
+                                <div class="flex flex-wrap items-center justify-between gap-2">
+                                    <h4 class="font-bold text-slate-900">Edmonds College (Washington, USA)</h4>
+                                    <span class="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-semibold text-slate-700">2019.03 – 2020.06</span>
+                                </div>
+                                <p class="mt-1 text-sm text-slate-600">Major in Biology · 미국 정규 대학 생물학 전공 수학</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Research & International Experience -->
+                    <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+                        <div class="mb-4 flex items-center gap-2.5">
+                            <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-600 text-xs font-bold text-white">LAB</span>
+                            <h3 class="text-lg font-extrabold text-slate-900">연구 및 국제 교류 이력 (Research &amp; Exchange)</h3>
+                        </div>
+
+                        <div class="space-y-6">
+                            <div class="rounded-xl border border-slate-100 bg-slate-50 p-4">
+                                <div class="flex flex-wrap items-center justify-between gap-2">
+                                    <h4 class="font-bold text-slate-900">대만 국립중정대학교 (CCU) 의생명과학과 교환학생</h4>
+                                    <span class="rounded-full bg-sky-100 px-2.5 py-0.5 text-xs font-semibold text-sky-800">2025.08 – 2026.07</span>
+                                </div>
+                                <p class="mt-1 text-xs font-medium text-slate-500">National Chung Cheng University, Dept. of Biomedical Sciences, Taiwan</p>
+                                <ul class="mt-2.5 space-y-1 text-xs leading-relaxed text-slate-600">
+                                    <li>• 한림대학교 대표 교환학생 선발 및 분자종양학·유전자/세포치료·단백질체학·조직학 등 영어 전공 강의 이수</li>
+                                    <li>• 영어 원서 및 학술 논문 발표 수행, <em>Language &amp; Health Communication 2025</em> 세미나(후성유전학 기반 암 치료) 참석</li>
+                                </ul>
+                            </div>
+
+                            <div class="rounded-xl border border-emerald-100 bg-emerald-50/40 p-4">
+                                <div class="flex flex-wrap items-center justify-between gap-2">
+                                    <h4 class="font-bold text-slate-900">한국생명공학연구원 (KRIBB) UST 하계 연구 인턴</h4>
+                                    <span class="rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-semibold text-emerald-800">2025.07.04 – 2025.08.08</span>
+                                </div>
+                                <p class="mt-1 text-xs font-medium text-emerald-800">Epigenome Editing &amp; Targeted Protein Degradation Lab (지도: 김정애 박사님)</p>
+                                <ul class="mt-2.5 space-y-1 text-xs leading-relaxed text-slate-600">
+                                    <li>• <code class="font-mono text-emerald-900">dCas12j-8</code> 기반 후성유전체 편집 및 표적단백질 분해(TPD) 연구 참여, crRNA 설계 실습</li>
+                                    <li>• In-Fusion cloning, PCR, HEK293T 세포 배양·형질전환, Plasmid 정제, Western blotting 및 형광 기반 단백질 발현량 측정 수행</li>
+                                </ul>
+                            </div>
+
+                            <div class="rounded-xl border border-slate-100 bg-slate-50 p-4">
+                                <div class="flex flex-wrap items-center justify-between gap-2">
+                                    <h4 class="font-bold text-slate-900">대한민국 육군 제53보병사단 병장 만기전역</h4>
+                                    <span class="rounded-full bg-slate-200 px-2.5 py-0.5 text-xs font-semibold text-slate-700">2021.03 – 2022.09</span>
+                                </div>
+                                <p class="mt-1 text-xs text-slate-600">81mm 박격포반 분대원·인원 조율 및 부대 작전 지원 리더십 수행</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Bio + AI Tech Stack, Research Interests, Languages -->
+                <div class="space-y-6 lg:col-span-5">
+                    <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+                        <h3 class="text-lg font-extrabold text-slate-900">연구 관심 분야 (Research Interests)</h3>
+                        <div class="mt-3 flex flex-wrap gap-2">
+                            <span class="rounded-lg bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-800">암 분자 기전 (Molecular Oncology)</span>
+                            <span class="rounded-lg bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-800">후성유전학적 발현 조절</span>
+                            <span class="rounded-lg bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-800">유비퀴틴-프로테아좀 / TPD</span>
+                            <span class="rounded-lg bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-800">CRISPR/dCas 유전자 조절</span>
+                        </div>
+                    </div>
+
+                    <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+                        <h3 class="text-lg font-extrabold text-slate-900">Wet-Lab &amp; AI/Dev 기술 스택</h3>
+
+                        <div class="mt-4 space-y-4">
+                            <div>
+                                <p class="text-xs font-bold uppercase tracking-wider text-emerald-700">Laboratory Skills</p>
+                                <div class="mt-2 flex flex-wrap gap-1.5 text-xs">
+                                    <span class="rounded-md border border-slate-200 bg-slate-50 px-2.5 py-1 font-medium text-slate-700">PCR</span>
+                                    <span class="rounded-md border border-slate-200 bg-slate-50 px-2.5 py-1 font-medium text-slate-700">Plasmid Mini/Maxi Prep</span>
+                                    <span class="rounded-md border border-slate-200 bg-slate-50 px-2.5 py-1 font-medium text-slate-700">HEK293T Culture</span>
+                                    <span class="rounded-md border border-slate-200 bg-slate-50 px-2.5 py-1 font-medium text-slate-700">Transfection</span>
+                                    <span class="rounded-md border border-slate-200 bg-slate-50 px-2.5 py-1 font-medium text-slate-700">In-Fusion Cloning</span>
+                                    <span class="rounded-md border border-slate-200 bg-slate-50 px-2.5 py-1 font-medium text-slate-700">crRNA Design</span>
+                                    <span class="rounded-md border border-slate-200 bg-slate-50 px-2.5 py-1 font-medium text-slate-700">SDS-PAGE / Western Blot</span>
+                                    <span class="rounded-md border border-slate-200 bg-slate-50 px-2.5 py-1 font-medium text-slate-700">BCA / Bradford</span>
                                 </div>
                             </div>
-                            <p class="mt-2 font-mono text-[11px] text-slate-600">
-                                order_qty = ceil(ml_forecast + clip(norm.ppf(CR), -2, 2) * std_error)
-                            </p>
-                        </div>
-                    </details>
-                    <div class="mt-3 flex flex-wrap gap-1.5">
-                        <span class="rounded-full bg-sky-100 px-2.5 py-0.5 text-[11px] font-semibold text-sky-800">Python</span>
-                        <span class="rounded-full bg-cyan-100 px-2.5 py-0.5 text-[11px] font-semibold text-cyan-800">HistGradientBoosting</span>
-                        <span class="rounded-full bg-slate-200 px-2.5 py-0.5 text-[11px] font-semibold text-slate-700">Newsvendor Model</span>
-                        <span class="rounded-full bg-slate-200 px-2.5 py-0.5 text-[11px] font-semibold text-slate-700">Excel Combo-Chart</span>
-                    </div>
-                </div>
-            </article>
 
-            <!-- Card 3: [PART 3] AI 영상 콘텐츠 제작 -->
-            <article class="module-card flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-                <div>
-                    <div class="h-1.5 w-full bg-gradient-to-r from-emerald-600 via-teal-500 to-emerald-400"></div>
-                    <div class="p-6 sm:p-8">
-                        <div class="flex items-center justify-between gap-3">
-                            <span class="inline-flex items-center rounded-full bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-700 ring-1 ring-inset ring-emerald-700/15">
-                                PART 3 · AI VIDEO
-                            </span>
-                            <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-50 text-emerald-700">
-                                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
-                                </svg>
-                            </div>
-                        </div>
-
-                        <h3 class="mt-4 text-xl font-extrabold text-slate-900 sm:text-2xl">
-                            AI 영상 콘텐츠 제작
-                        </h3>
-                        <p class="mt-1.5 text-sm font-medium text-emerald-700">
-                            광고 및 오피스 출입 시퀀스 · ABSOLUTE CONTINUITY LOCK 시간차 렌더링 통제
-                        </p>
-
-                        <div class="mt-5 space-y-3 text-sm leading-relaxed text-slate-600">
-                            <div class="rounded-xl bg-slate-50 p-3.5">
-                                <p class="font-semibold text-slate-900">1. 상업 광고 &amp; 오피스 출입 시퀀스 프로덕션</p>
-                                <p class="mt-1">
-                                    잭 다니엘스 상업 광고 영상, 현대 오피스 로비·보안 게이트 출입 연속 씬, 4K 키프레임 기반 20초 연속 시퀀스 및 Claude Motion을 활용한 30초 인터랙티브 모션 그래픽을 제작했습니다.
-                                </p>
-                            </div>
-                            <div class="rounded-xl bg-slate-50 p-3.5">
-                                <p class="font-semibold text-slate-900">2. <code class="rounded bg-emerald-100/80 px-1.5 py-0.5 font-mono text-xs text-emerald-800">ABSOLUTE CONTINUITY LOCK</code> 엔진</p>
-                                <p class="mt-1">
-                                    생성형 영상 AI의 형태 붕괴(Morphing) 한계를 극복하기 위해 0초부터 20초까지 타임스탬프별로 인물 외형, 손 위치, 소품, 카메라 무빙을 강제 고정하는 연속성 잠금 프롬프트 엔진을 설계·적용했습니다.
-                                </p>
+                            <div class="border-t border-slate-100 pt-4">
+                                <p class="text-xs font-bold uppercase tracking-wider text-blue-700">AI &amp; Engineering Stack</p>
+                                <div class="mt-2 flex flex-wrap gap-1.5 text-xs">
+                                    <span class="rounded-md bg-blue-50 px-2.5 py-1 font-semibold text-blue-800">Python</span>
+                                    <span class="rounded-md bg-blue-50 px-2.5 py-1 font-semibold text-blue-800">R</span>
+                                    <span class="rounded-md bg-blue-50 px-2.5 py-1 font-semibold text-blue-800">Scikit-learn</span>
+                                    <span class="rounded-md bg-sky-50 px-2.5 py-1 font-semibold text-sky-800">Streamlit</span>
+                                    <span class="rounded-md bg-slate-100 px-2.5 py-1 font-semibold text-slate-800">Next.js / React</span>
+                                    <span class="rounded-md bg-slate-100 px-2.5 py-1 font-semibold text-slate-800">Supabase</span>
+                                    <span class="rounded-md bg-slate-100 px-2.5 py-1 font-semibold text-slate-800">Cursor / Antigravity</span>
+                                    <span class="rounded-md bg-slate-100 px-2.5 py-1 font-semibold text-slate-800">Git / Netlify</span>
+                                </div>
+                                <a href="https://protein-analysis-lab.streamlit.app/" target="_blank" rel="noopener noreferrer" class="mt-3 flex items-center justify-between rounded-xl border border-blue-200 bg-blue-50/70 px-3.5 py-2.5 text-xs font-semibold text-blue-800 transition hover:bg-blue-100">
+                                    <span>구축 웹앱: Protein Analysis Lab (Streamlit)</span>
+                                    <span>열기 ↗</span>
+                                </a>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="border-t border-slate-100 bg-slate-50/70 px-6 py-4 sm:px-8">
-                    <details class="group">
-                        <summary class="flex cursor-pointer items-center justify-between text-xs font-bold text-slate-700 hover:text-emerald-700">
-                            <span>시간차 렌더링 통제 로직 보기</span>
-                            <svg class="chevron-icon h-4 w-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
-                            </svg>
-                        </summary>
-                        <div class="mt-3 rounded-lg border border-slate-200 bg-white p-3 text-xs leading-relaxed text-slate-600">
-                            <p class="font-semibold text-slate-800">Continuity Lock Control</p>
-                            <p class="mt-1 font-mono text-[11px] text-slate-700">
-                                4K Start/End Keyframes 고정 → 00s~20s 구간별 손·소품·배경 불변 제약(ABSOLUTE CONTINUITY LOCK) → Google Flow / Kling 렌더링 + Exclusions 차단
-                            </p>
-                        </div>
-                    </details>
-                    <div class="mt-3 flex flex-wrap gap-1.5">
-                        <span class="rounded-full bg-emerald-100 px-2.5 py-0.5 text-[11px] font-semibold text-emerald-800">Google Flow</span>
-                        <span class="rounded-full bg-teal-100 px-2.5 py-0.5 text-[11px] font-semibold text-teal-800">Continuity Lock</span>
-                        <span class="rounded-full bg-slate-200 px-2.5 py-0.5 text-[11px] font-semibold text-slate-700">4K Keyframing</span>
-                        <span class="rounded-full bg-slate-200 px-2.5 py-0.5 text-[11px] font-semibold text-slate-700">Claude Motion</span>
-                    </div>
-                </div>
-            </article>
-
-            <!-- Card 4: [PART 3] 인터랙티브 AI 봇 구축 -->
-            <article class="module-card flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-                <div>
-                    <div class="h-1.5 w-full bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-500"></div>
-                    <div class="p-6 sm:p-8">
-                        <div class="flex items-center justify-between gap-3">
-                            <span class="inline-flex items-center rounded-full bg-violet-50 px-3 py-1 text-xs font-bold text-violet-700 ring-1 ring-inset ring-violet-700/15">
-                                PART 3 · INTERACTIVE BOT
-                            </span>
-                            <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-violet-50 text-violet-700">
-                                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>
-                                </svg>
+                    <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+                        <h3 class="text-lg font-extrabold text-slate-900">어학 능력 (Languages)</h3>
+                        <dl class="mt-3 space-y-2.5 text-sm">
+                            <div class="flex items-center justify-between rounded-lg bg-slate-50 px-3 py-2">
+                                <dt class="font-semibold text-slate-700">한국어 (Korean)</dt>
+                                <dd class="text-xs font-bold text-slate-900">Native</dd>
                             </div>
-                        </div>
-
-                        <h3 class="mt-4 text-xl font-extrabold text-slate-900 sm:text-2xl">
-                            인터랙티브 AI 봇 구축
-                        </h3>
-                        <p class="mt-1.5 text-sm font-medium text-violet-700">
-                            Google GEMS &amp; Grill-me 기법 · PDF 기반 스토리보드·카드뉴스 자동 생성 에이전트
-                        </p>
-
-                        <div class="mt-5 space-y-3 text-sm leading-relaxed text-slate-600">
-                            <div class="rounded-xl bg-slate-50 p-3.5">
-                                <p class="font-semibold text-slate-900">1. <code class="rounded bg-violet-100/80 px-1.5 py-0.5 font-mono text-xs text-violet-800">Grill-me</code> 역질문 기반 System Role 설계</p>
-                                <p class="mt-1">
-                                    단방향 지시·응답 방식에서 벗어나, PDF를 업로드하면 AI가 먼저 "몇 장으로 구성할까요?", "독자 타깃과 핵심 강조점은 무엇인가요?"라고 되물으며 요구사항을 구체화하는 맞춤형 인터뷰 봇을 구축했습니다.
-                                </p>
+                            <div class="flex items-center justify-between rounded-lg bg-slate-50 px-3 py-2">
+                                <dt class="font-semibold text-slate-700">영어 (English)</dt>
+                                <dd class="font-mono text-xs font-bold text-blue-800">TOEIC 880 · OPIc IH</dd>
                             </div>
-                            <div class="rounded-xl bg-slate-50 p-3.5">
-                                <p class="font-semibold text-slate-900">2. 스토리보드 및 타이포그래피 카드뉴스 자동 생성</p>
-                                <p class="mt-1">
-                                    사용자 답변이 확정되면 PDF 핵심 문맥을 7장 분량의 스토리보드로 자동 구조화하고, 일관된 타이포그래피·컬러 톤이 적용된 카드뉴스 이미지 세트까지 원스톱으로 연동 출력하도록 자동화했습니다.
-                                </p>
+                            <div class="flex items-center justify-between rounded-lg bg-slate-50 px-3 py-2">
+                                <dt class="font-semibold text-slate-700">중국어 (Chinese)</dt>
+                                <dd class="font-mono text-xs font-bold text-emerald-800">HSK 4급 · OPIc NH</dd>
                             </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="border-t border-slate-100 bg-slate-50/70 px-6 py-4 sm:px-8">
-                    <details class="group">
-                        <summary class="flex cursor-pointer items-center justify-between text-xs font-bold text-slate-700 hover:text-violet-700">
-                            <span>에이전트 상호작용 흐름 보기</span>
-                            <svg class="chevron-icon h-4 w-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
-                            </svg>
-                        </summary>
-                        <div class="mt-3 rounded-lg border border-slate-200 bg-white p-3 text-xs leading-relaxed text-slate-600">
-                            <p class="font-semibold text-slate-800">GEMS Interactive Loop</p>
-                            <p class="mt-1 font-mono text-[11px] text-slate-700">
-                                PDF 자료 업로드 → Grill-me 역질문(분량·타깃·톤 협의) → 7장 스토리보드 설계 → Nano Banana 타이포그래피 카드뉴스 일괄 생성
-                            </p>
-                        </div>
-                    </details>
-                    <div class="mt-3 flex flex-wrap gap-1.5">
-                        <span class="rounded-full bg-violet-100 px-2.5 py-0.5 text-[11px] font-semibold text-violet-800">Google GEMS</span>
-                        <span class="rounded-full bg-purple-100 px-2.5 py-0.5 text-[11px] font-semibold text-purple-800">Grill-me Method</span>
-                        <span class="rounded-full bg-slate-200 px-2.5 py-0.5 text-[11px] font-semibold text-slate-700">Storyboard Agent</span>
-                        <span class="rounded-full bg-slate-200 px-2.5 py-0.5 text-[11px] font-semibold text-slate-700">Nano Banana</span>
-                    </div>
-                </div>
-            </article>
-
-        </div>
-
-        <!-- 3. 하단 소감 및 비전 섹션 -->
-        <section id="reflection" class="mt-16 overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
-            <div class="grid grid-cols-1 lg:grid-cols-12">
-                <div class="bg-slate-900 p-8 text-white sm:p-10 lg:col-span-4 lg:flex lg:flex-col lg:justify-between">
-                    <div>
-                        <span class="inline-block rounded-full border border-amber-400/30 bg-amber-400/10 px-3 py-1 text-xs font-bold text-amber-300">
-                            Final Reflection &amp; Vision
-                        </span>
-                        <h2 class="mt-4 text-2xl font-extrabold leading-snug sm:text-3xl">
-                            챗봇 사용자를 넘어<br>실무 기술 스택을<br>내 것으로 만든 한 학기
-                        </h2>
-                    </div>
-
-                    <div class="mt-8 space-y-2.5 border-t border-white/10 pt-6 text-xs text-slate-300">
-                        <div class="flex items-center justify-between">
-                            <span class="text-slate-400">전공 역량</span>
-                            <span class="font-semibold text-white">경영학 × 생명과학</span>
-                        </div>
-                        <div class="flex items-center justify-between">
-                            <span class="text-slate-400">핵심 전환</span>
-                            <span class="font-semibold text-amber-300">단순 활용 → 에이전틱 구현</span>
-                        </div>
-                        <div class="flex items-center justify-between">
-                            <span class="text-slate-400">배포 파이프라인</span>
-                            <span class="font-semibold text-emerald-300">Git · GitHub · Netlify</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="p-8 sm:p-10 lg:col-span-8">
-                    <h3 class="text-lg font-bold text-slate-900 sm:text-xl">
-                        AI 스마트워크 기말 과제 종합 소감
-                    </h3>
-
-                    <div class="mt-4 space-y-4 text-sm leading-7 text-slate-600 sm:text-base">
-                        <p>
-                            한 학기 전만 해도 생성형 AI는 질문에 대한 답을 대신 찾아주는 편리한 검색형 챗봇에 가까웠습니다. 그러나 황현석 교수님의 <strong>'AI 스마트워크'</strong> 강의를 통해 AI를 수동적으로 소비하는 수준을 벗어나, <strong>업무의 맥락에 맞게 도구를 설계하고 검증하며 끝까지 배포하는 능동적 빌더(Builder)</strong>로 관점이 완전히 전환되었습니다.
-                        </p>
-                        <p>
-                            보고서와 발표 자료 자동화 과정에서는 환각을 차단하는 구조화 프롬프트와 <code class="rounded bg-slate-100 px-1.5 py-0.5 font-mono text-xs text-slate-800">hallym-edu-pptx</code> 커스텀 스킬로 반복 문서 작업의 표준화를 구현했고, 데이터 분석 파트에서는 Python 환경의 패키지 오류를 AI와 함께 직접 디버깅하며 머신러닝 예측 모델과 재고 최적화 시뮬레이션, 엑셀 이중축 시각화까지 완수했습니다.
-                        </p>
-                        <p>
-                            나아가 <code class="rounded bg-slate-100 px-1.5 py-0.5 font-mono text-xs text-slate-800">ABSOLUTE CONTINUITY LOCK</code> 기반의 시간차 영상 렌더링 통제, Google GEMS와 <code class="rounded bg-slate-100 px-1.5 py-0.5 font-mono text-xs text-slate-800">Grill-me</code> 기법을 활용한 역질문형 카드뉴스 봇 구축, 그리고 Git 버전 관리와 Netlify 자동 웹 배포에 이르기까지 현대 실무에 필수적인 에이전틱 워크플로우 전 과정을 온전히 내 기술 스택으로 체화할 수 있었습니다.
-                        </p>
-                        <p class="rounded-xl border border-blue-100 bg-blue-50/60 p-4 font-medium text-slate-800">
-                            앞으로 경영학적 비즈니스 의사결정 역량과 생명과학 복수전공의 데이터 탐구 역량 위에 이번 학기 체득한 AI 오케스트레이션 기술을 결합하여, 현장의 복잡한 문제를 자동화된 솔루션으로 풀어내는 실무형 융합 인재로 나아가겠습니다.
-                        </p>
+                            <div class="flex items-center justify-between rounded-lg bg-slate-50 px-3 py-2">
+                                <dt class="font-semibold text-slate-700">일본어 (Japanese)</dt>
+                                <dd class="text-xs font-medium text-slate-600">Basic</dd>
+                            </div>
+                        </dl>
                     </div>
                 </div>
             </div>
         </section>
+
+        <!-- Certificates & Course Completions -->
+        <section id="credentials-section" class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+            <div class="flex flex-col justify-between gap-4 border-b border-slate-100 pb-6 md:flex-row md:items-end">
+                <div>
+                    <span class="text-xs font-bold uppercase tracking-widest text-blue-700">Credentials &amp; Training Archive</span>
+                    <h2 class="mt-1 text-2xl font-extrabold text-slate-900">자격증 · 글로벌 직무 시뮬레이션 · 이수증 (42건)</h2>
+                    <p class="mt-1 text-sm text-slate-600">바이오·IP·품질(KGEC/Forage/WIPO)과 경영·마케팅·데이터(Six Sigma/Google/NCS/K-MOOC) 분야 이수 내역입니다.</p>
+                </div>
+                <div id="cert-filters" class="flex flex-wrap gap-1.5 text-xs font-semibold">
+                    <button type="button" data-filter="all" class="cert-filter-btn rounded-lg bg-slate-900 px-3 py-1.5 text-white">전체 (42)</button>
+                    <button type="button" data-filter="cert" class="cert-filter-btn rounded-lg bg-slate-100 px-3 py-1.5 text-slate-700 hover:bg-slate-200">자격·인증 (9)</button>
+                    <button type="button" data-filter="forage" class="cert-filter-btn rounded-lg bg-slate-100 px-3 py-1.5 text-slate-700 hover:bg-slate-200">글로벌 시뮬레이션 (5)</button>
+                    <button type="button" data-filter="kgec" class="cert-filter-btn rounded-lg bg-slate-100 px-3 py-1.5 text-slate-700 hover:bg-slate-200">제약·바이오 KGEC (10)</button>
+                    <button type="button" data-filter="ncs" class="cert-filter-btn rounded-lg bg-slate-100 px-3 py-1.5 text-slate-700 hover:bg-slate-200">경영·실무 NCS (6)</button>
+                    <button type="button" data-filter="mooc" class="cert-filter-btn rounded-lg bg-slate-100 px-3 py-1.5 text-slate-700 hover:bg-slate-200">K-MOOC / KOCW (12)</button>
+                </div>
+            </div>
+
+            <div id="cert-grid" class="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                <!-- Populated by inline script below -->
+            </div>
+        </section>
+
+        <!-- Lecture Notes Preview Section -->
+        <section class="rounded-3xl border border-slate-200 bg-slate-900 p-6 text-white shadow-sm sm:p-10">
+            <div class="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+                <div>
+                    <span class="text-xs font-bold uppercase tracking-widest text-amber-300">Lecture Notes &amp; Study Archive</span>
+                    <h2 class="mt-1.5 text-2xl font-extrabold sm:text-3xl">실제 강의 필기 기반 학습 아카이브</h2>
+                    <p class="mt-2 max-w-2xl text-sm text-slate-300">
+                        수업 중 직접 정리한 프롬프트 설계 원리, Claude Skill 구조, Python 디버깅 루프, Google Flow·GEMS 워크플로우 필기 노트를 한눈에 확인하고 전체 아카이브로 이동할 수 있습니다.
+                    </p>
+                </div>
+                <a href="notes.html" class="inline-flex shrink-0 items-center gap-2 rounded-xl bg-amber-400 px-4 py-2.5 text-sm font-bold text-slate-950 transition hover:bg-amber-300">
+                    <span>필기 노트 전체 보기 (10개 주제)</span>
+                    <span>→</span>
+                </a>
+            </div>
+
+            <div class="mt-7 grid grid-cols-1 gap-4 md:grid-cols-3">
+                <a href="notes.html#note-skill" class="rounded-2xl border border-white/10 bg-white/5 p-5 transition hover:border-amber-300/40 hover:bg-white/10">
+                    <span class="text-[11px] font-bold text-blue-300">문서 · 발표 자동화</span>
+                    <h3 class="mt-1.5 text-base font-bold">Claude Skill &amp; SVG 도식화</h3>
+                    <p class="mt-2 text-xs leading-relaxed text-slate-300">Skill = Prompt + 실행 순서 + 주의사항. 슬라이드 마스터 XML 보존 및 편집 가능한 <code class="font-mono text-amber-200">pptx-native</code> 도형 삽입 원칙 정리.</p>
+                </a>
+                <a href="notes.html#note-code" class="rounded-2xl border border-white/10 bg-white/5 p-5 transition hover:border-amber-300/40 hover:bg-white/10">
+                    <span class="text-[11px] font-bold text-sky-300">코드 · 데이터 분석</span>
+                    <h3 class="mt-1.5 text-base font-bold">Python 디버깅 &amp; 이중축 차트</h3>
+                    <p class="mt-2 text-xs leading-relaxed text-slate-300">상위 10개 행 + <code class="font-mono text-amber-200">data_description.txt</code> 주입 전략 및 실행-오류수정-해석 반복 루프, 매출·이익률 Combo-Chart 필기.</p>
+                </a>
+                <a href="notes.html#note-gems" class="rounded-2xl border border-white/10 bg-white/5 p-5 transition hover:border-amber-300/40 hover:bg-white/10">
+                    <span class="text-[11px] font-bold text-emerald-300">영상 · GEMS · 웹 구축</span>
+                    <h3 class="mt-1.5 text-base font-bold">Grill-me &amp; Continuity Lock</h3>
+                    <p class="mt-2 text-xs leading-relaxed text-slate-300">AI가 먼저 역질문해 요구사항을 확정하는 Grill-me 패턴, 20초 연속 프레임 잠금, HTML 모션 및 웹 배포 학습 기록.</p>
+                </a>
+            </div>
+        </section>
+
     </main>
 
-    <!-- Footer -->
-    <footer class="border-t border-slate-200 bg-white">
-        <div class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-4 py-8 text-center text-xs text-slate-500 sm:flex-row sm:px-6 sm:text-left lg:px-8">
-            <p class="font-medium text-slate-700">
-                한림대학교 경영학과 · AI 스마트워크 (담당교수: 황현석 교수님) 기말 과제 제출용
-            </p>
-            <p>
-                &copy; 2026 이종건 (20213528) · 경영학과 (복수전공 생명과학)
-            </p>
-        </div>
-    </footer>
+    <div id="site-footer"></div>
 
+    <script src="assets/shared.js"></script>
+    <script>
+        (function () {
+            const CREDENTIALS = [
+                // 9 Global Certifications
+                { cat: 'cert', badge: '자격·인증', color: 'blue', title: 'WIPO Academy: General Course on Intellectual Property (DL-101)', meta: 'World Intellectual Property Organization · 2026.11.03 수료' },
+                { cat: 'cert', badge: '자격·인증', color: 'blue', title: 'Lean Six Sigma White Belt (CSSC)', meta: 'Council for Six Sigma Certification · 2026.09' },
+                { cat: 'cert', badge: '자격·인증', color: 'blue', title: 'Six Sigma White Belt (CSSC)', meta: 'Council for Six Sigma Certification · 2026.09' },
+                { cat: 'cert', badge: '자격·인증', color: 'blue', title: 'INSIDE LVMH Certificate', meta: 'Operations & Supply-Chain / Retail & Client Experience · 2026.11' },
+                { cat: 'cert', badge: '자격·인증', color: 'blue', title: 'Google Analytics Certified', meta: 'Google Skillshop' },
+                { cat: 'cert', badge: '자격·인증', color: 'blue', title: 'Google Ads Measurement Certified', meta: 'Google Skillshop' },
+                { cat: 'cert', badge: '자격·인증', color: 'blue', title: 'Google Ads Search Certified', meta: 'Google Skillshop' },
+                { cat: 'cert', badge: '자격·인증', color: 'blue', title: 'HubSpot Digital Marketing Certified', meta: 'HubSpot Academy' },
+                { cat: 'cert', badge: '자격·인증', color: 'blue', title: '한국사능력검정시험 3급', meta: '국사편찬위원회' },
+
+                // 5 Forage Job Simulations
+                { cat: 'forage', badge: '글로벌 시뮬레이션', color: 'emerald', title: 'LifeArc: Technology Transfer Job Simulation', meta: 'Forage · 2026.11.10 완료' },
+                { cat: 'forage', badge: '글로벌 시뮬레이션', color: 'emerald', title: 'LifeArc: Intellectual Property Job Simulation', meta: 'Forage · 2026.10.23 완료' },
+                { cat: 'forage', badge: '글로벌 시뮬레이션', color: 'emerald', title: 'LifeArc: Life Sciences — Biology Research Job Simulation', meta: 'Forage · 2026.10.09 완료' },
+                { cat: 'forage', badge: '글로벌 시뮬레이션', color: 'emerald', title: 'Pfizer: Molecule to Market Job Simulation', meta: 'Forage · 2026.09.16 완료' },
+                { cat: 'forage', badge: '글로벌 시뮬레이션', color: 'emerald', title: 'PwC: Management Consulting Simulation', meta: 'Forage · 2026.09.15 완료' },
+
+                // 10 KGEC & K-Bio
+                { cat: 'kgec', badge: '제약·바이오 KGEC', color: 'teal', title: 'ISO 15378 (의약품 일차포장재 품질경영시스템)', meta: 'KGEC 제약바이오 교육' },
+                { cat: 'kgec', badge: '제약·바이오 KGEC', color: 'teal', title: 'ICH Q9 개론 (품질위험관리 · Quality Risk Management)', meta: 'KGEC 제약바이오 교육' },
+                { cat: 'kgec', badge: '제약·바이오 KGEC', color: 'teal', title: 'Data Integrity (데이터 완전성)', meta: '2026 강원대 「K-바이오 리더양성」' },
+                { cat: 'kgec', badge: '제약·바이오 KGEC', color: 'teal', title: '제약바이오 산업 트렌드와 미생물 직무 탐색', meta: '2026 강원대 「K-바이오 리더양성」' },
+                { cat: 'kgec', badge: '제약·바이오 KGEC', color: 'teal', title: 'QC (품질관리) 직무탐색', meta: '2026 강원대 「K-바이오 리더양성」' },
+                { cat: 'kgec', badge: '제약·바이오 KGEC', color: 'teal', title: 'QA (품질보증) 직무탐색', meta: '2026 강원대 「K-바이오 리더양성」' },
+                { cat: 'kgec', badge: '제약·바이오 KGEC', color: 'teal', title: 'RA / BD (인허가·사업개발) 직무 탐색', meta: '2026 강원대 「K-바이오 리더양성」' },
+                { cat: 'kgec', badge: '제약·바이오 KGEC', color: 'teal', title: '밸리데이션 (Validation) 직무 탐색', meta: '2026 강원대 「K-바이오 리더양성」' },
+                { cat: 'kgec', badge: '제약·바이오 KGEC', color: 'teal', title: '임상 (Clinical) 직무탐색', meta: '2026 강원대 「K-바이오 리더양성」' },
+                { cat: 'kgec', badge: '제약·바이오 KGEC', color: 'teal', title: 'K-바이오 리더양성 취업특강', meta: '2026 강원대 주관' },
+
+                // 6 NCS
+                { cat: 'ncs', badge: '경영·실무 NCS', color: 'indigo', title: '[경영기획] 업무성과를 높이는 협상전략', meta: 'NCS · Winspec' },
+                { cat: 'ncs', badge: '경영·실무 NCS', color: 'indigo', title: '[마케팅전략기획] 데이터를 활용한 디지털 마케팅 광고전략', meta: 'NCS · Winspec' },
+                { cat: 'ncs', badge: '경영·실무 NCS', color: 'indigo', title: '[인사] 전략적 조직운영을 위한 인사관리 실무', meta: 'NCS · Winspec' },
+                { cat: 'ncs', badge: '경영·실무 NCS', color: 'indigo', title: '[총무] 핵심만 콕! 바로 쓰는 총무실무', meta: 'NCS · Winspec' },
+                { cat: 'ncs', badge: '경영·실무 NCS', color: 'indigo', title: '[사무행정] 문서 작성 능력 UP! 노션·워드 자동화·보고서', meta: 'NCS · Winspec' },
+                { cat: 'ncs', badge: '경영·실무 NCS', color: 'indigo', title: '[통계조사] Big Data 시대 기초 통계지식', meta: 'NCS · Winspec' },
+
+                // 12 K-MOOC / KOCW
+                { cat: 'mooc', badge: 'K-MOOC / KOCW', color: 'violet', title: '[생명과학] 제약바이오품질분석기초', meta: '건국대학교 · K-MOOC' },
+                { cat: 'mooc', badge: 'K-MOOC / KOCW', color: 'violet', title: '[생명과학] 디지털 기반 바이오신약 개발과정', meta: '성신여자대학교 · K-MOOC' },
+                { cat: 'mooc', badge: 'K-MOOC / KOCW', color: 'violet', title: '[생명과학] 인류와 감염병 이야기', meta: '고려대학교 · K-MOOC' },
+                { cat: 'mooc', badge: 'K-MOOC / KOCW', color: 'violet', title: '[생명과학] 위대한 수업 1: 암 (Cancer)', meta: 'EBS · K-MOOC' },
+                { cat: 'mooc', badge: 'K-MOOC / KOCW', color: 'violet', title: '[생명과학] 재생의학 입문 & 적용사례 (2과정)', meta: '전남대학교 · K-MOOC' },
+                { cat: 'mooc', badge: 'K-MOOC / KOCW', color: 'violet', title: '[생명과학] 흥미로운 생리학', meta: '전남대학교 · K-MOOC' },
+                { cat: 'mooc', badge: 'K-MOOC / KOCW', color: 'violet', title: '[생명과학] 노화의 비밀: 젊음을 향한 과학적 여정', meta: '전남대학교 · K-MOOC' },
+                { cat: 'mooc', badge: 'K-MOOC / KOCW', color: 'violet', title: '[생명과학] 바이오테크놀러지, A에서 Z까지', meta: '경기대학교 · K-MOOC' },
+                { cat: 'mooc', badge: 'K-MOOC / KOCW', color: 'violet', title: '[생명과학] 생물다양성과 생물자원', meta: '이화여자대학교 · K-MOOC' },
+                { cat: 'mooc', badge: 'K-MOOC / KOCW', color: 'violet', title: '[법학] 국제법 길라잡이', meta: '서울대학교 · K-MOOC' },
+                { cat: 'mooc', badge: 'K-MOOC / KOCW', color: 'violet', title: '[법학] 민법학입문', meta: '고려대학교 · K-MOOC' },
+                { cat: 'mooc', badge: 'K-MOOC / KOCW', color: 'violet', title: '[세미나] Language & Health Communication 2025 Seminar Series', meta: 'National Chung Cheng Univ. (CCU)' }
+            ];
+
+            const BADGE_CLASSES = {
+                blue: 'bg-blue-50 text-blue-700',
+                emerald: 'bg-emerald-50 text-emerald-700',
+                teal: 'bg-teal-50 text-teal-700',
+                indigo: 'bg-indigo-50 text-indigo-700',
+                violet: 'bg-violet-50 text-violet-700'
+            };
+
+            const grid = document.getElementById('cert-grid');
+            const buttons = document.querySelectorAll('.cert-filter-btn');
+
+            function render(filter) {
+                const items = filter === 'all' ? CREDENTIALS : CREDENTIALS.filter((c) => c.cat === filter);
+                grid.innerHTML = items.map((item) => `
+                    <div class="rounded-xl border border-slate-200 bg-slate-50/60 p-4 transition hover:border-slate-300 hover:bg-white">
+                        <span class="inline-block rounded-md px-2 py-0.5 text-[11px] font-bold ${BADGE_CLASSES[item.color]}">${item.badge}</span>
+                        <h3 class="mt-2 text-sm font-bold leading-snug text-slate-900">${item.title}</h3>
+                        <p class="mt-1 text-xs text-slate-500">${item.meta}</p>
+                    </div>
+                `).join('');
+            }
+
+            buttons.forEach((btn) => {
+                btn.addEventListener('click', () => {
+                    const filter = btn.getAttribute('data-filter');
+                    buttons.forEach((b) => {
+                        b.className = 'cert-filter-btn rounded-lg bg-slate-100 px-3 py-1.5 text-slate-700 hover:bg-slate-200';
+                    });
+                    btn.className = 'cert-filter-btn rounded-lg bg-slate-900 px-3 py-1.5 text-white';
+                    render(filter);
+                });
+            });
+
+            render('all');
+        })();
+    </script>
 </body>
 </html>

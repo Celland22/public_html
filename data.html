@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>쿠팡 수요예측 &amp; 분석 (Part 3 · Data) | 20213528 이종건</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+    <style>
+        body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; background-color: #f8fafc; color: #0f172a; }
+    </style>
+</head>
+<body data-page="data" class="antialiased">
+
+    <div id="site-nav"></div>
+
+    <!-- Page Header -->
+    <header class="bg-gradient-to-br from-slate-950 via-sky-950 to-slate-900 py-14 text-white">
+        <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+            <div class="inline-flex items-center gap-2 rounded-full border border-sky-400/30 bg-sky-900/50 px-3 py-1 text-xs font-bold text-sky-200">
+                PART 3 · DATA ANALYSIS &amp; CODING AUTOMATION
+            </div>
+            <h1 class="mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl">
+                쿠팡 신선식품 수요예측 · 발주 최적화 &amp; 엑셀 이중축 시각화
+            </h1>
+            <p class="mt-3 max-w-3xl text-sm leading-relaxed text-slate-300 sm:text-base">
+                생명과학 정량 데이터 분석 경험을 바탕으로, Python(<code class="rounded bg-white/10 px-1.5 py-0.5 font-mono text-xs text-sky-300">HistGradientBoostingRegressor</code>) 수요 예측과 Newsvendor(신문팔이) 재고 최적화 모델을 결합하여 폐기 손실 <strong class="text-emerald-300">25.3% 절감</strong>을 검증하고, Claude 기반 엑셀 이중축 콤보 차트 자동화를 구현했습니다.
+            </p>
+        </div>
+    </header>
+
+    <main class="mx-auto max-w-6xl space-y-12 px-4 py-12 sm:px-6 lg:px-8">
+
+        <!-- KPI Highlights -->
+        <section class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+                <span class="text-xs font-bold text-slate-500">기존 발주 시스템 폐기 손실</span>
+                <p class="mt-2 font-mono text-2xl font-extrabold text-slate-900">157,597,320원</p>
+                <p class="mt-1 text-xs text-slate-500">6월 테스트 기간 기준</p>
+            </div>
+            <div class="rounded-2xl border border-sky-200 bg-sky-50/70 p-5 shadow-sm">
+                <span class="text-xs font-bold text-sky-800">ML + Newsvendor 폐기 손실</span>
+                <p class="mt-2 font-mono text-2xl font-extrabold text-sky-900">117,652,450원</p>
+                <p class="mt-1 text-xs font-bold text-emerald-700">▼ 39,944,870원 (-25.3% 절감)</p>
+            </div>
+            <div class="rounded-2xl border border-emerald-200 bg-emerald-50/70 p-5 shadow-sm">
+                <span class="text-xs font-bold text-emerald-800">총 순이익 개선 효과</span>
+                <p class="mt-2 font-mono text-2xl font-extrabold text-emerald-900">947,520,739원</p>
+                <p class="mt-1 text-xs font-semibold text-emerald-700">▲ +1,685,012원 순이익 증가</p>
+            </div>
+            <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+                <span class="text-xs font-bold text-slate-500">고위험 예측 오차 진단 (MAPE)</span>
+                <p class="mt-2 font-mono text-2xl font-extrabold text-rose-600">44.67%</p>
+                <p class="mt-1 text-xs text-slate-500">프로모션+공휴일 동시 발생 시 편향 -193.7</p>
+            </div>
+        </section>
+
+        <!-- Section 1: Category & Error Diagnosis -->
+        <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+            <div class="border-b border-slate-100 pb-5">
+                <span class="text-xs font-bold uppercase tracking-wider text-sky-700">Step 1 · Diagnostic EDA</span>
+                <h2 class="mt-1 text-2xl font-extrabold text-slate-900">카테고리별 폐기·품절 현황 및 기존 시스템 오차 진단</h2>
+                <p class="mt-1.5 text-sm text-slate-600">
+                    <code class="font-mono text-xs text-slate-800">P4_fresh_inventory_daily.csv</code> (10,860일별 레코드) 분석 결과, 수산(11.95%)·채소(10.94%)·정육(10.77%)의 폐기율이 두드러졌으며, 프로모션과 공휴일이 겹치는 날 기존 시스템이 수요를 크게 과소 예측하는 패턴을 확인했습니다.
+                </p>
+            </div>
+
+            <div class="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-12">
+                <div class="overflow-x-auto rounded-2xl border border-slate-200 lg:col-span-7">
+                    <table class="min-w-full divide-y divide-slate-200 text-left text-xs">
+                        <thead class="bg-slate-900 text-white">
+                            <tr>
+                                <th class="px-4 py-3 font-semibold">카테고리</th>
+                                <th class="px-4 py-3 text-right font-semibold">발주량</th>
+                                <th class="px-4 py-3 text-right font-semibold">실수요</th>
+                                <th class="px-4 py-3 text-right font-semibold">폐기율</th>
+                                <th class="px-4 py-3 text-right font-semibold">품절률</th>
+                                <th class="px-4 py-3 text-right font-semibold">폐기 손실(원)</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100 bg-white font-mono">
+                            <tr><td class="px-4 py-2.5 font-sans font-bold text-slate-900">정육</td><td class="px-4 py-2.5 text-right">395,275</td><td class="px-4 py-2.5 text-right">356,802</td><td class="px-4 py-2.5 text-right text-amber-700">10.77%</td><td class="px-4 py-2.5 text-right">1.48%</td><td class="px-4 py-2.5 text-right font-semibold text-rose-700">397,972,600</td></tr>
+                            <tr><td class="px-4 py-2.5 font-sans font-bold text-slate-900">수산</td><td class="px-4 py-2.5 text-right">316,050</td><td class="px-4 py-2.5 text-right">285,557</td><td class="px-4 py-2.5 text-right text-rose-700 font-bold">11.95%</td><td class="px-4 py-2.5 text-right">2.63%</td><td class="px-4 py-2.5 text-right font-semibold text-rose-700">312,503,569</td></tr>
+                            <tr><td class="px-4 py-2.5 font-sans font-bold text-slate-900">과일</td><td class="px-4 py-2.5 text-right">450,189</td><td class="px-4 py-2.5 text-right">428,768</td><td class="px-4 py-2.5 text-right">7.37%</td><td class="px-4 py-2.5 text-right">2.81%</td><td class="px-4 py-2.5 text-right">136,341,930</td></tr>
+                            <tr><td class="px-4 py-2.5 font-sans font-bold text-slate-900">간편식</td><td class="px-4 py-2.5 text-right">355,332</td><td class="px-4 py-2.5 text-right">339,623</td><td class="px-4 py-2.5 text-right">8.94%</td><td class="px-4 py-2.5 text-right text-amber-700 font-bold">4.83%</td><td class="px-4 py-2.5 text-right">114,330,471</td></tr>
+                            <tr><td class="px-4 py-2.5 font-sans font-bold text-slate-900">채소</td><td class="px-4 py-2.5 text-right">360,014</td><td class="px-4 py-2.5 text-right">324,623</td><td class="px-4 py-2.5 text-right text-amber-700">10.94%</td><td class="px-4 py-2.5 text-right">1.44%</td><td class="px-4 py-2.5 text-right">82,203,166</td></tr>
+                            <tr><td class="px-4 py-2.5 font-sans font-bold text-slate-900">유제품</td><td class="px-4 py-2.5 text-right">306,573</td><td class="px-4 py-2.5 text-right">277,537</td><td class="px-4 py-2.5 text-right">9.50%</td><td class="px-4 py-2.5 text-right">0.71%</td><td class="px-4 py-2.5 text-right">43,760,450</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="space-y-4 lg:col-span-5">
+                    <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+                        <h3 class="text-sm font-bold text-slate-900">이벤트 조건별 시스템 예측 오차 (<code class="font-mono text-xs">2_system_error_summary.csv</code>)</h3>
+                        <div class="mt-3 space-y-2.5 text-xs">
+                            <div class="flex items-center justify-between rounded-lg bg-white px-3 py-2">
+                                <span class="text-slate-600">평일 (promo=0, holiday=0)</span>
+                                <span class="font-mono font-bold text-slate-800">Bias +1.78 · MAPE 18.16%</span>
+                            </div>
+                            <div class="flex items-center justify-between rounded-lg bg-white px-3 py-2">
+                                <span class="text-slate-600">공휴일 (promo=0, holiday=1)</span>
+                                <span class="font-mono font-bold text-amber-700">Bias -62.58 · MAPE 25.26%</span>
+                            </div>
+                            <div class="flex items-center justify-between rounded-lg bg-white px-3 py-2">
+                                <span class="text-slate-600">프로모션 (promo=1, holiday=0)</span>
+                                <span class="font-mono font-bold text-amber-700">Bias -61.49 · MAPE 22.59%</span>
+                            </div>
+                            <div class="flex items-center justify-between rounded-lg border border-rose-200 bg-rose-50 px-3 py-2">
+                                <span class="font-semibold text-rose-900">프로모션 + 공휴일 (1, 1)</span>
+                                <span class="font-mono font-bold text-rose-700">Bias -193.73 · MAPE 44.67%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rounded-2xl border border-amber-200 bg-amber-50/70 p-4 text-xs leading-relaxed text-slate-700">
+                        <strong class="text-amber-900">Antigravity IDE 디버깅 경험:</strong>
+                        파이썬 환경 구축 초기 발생한 <code class="rounded bg-white px-1 py-0.5 font-mono text-rose-600">ModuleNotFoundError</code>(scikit-learn, scipy 의존성 누락)를 AI와 대화를 통해 가상환경·패키지 경로 진단 및 설치로 직접 해결하며 코드 실행 역량을 확보했습니다.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: ML + Newsvendor Simulation -->
+        <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+            <div class="border-b border-slate-100 pb-5">
+                <span class="text-xs font-bold uppercase tracking-wider text-indigo-700">Step 2 · ML Forecasting &amp; Newsvendor Policy</span>
+                <h2 class="mt-1 text-2xl font-extrabold text-slate-900">머신러닝 수요예측 및 신문팔이 최적화 시뮬레이션</h2>
+            </div>
+
+            <div class="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-12">
+                <div class="space-y-4 lg:col-span-6">
+                    <h3 class="text-base font-bold text-slate-900">핵심 파이썬 모델링 파이프라인 (<code class="font-mono text-xs text-sky-700">analysis.py</code>)</h3>
+                    <ul class="space-y-2.5 text-sm text-slate-600">
+                        <li class="rounded-xl bg-slate-50 p-3.5">
+                            <strong class="text-slate-900">시계열 파생변수 생성:</strong> SKU·센터·날짜순 정렬 후 <code class="font-mono text-xs">lag_1</code>, <code class="font-mono text-xs">lag_7</code>, <code class="font-mono text-xs">roll_mean_3</code>, <code class="font-mono text-xs">roll_mean_7</code> 및 기온(<code class="font-mono text-xs">temperature_c</code>), 프로모션·공휴일 플래그 투입
+                        </li>
+                        <li class="rounded-xl bg-slate-50 p-3.5">
+                            <strong class="text-slate-900">부스팅 회귀 예측:</strong> <code class="font-mono text-xs text-indigo-700">HistGradientBoostingRegressor(max_iter=300)</code>로 6월 테스트 구간 수요 예측 및 SKU별 학습 잔차 표준편차(<code class="font-mono text-xs">std_error</code>) 산출
+                        </li>
+                        <li class="rounded-xl bg-slate-50 p-3.5">
+                            <strong class="text-slate-900">Newsvendor 임계비율 발주:</strong> 마진과 원가 비율(<code class="font-mono text-xs">CR = margin / (margin + cost)</code>)에 정규분포 역함수 <code class="font-mono text-xs">norm.ppf(CR)</code>를 적용하고 Z-score를 [-2, 2]로 클리핑해 과잉 폐기와 품절 간 최적 균형점 도출
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="rounded-2xl bg-slate-950 p-5 text-white lg:col-span-6">
+                    <div class="mb-3 flex items-center justify-between border-b border-white/10 pb-2 text-xs">
+                        <span class="font-mono font-bold text-sky-300">analysis.py — Core Optimization Logic</span>
+                        <span class="text-slate-400">Python · Scikit-learn · SciPy</span>
+                    </div>
+                    <pre class="overflow-x-auto font-mono text-[11px] leading-relaxed text-slate-200"><code>features = [
+    'system_forecast', 'lag_1', 'lag_7',
+    'roll_mean_3', 'roll_mean_7',
+    'promo_flag', 'holiday_flag', 'temperature_c'
+]
+model = HistGradientBoostingRegressor(max_iter=300, random_state=42)
+model.fit(train[features], train['actual_demand'])
+
+# SKU별 잔차 표준편차 & Newsvendor Z-score 산출
+test['critical_ratio'] = test['margin_krw'] / (test['margin_krw'] + test['unit_cost_krw'])
+test['z_score'] = np.clip(norm.ppf(test['critical_ratio']), -2, 2)
+test['new_order_qty'] = np.maximum(
+    np.ceil(test['ml_forecast'] + test['z_score'] * test['std_error']), 0
+)</code></pre>
+
+                    <!-- Visual Bar Comparison -->
+                    <div class="mt-5 space-y-3 border-t border-white/10 pt-4 text-xs">
+                        <p class="font-bold text-emerald-300">시뮬레이션 폐기 손실 절감 비교</p>
+                        <div>
+                            <div class="mb-1 flex justify-between">
+                                <span class="text-slate-300">기존 발주 시스템</span>
+                                <span class="font-mono font-bold">157,597,320원</span>
+                            </div>
+                            <div class="h-3 w-full overflow-hidden rounded-full bg-white/10">
+                                <div class="h-full w-full rounded-full bg-slate-400"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="mb-1 flex justify-between">
+                                <span class="text-emerald-300">ML + 신문팔이 최적화</span>
+                                <span class="font-mono font-bold text-emerald-300">117,652,450원 (-25.3%)</span>
+                            </div>
+                            <div class="h-3 w-full overflow-hidden rounded-full bg-white/10">
+                                <div class="h-full w-[74.7%] rounded-full bg-emerald-400"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Excel Dual-Axis Combo Chart -->
+        <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+            <div class="grid grid-cols-1 gap-8 lg:grid-cols-12">
+                <div class="lg:col-span-7">
+                    <span class="text-xs font-bold uppercase tracking-wider text-emerald-700">Step 3 · Excel Automation</span>
+                    <h2 class="mt-1 text-2xl font-extrabold text-slate-900">Claude 기반 엑셀 이중축(Combo-Chart) 시각화</h2>
+                    <p class="mt-2 text-sm leading-relaxed text-slate-600">
+                        기업 실적 데이터(<code class="font-mono text-xs text-slate-800">기업실적.csv</code>)에서 매출액(640~2,100)과 영업이익률(7.4~15.2%) 간 단위 격차가 커 단일 축 차트로는 추세 파악이 불가능한 문제를 해결하기 위해, Claude에게 이중축 콤보 차트(Combo-Chart) 설계를 요청하여 <code class="font-mono text-xs text-slate-800">.xlsx</code> 파일로 자동 생성했습니다.
+                    </p>
+                </div>
+                <div class="overflow-x-auto rounded-2xl border border-slate-200 lg:col-span-5">
+                    <table class="min-w-full divide-y divide-slate-200 text-left text-xs">
+                        <thead class="bg-slate-100 text-slate-700">
+                            <tr>
+                                <th class="px-4 py-2.5 font-bold">기업명</th>
+                                <th class="px-4 py-2.5 text-right font-bold">매출액 (주축)</th>
+                                <th class="px-4 py-2.5 text-right font-bold">영업이익률 (보조축)</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100 bg-white font-mono">
+                            <tr><td class="px-4 py-2 font-sans font-semibold">기업A</td><td class="px-4 py-2 text-right">1,200</td><td class="px-4 py-2 text-right text-sky-700">12.5%</td></tr>
+                            <tr><td class="px-4 py-2 font-sans font-semibold">기업B</td><td class="px-4 py-2 text-right">850</td><td class="px-4 py-2 text-right text-sky-700">9.8%</td></tr>
+                            <tr><td class="px-4 py-2 font-sans font-semibold">기업C</td><td class="px-4 py-2 text-right font-bold">2,100</td><td class="px-4 py-2 text-right font-bold text-emerald-700">15.2%</td></tr>
+                            <tr><td class="px-4 py-2 font-sans font-semibold">기업D</td><td class="px-4 py-2 text-right">640</td><td class="px-4 py-2 text-right text-sky-700">7.4%</td></tr>
+                            <tr><td class="px-4 py-2 font-sans font-semibold">기업E</td><td class="px-4 py-2 text-right">1,500</td><td class="px-4 py-2 text-right text-sky-700">11.0%</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Deliverable Links -->
+            <div class="mt-8 grid grid-cols-1 gap-4 border-t border-slate-100 pt-6 sm:grid-cols-2 lg:grid-cols-4">
+                <a href="7주차 개별 활동/analysis.py" target="_blank" class="flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-xs font-bold text-slate-800 hover:border-sky-300 hover:bg-white">
+                    <span>analysis.py (전체 파이썬 코드)</span><span>↗</span>
+                </a>
+                <a href="7주차 개별 활동/5_advanced_simulation_comparison.csv" download class="flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-xs font-bold text-slate-800 hover:border-sky-300 hover:bg-white">
+                    <span>시뮬레이션 비교 CSV</span><span>↓</span>
+                </a>
+                <a href="7주차 개별 활동/신선식품 수요 예측 및 재고 발주 최적화 분석 보고서 (1).docx" download class="flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-xs font-bold text-slate-800 hover:border-sky-300 hover:bg-white">
+                    <span>최적화 분석 보고서 (DOCX)</span><span>↓</span>
+                </a>
+                <a href="Claude 엑셀/기업실적_콤보차트.xlsx" download class="flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-xs font-bold text-slate-800 hover:border-emerald-300 hover:bg-white">
+                    <span>기업실적_콤보차트.xlsx</span><span>↓</span>
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="site-footer"></div>
+    <script src="assets/shared.js"></script>
+</body>
+</html>
