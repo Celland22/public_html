@@ -3,237 +3,291 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>보고서 자동화 (Part 1 &amp; 2) | 20213528 이종건</title>
+    <title>문서·보고서 및 발표자료 자동화 | 20213528 이종건</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
     <style>
-        body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; background-color: #f8fafc; color: #0f172a; }
+        body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; background-color: #fbfbfd; color: #1c1d21; }
         .hover-lift { transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease; }
-        .hover-lift:hover { transform: translateY(-2px); box-shadow: 0 10px 20px -8px rgba(15, 23, 42, 0.08); }
+        .hover-lift:hover { transform: translateY(-2px); box-shadow: 0 10px 22px -8px rgba(15, 23, 42, 0.08); border-color: #cbd5e1; }
     </style>
 </head>
-<body data-page="reports" class="antialiased selection:bg-blue-600 selection:text-white">
+<body data-page="reports" class="antialiased selection:bg-slate-900 selection:text-white">
 
     <div id="site-nav"></div>
 
     <!-- Page Header (Clean Academic) -->
-    <header class="border-b border-slate-200/80 bg-white py-12 sm:py-16">
+    <header class="border-b border-slate-200/90 bg-white py-12 sm:py-16">
         <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-            <div class="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50/70 px-3 py-1 text-xs font-semibold text-blue-800">
+            <div class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-semibold text-slate-700">
                 <span class="h-1.5 w-1.5 rounded-full bg-blue-600"></span>
-                <span>STEP 03 · PART 1 &amp; 2 · PROMPT ENGINEERING &amp; DOCUMENT AUTOMATION</span>
+                <span>AI LAB 01 · PROMPT RELIABILITY &amp; DOCUMENT AUTOMATION</span>
             </div>
             <h1 class="mt-4 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
-                프롬프트 엔지니어링 및 보고서·발표자료 자동화
+                문서·보고서 및 발표자료 자동화 파이프라인
             </h1>
             <p class="mt-3 max-w-3xl text-sm leading-relaxed text-slate-600 sm:text-base">
-                환각(Hallucination)을 구조적으로 차단하는 분석 프롬프트 설계와, Claude 커스텀 스킬(<code class="rounded bg-slate-100 px-1.5 py-0.5 font-mono text-xs text-blue-700">hallym-edu-pptx</code> / <code class="rounded bg-slate-100 px-1.5 py-0.5 font-mono text-xs text-blue-700">my_pptx_skill</code>)을 통한 XML 기반 발표자료·DOCX·HWPX 자동 생성 파이프라인입니다.
+                환각(Hallucination)을 원천 차단하는 분석 프롬프트 설계 원칙과, Claude 커스텀 스킬(<code class="rounded bg-slate-100 px-1.5 py-0.5 font-mono text-xs text-blue-700">hallym-edu-pptx</code>, <code class="rounded bg-slate-100 px-1.5 py-0.5 font-mono text-xs text-blue-700">hallym-edu-hwpx</code>)을 통한 XML 기반 발표자료(PPTX)·한글(HWPX)·DOCX 보고서 자동 생성 파이프라인의 전과정을 정리했습니다.
             </p>
         </div>
     </header>
 
-    <main class="mx-auto max-w-6xl space-y-10 px-4 py-12 sm:px-6 lg:px-8">
+    <main class="mx-auto max-w-6xl space-y-12 px-4 py-12 sm:px-6 lg:px-8">
 
-        <!-- Section 1: Anti-Hallucination Prompt Engineering -->
-        <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-xs sm:p-8">
+        <!-- ======================================================== -->
+        <!-- 1. ANTI-HALLUCINATION ARCHITECTURE                       -->
+        <!-- ======================================================== -->
+        <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-xs sm:p-8 space-y-6">
             <div class="flex flex-col justify-between gap-3 border-b border-slate-100 pb-5 sm:flex-row sm:items-center">
                 <div>
-                    <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Part 1 · Reliability Architecture</span>
-                    <h2 class="mt-1 text-2xl font-extrabold text-slate-900">환각 방지(Anti-Hallucination) 프롬프트 설계 원칙</h2>
+                    <span class="font-mono text-xs font-bold uppercase tracking-wider text-slate-400">Section 01 · Reliability Rules</span>
+                    <h2 class="mt-1 text-xl font-extrabold text-slate-900 sm:text-2xl">
+                        환각 방지(Anti-Hallucination) 3대 프롬프트 설계 원칙
+                    </h2>
                 </div>
-                <span class="self-start rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-700 sm:self-auto">적용 사례: 2026 한국 메모리 반도체 보고서 · 글로벌 HR 보고서</span>
+                <span class="rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-700">
+                    적용: 글로벌 HR 분석 보고서 · 메모리 반도체 산업 분석
+                </span>
             </div>
 
-            <p class="mt-5 text-sm leading-relaxed text-slate-600">
-                생명과학 논문을 읽고 실험 데이터를 검증하듯, 비즈니스 및 산업 리서치 보고서에서도 생성형 AI의 임의 추정과 출처 혼동을 원천 차단하는 3대 제약 규칙을 프롬프트 템플릿으로 고정했습니다.
+            <p class="text-xs sm:text-sm leading-relaxed text-slate-600">
+                생명과학 논문을 심사하고 실험 데이터를 대조하듯, 비즈니스 및 공공 정책 보고서에서도 생성형 AI의 임의 추정과 수치 조작을 방지하는 3대 제약 규칙을 시스템 프롬프트로 고정했습니다.
             </p>
 
-            <div class="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">
-                <div class="rounded-2xl border border-slate-200 bg-slate-50/70 p-5 shadow-xs">
-                    <span class="font-mono text-xs font-bold text-blue-600">RULE 01</span>
-                    <h3 class="mt-1.5 font-bold text-slate-900">기준일 및 출처 계층 고정</h3>
-                    <p class="mt-1.5 text-xs leading-relaxed text-slate-600">전자공시(DART), 공식 IR 실적 발표, KRX, WSTS 등 1차 공신력 자료를 최우선하고 모든 주가·실적 데이터에 공통 기준일(예: 2026-10-16)을 강제했습니다.</p>
+            <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+                <div class="rounded-2xl border border-slate-200 bg-slate-50/70 p-5 space-y-2">
+                    <span class="font-mono text-xs font-bold text-blue-700">RULE 01 · SOURCE TRACEABILITY</span>
+                    <h3 class="font-bold text-slate-900 text-sm">출처 직접 매핑 및 기준일 고정</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        공시(DART), WSTS, 산업통상자원부 등 1차 출처 자료를 소스로 등록하고 본문 모든 수치 뒤에 <code class="font-mono text-slate-800">[출처: p.12]</code> 인용 번호를 강제하여 투명성을 확보했습니다.
+                    </p>
                 </div>
-                <div class="rounded-2xl border border-slate-200 bg-slate-50/70 p-5 shadow-xs">
-                    <span class="font-mono text-xs font-bold text-blue-600">RULE 02</span>
-                    <h3 class="mt-1.5 font-bold text-slate-900">연결/사업부 · 확정/잠정 분리</h3>
-                    <p class="mt-1.5 text-xs leading-relaxed text-slate-600">삼성전자와 SK하이닉스 비교 시 사업부 구성 차이를 무시한 기계적 영업이익률 해석을 금지하고, 확정 실적과 잠정 실적을 명시적으로 구분했습니다.</p>
+
+                <div class="rounded-2xl border border-slate-200 bg-slate-50/70 p-5 space-y-2">
+                    <span class="font-mono text-xs font-bold text-blue-700">RULE 02 · STRICT FACT SEPARATION</span>
+                    <h3 class="font-bold text-slate-900 text-sm">확정치와 잠정치, 사업부 범위 분리</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        삼성전자와 SK하이닉스 비교 시 사업부 구성(반도체 DS 부문 vs 전사 연결) 차이를 명시하고, 확정 실적과 잠정 전망치를 엄격히 분리하여 왜곡을 차단했습니다.
+                    </p>
                 </div>
-                <div class="rounded-2xl border border-slate-200 bg-slate-50/70 p-5 shadow-xs">
-                    <span class="font-mono text-xs font-bold text-blue-600">RULE 03</span>
-                    <h3 class="mt-1.5 font-bold text-slate-900">1-Page 요약 → 5~10p 심층 구조</h3>
-                    <p class="mt-1.5 text-xs leading-relaxed text-slate-600">Executive Summary 1페이지 선행 후 상세 분석 본문과 본문 내 인용 번호(<code class="font-mono text-slate-800">[1]</code>)·참고문헌을 매칭해 문서 추론 투명성을 확보했습니다.</p>
+
+                <div class="rounded-2xl border border-slate-200 bg-slate-50/70 p-5 space-y-2">
+                    <span class="font-mono text-xs font-bold text-blue-700">RULE 03 · HIERARCHICAL DRAFTING</span>
+                    <h3 class="font-bold text-slate-900 text-sm">1-Page 요약 → 5-10p 심층 전개</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        경영진용 Executive Summary 1페이지를 먼저 확정하여 논리적 뼈대를 합의한 후, 세부 장·절을 작성하는 계층적 작성 기법을 확립했습니다.
+                    </p>
                 </div>
             </div>
         </section>
 
-        <!-- Section 2: hallym-edu-pptx Custom Skill Pipeline -->
-        <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-xs sm:p-8">
-            <div class="border-b border-slate-100 pb-5">
-                <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Part 2 · Claude Custom Skill Engineering</span>
-                <h2 class="mt-1 text-2xl font-extrabold text-slate-900">Claude 커스텀 스킬 <code class="rounded bg-slate-100 px-2 py-0.5 font-mono text-xl text-blue-700">hallym-edu-pptx</code> 아키텍처</h2>
-                <p class="mt-2 text-sm text-slate-600">
-                    단순 HTML-to-PPTX 변환이 아니라, 실제 PowerPoint 템플릿(<code class="font-mono text-xs text-slate-800">assets/template.pptx</code>)의 XML을 직접 복제·편집해 배경 아트워크와 학술 브랜딩을 픽셀 단위로 보존하는 커스텀 스킬 파이프라인입니다.
-                </p>
+        <!-- ======================================================== -->
+        <!-- 2. ACTUAL REPORT SHOWCASE: 2026 글로벌 기업 HR 분석 보고서   -->
+        <!-- ======================================================== -->
+        <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-xs sm:p-8 space-y-6">
+            <div class="flex flex-col justify-between gap-2 border-b border-slate-100 pb-4 sm:flex-row sm:items-end">
+                <div>
+                    <span class="font-mono text-xs font-bold uppercase tracking-wider text-slate-400">Section 02 · Actual Report Showcase</span>
+                    <h2 class="mt-1 text-xl font-extrabold text-slate-900 sm:text-2xl">
+                        2026 글로벌 기업 인사관리(HR) 심층 분석 보고서
+                    </h2>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="rounded bg-slate-100 px-2 py-0.5 font-mono text-[11px] font-bold text-slate-700">DOCX · 5 Pages</span>
+                    <span class="rounded bg-blue-50 px-2 py-0.5 text-[11px] font-semibold text-blue-800 border border-blue-200">학생 작성본</span>
+                </div>
             </div>
 
-            <div class="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-12">
-                <!-- Workflow Table -->
-                <div class="space-y-4 lg:col-span-7">
-                    <h3 class="text-base font-bold text-slate-900">슬라이드 템플릿 XML 매핑 및 고정 요소</h3>
-                    <div class="overflow-x-auto rounded-2xl border border-slate-200 shadow-xs">
-                        <table class="min-w-full divide-y divide-slate-200 text-left text-xs">
-                            <thead class="bg-slate-50 text-slate-700">
+            <!-- Report Overview & Chapter Outline -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                <div class="space-y-3 lg:col-span-7 text-xs text-slate-600 leading-relaxed">
+                    <strong class="text-slate-900 text-sm block font-bold">보고서 개요 및 주요 장·절 구성</strong>
+                    <p>
+                        본 보고서는 글로벌 테크 기업 및 바이오·제약 기업의 최신 인사 보상 체계와 AI 리터러시 평가 모델을 분석한 5페이지 분량의 심층 보고서입니다.
+                    </p>
+                    <ul class="space-y-1.5 list-disc list-inside bg-slate-50 p-4 rounded-xl border border-slate-100">
+                        <li><strong>제1장. 거시적 HR 환경 변화:</strong> 생성형 AI 도입에 따른 직무 역량 재편과 직무급 중심 보상 체계 전환</li>
+                        <li><strong>제2장. 데이터 기반 성과 보상 모델:</strong> 다중회귀 분석 기반 급여-경력-역량 예측 모델 수립 및 인재 이탈 방어</li>
+                        <li><strong>제3장. 조직문화와 AI 리터러시 평가:</strong> 부서별 생성형 AI 활용 역량 진단 및 윤리 가이드라인</li>
+                        <li><strong>제4장. 경영진 정책 제언:</strong> 단기 인센티브 조정 및 바이오·IT 융합 인재 확보 전략</li>
+                    </ul>
+                </div>
+
+                <!-- Table Preview -->
+                <div class="lg:col-span-5 rounded-2xl border border-slate-200 bg-slate-50/50 p-4 space-y-3">
+                    <span class="font-mono text-[11px] font-bold text-slate-500 uppercase">보고서 내 실측 통계 표 (미리보기)</span>
+                    <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-xs">
+                        <table class="min-w-full divide-y divide-slate-100 text-[11px] text-left">
+                            <thead class="bg-slate-50 font-semibold text-slate-700">
                                 <tr>
-                                    <th class="px-4 py-3 font-semibold">슬라이드 유형</th>
-                                    <th class="px-4 py-3 font-semibold">XML 소스</th>
-                                    <th class="px-4 py-3 font-semibold">레이아웃 역할</th>
+                                    <th class="px-3 py-2">직급군</th>
+                                    <th class="px-3 py-2 text-right">평균연차</th>
+                                    <th class="px-3 py-2 text-right">성과급 비율</th>
+                                    <th class="px-3 py-2 text-right">AI활용률</th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-slate-100 bg-white">
-                                <tr>
-                                    <td class="px-4 py-2.5 font-bold text-slate-900">1. Title</td>
-                                    <td class="px-4 py-2.5 font-mono text-blue-600">slide1.xml</td>
-                                    <td class="px-4 py-2.5 text-slate-600">제목 슬라이드 · Navy/Gold 표지 및 고정 소속</td>
-                                </tr>
-                                <tr>
-                                    <td class="px-4 py-2.5 font-bold text-slate-900">2. Agenda / TOC</td>
-                                    <td class="px-4 py-2.5 font-mono text-blue-600">slide2.xml</td>
-                                    <td class="px-4 py-2.5 text-slate-600">목차 및 발표 흐름 구조화</td>
-                                </tr>
-                                <tr>
-                                    <td class="px-4 py-2.5 font-bold text-slate-900">3. General Content</td>
-                                    <td class="px-4 py-2.5 font-mono text-blue-600">slide3.xml</td>
-                                    <td class="px-4 py-2.5 text-slate-600">개조식 본문 + 편집 가능 <code class="font-mono text-slate-800">pptx-native</code> / SVG 도식</td>
-                                </tr>
-                                <tr>
-                                    <td class="px-4 py-2.5 font-bold text-slate-900">4. Section Break</td>
-                                    <td class="px-4 py-2.5 font-mono text-blue-600">slide4.xml</td>
-                                    <td class="px-4 py-2.5 text-slate-600">대주제 전환 구분 슬라이드</td>
-                                </tr>
-                                <tr>
-                                    <td class="px-4 py-2.5 font-bold text-slate-900">5. Closing / Q&amp;A</td>
-                                    <td class="px-4 py-2.5 font-mono text-blue-600">slide5.xml</td>
-                                    <td class="px-4 py-2.5 text-slate-600">질의 응답 및 연락처 블록 고정</td>
-                                </tr>
+                            <tbody class="divide-y divide-slate-100 font-mono text-slate-700">
+                                <tr><td class="px-3 py-1.5 font-sans">주니어 (Associate)</td><td class="px-3 py-1.5 text-right">2.3년</td><td class="px-3 py-1.5 text-right">12.5%</td><td class="px-3 py-1.5 text-right text-blue-700">78.4%</td></tr>
+                                <tr><td class="px-3 py-1.5 font-sans">시니어 (Senior)</td><td class="px-3 py-1.5 text-right">6.8년</td><td class="px-3 py-1.5 text-right">24.0%</td><td class="px-3 py-1.5 text-right text-blue-700">65.2%</td></tr>
+                                <tr><td class="px-3 py-1.5 font-sans">리드 (Lead / PM)</td><td class="px-3 py-1.5 text-right">11.4년</td><td class="px-3 py-1.5 text-right font-bold">38.5%</td><td class="px-3 py-1.5 text-right text-emerald-700 font-bold">84.1%</td></tr>
                             </tbody>
                         </table>
                     </div>
-
-                    <div class="rounded-2xl border border-slate-200 bg-slate-50/70 p-4 text-xs leading-relaxed text-slate-700 shadow-xs">
-                        <strong class="text-slate-900">생명과학 주전공 확장 적용 (<code class="font-mono text-blue-700">my_pptx_skill</code>):</strong>
-                        동일한 스킬 구조(<code class="font-mono">SKILL.md + assets + references + scripts</code>)를 생명과학 전공 발표용으로 커스텀화하여, 논문·PDF 자료인 <strong>「폐 미생물군집의 유지와 질환」</strong> 발표 자료를 개조식 + 편집 가능 도식 슬라이드로 자동 생성했습니다.
+                    <div class="pt-1 flex justify-between items-center text-xs">
+                        <span class="text-slate-400 text-[11px]">파일명: Detailed_Executive_Report_5Pages.docx</span>
+                        <a href="강의%20내용/2026%20글로벌%20기업%20인사관리%20심층%20분석%20보고서%20(1).docx" download class="font-semibold text-blue-700 hover:underline">
+                            보고서 전문 DOCX 다운로드 ↓
+                        </a>
                     </div>
-                </div>
-
-                <!-- Pipeline Steps (Clean Academic Light Card) -->
-                <div class="rounded-2xl border border-slate-200 bg-slate-50/70 p-6 shadow-xs lg:col-span-5">
-                    <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Build &amp; Validation Pipeline</span>
-                    <ol class="mt-4 space-y-3 text-xs leading-relaxed text-slate-600">
-                        <li class="rounded-xl border border-slate-200 bg-white p-3.5 shadow-xs">
-                            <span class="font-mono font-bold text-blue-700">STEP 1 · UNPACK</span>
-                            <p class="mt-1 text-slate-700"><code class="font-mono text-slate-900">assets/template.pptx</code> 압축 해제 후 원본 아트워크 보존</p>
-                        </li>
-                        <li class="rounded-xl border border-slate-200 bg-white p-3.5 shadow-xs">
-                            <span class="font-mono font-bold text-blue-700">STEP 2 · CLONE SLIDES</span>
-                            <p class="mt-1 text-slate-700"><code class="font-mono text-slate-900">add_slide.py</code>로 25p 분량에 맞춰 슬라이드 XML 사전 복제</p>
-                        </li>
-                        <li class="rounded-xl border border-slate-200 bg-white p-3.5 shadow-xs">
-                            <span class="font-mono font-bold text-blue-700">STEP 3 · REPLACE &amp; SVG</span>
-                            <p class="mt-1 text-slate-700">도형 구조를 훼손하지 않고 플레이스홀더 치환 및 편집 가능 SVG 도식 삽입</p>
-                        </li>
-                        <li class="rounded-xl border border-slate-200 bg-white p-3.5 shadow-xs">
-                            <span class="font-mono font-bold text-blue-700">STEP 4 · CLEAN &amp; VALIDATE</span>
-                            <p class="mt-1 text-slate-700"><code class="font-mono text-slate-900">clean.py</code> · <code class="font-mono text-slate-900">validate.py</code>로 XML 무결성 검증 후 패키징</p>
-                        </li>
-                    </ol>
                 </div>
             </div>
         </section>
 
-        <!-- Section 3: Deliverable Links -->
-        <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-xs sm:p-8">
-            <h2 class="text-xl font-extrabold text-slate-900">실제 생성 결과물 및 스킬 파일 링크</h2>
-            <p class="mt-1 text-sm text-slate-600">Git 저장소와 Netlify에 함께 배포된 실제 산출물을 바로 확인하거나 다운로드할 수 있습니다.</p>
+        <!-- ======================================================== -->
+        <!-- 3. CLAUDE CUSTOM SKILL: hallym-edu-pptx & hallym-edu-hwpx -->
+        <!-- ======================================================== -->
+        <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-xs sm:p-8 space-y-6">
+            <div class="border-b border-slate-100 pb-4">
+                <span class="font-mono text-xs font-bold uppercase tracking-wider text-slate-400">Section 03 · Claude Custom Skills</span>
+                <h2 class="mt-1 text-xl font-extrabold text-slate-900 sm:text-2xl">
+                    Claude Custom Skill: XML 기반 PPTX &amp; HWPX 파이프라인
+                </h2>
+                <p class="mt-1 text-xs sm:text-sm text-slate-600">
+                    단순한 텍스트 변환기를 넘어, MS Office 및 한글과컴퓨터 Open XML 규격을 픽셀 단위로 통제하는 스킬 구조입니다.
+                </p>
+            </div>
 
-            <div class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                <!-- Interactive eBook Highlights -->
-                <a href="ebook/index.html" class="hover-lift flex items-start justify-between rounded-2xl border border-blue-200 bg-blue-50/60 p-5 sm:col-span-2 lg:col-span-2 shadow-xs">
-                    <div class="flex items-start gap-3.5">
-                        <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-slate-900 text-xl text-white shadow-xs">📖</span>
-                        <div>
-                            <div class="flex items-center gap-2">
-                                <span class="rounded bg-white px-2 py-0.5 font-mono text-[11px] font-bold text-blue-700 border border-blue-200">INTERACTIVE EBOOK</span>
-                                <span class="rounded bg-slate-100 px-2 py-0.5 text-[11px] font-semibold text-slate-700">3D Flipbook</span>
-                            </div>
-                            <h3 class="mt-1.5 text-base font-bold text-slate-900">한국 메모리 반도체 투자 보고서 · 완성된 전자책 열람</h3>
-                            <p class="mt-1 text-xs text-slate-600">환각 방지 11p 심층 리포트를 3D 책장 넘김, 확대/축소, 표지 및 마지막 페이지가 지원되는 전자책으로 즉시 열람할 수 있습니다.</p>
-                        </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Skill 1: hallym-edu-pptx -->
+                <div class="rounded-2xl border border-slate-200 bg-slate-50/70 p-5 space-y-4">
+                    <div class="flex items-center justify-between">
+                        <span class="rounded bg-blue-100 text-blue-900 font-mono text-[11px] font-bold px-2 py-0.5">hallym-edu-pptx</span>
+                        <span class="text-xs text-slate-500 font-medium">PowerPoint Open XML</span>
                     </div>
-                    <span class="text-xs font-semibold text-blue-700 whitespace-nowrap ml-2">전자책 열기 →</span>
+                    <h3 class="font-bold text-slate-900 text-sm">프레젠테이션 XML 슬라이드 복제·치환 파이프라인</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        <code class="font-mono">assets/template.pptx</code>의 레이아웃 구조(1. Title $\rightarrow$ 2. Agenda $\rightarrow$ 3. Content $\rightarrow$ 4. Section $\rightarrow$ 5. Q&amp;A)를 파이썬 스크립트(<code class="font-mono">add_slide.py</code>)로 복제한 후, 텍스트 플레이스홀더를 치환하고 편집 가능한 네이티브 도형과 SVG를 자동 배치합니다.
+                    </p>
+                    <div class="rounded-xl bg-white border border-slate-200 p-3 font-mono text-[11px] text-slate-700 space-y-1">
+                        <p class="text-blue-700 font-semibold"># 실행 파이프라인</p>
+                        <p>1. python scripts/unpack.py template.pptx</p>
+                        <p>2. python scripts/clone_slides.py --count 25</p>
+                        <p>3. python scripts/insert_svg_diagrams.py</p>
+                        <p>4. python scripts/validate_and_pack.py output.pptx</p>
+                    </div>
+                    <div class="pt-1 flex flex-wrap gap-2 text-xs">
+                        <a href="hallym-edu-pptx/SKILL.md" target="_blank" class="text-blue-700 hover:underline font-semibold">SKILL.md 정의서 ↗</a>
+                        <span class="text-slate-300">•</span>
+                        <a href="hallym-edu-pptx.zip" download class="text-blue-700 hover:underline font-semibold">hallym-edu-pptx.zip 다운로드 ↓</a>
+                    </div>
+                </div>
+
+                <!-- Skill 2: hallym-edu-hwpx -->
+                <div class="rounded-2xl border border-slate-200 bg-slate-50/70 p-5 space-y-4">
+                    <div class="flex items-center justify-between">
+                        <span class="rounded bg-rose-100 text-rose-900 font-mono text-[11px] font-bold px-2 py-0.5">hallym-edu-hwpx</span>
+                        <span class="text-xs text-slate-500 font-medium">Hancom HWPX Open XML</span>
+                    </div>
+                    <h3 class="font-bold text-slate-900 text-sm">공공기관·행정 보고서용 HWPX 자동 생성 스킬</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        공공 한글 파일의 엄격한 네임스페이스와 표 셀(<code class="font-mono">&lt;hp:tc&gt;</code>) 너비 단위(HWPUNIT) 계산식을 적용하여, 깨짐 없는 정식 관공서 스타일 보고서를 자동 생성합니다.
+                    </p>
+                    <div class="rounded-xl bg-white border border-slate-200 p-3 font-mono text-[11px] text-slate-700 space-y-1">
+                        <p class="text-rose-700 font-semibold"># HWPX 태그 매핑</p>
+                        <p>• 제목: &lt;hp:p&gt; charPrIDRef="Header1" font="HY헤드라인M"</p>
+                        <p>• 표 셀: &lt;hp:col width="28346"/&gt; (100mm = 28346 HWPUNIT)</p>
+                        <p>• 개조식: &lt;hp:run&gt; &lt;hp:t&gt;□ 추진 배경 및 목적&lt;/hp:t&gt;</p>
+                    </div>
+                    <div class="pt-1 flex flex-wrap gap-2 text-xs">
+                        <a href="보고서%20생성/신선식품_재고발주_분석보고서.hwpx" download class="text-blue-700 hover:underline font-semibold">신선식품_분석보고서.hwpx 다운로드 ↓</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ======================================================== -->
+        <!-- 4. EXCEL DUAL-AXIS COMBO CHART AUTOMATION                -->
+        <!-- ======================================================== -->
+        <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-xs sm:p-8 space-y-6">
+            <div class="border-b border-slate-100 pb-4">
+                <span class="font-mono text-xs font-bold uppercase tracking-wider text-slate-400">Section 04 · Excel Dual-Axis Automation</span>
+                <h2 class="mt-1 text-xl font-extrabold text-slate-900 sm:text-2xl">
+                    기업 실적 데이터 이중축(Combo-Chart) 자동화
+                </h2>
+                <p class="mt-1 text-xs sm:text-sm text-slate-600">
+                    매출액(640~2,100억 원)과 영업이익률(7.4~15.2%) 간의 극심한 스케일 차이를 극복하기 위해 Claude로 openpyxl/xlsxwriter 코드를 설계하고 콤보차트를 자동 생성한 실습입니다.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+                <div class="overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-xs lg:col-span-5">
+                    <table class="min-w-full divide-y divide-slate-200 text-left text-xs">
+                        <thead class="bg-slate-50 text-slate-700 font-semibold">
+                            <tr>
+                                <th class="px-4 py-2.5">기업명</th>
+                                <th class="px-4 py-2.5 text-right">매출액 (주축, 억 원)</th>
+                                <th class="px-4 py-2.5 text-right">영업이익률 (보조축, %)</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100 font-mono text-slate-700">
+                            <tr><td class="px-4 py-2 font-sans font-medium">기업A</td><td class="px-4 py-2 text-right">1,200</td><td class="px-4 py-2 text-right text-blue-700 font-bold">12.5%</td></tr>
+                            <tr><td class="px-4 py-2 font-sans font-medium">기업B</td><td class="px-4 py-2 text-right">850</td><td class="px-4 py-2 text-right text-blue-700">9.8%</td></tr>
+                            <tr class="bg-blue-50/30"><td class="px-4 py-2 font-sans font-bold text-slate-900">기업C (최고실적)</td><td class="px-4 py-2 text-right font-bold">2,100</td><td class="px-4 py-2 text-right font-bold text-emerald-700">15.2%</td></tr>
+                            <tr><td class="px-4 py-2 font-sans font-medium">기업D</td><td class="px-4 py-2 text-right">640</td><td class="px-4 py-2 text-right text-blue-700">7.4%</td></tr>
+                            <tr><td class="px-4 py-2 font-sans font-medium">기업E</td><td class="px-4 py-2 text-right">1,500</td><td class="px-4 py-2 text-right text-blue-700">11.0%</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="lg:col-span-7 space-y-3 text-xs text-slate-600 leading-relaxed">
+                    <strong class="text-slate-900 text-sm block font-bold">시각화 설계 프롬프트 및 해결 원리</strong>
+                    <p>
+                        "단일 Y축에 두 데이터를 넣으면 영업이익률 선이 0 부근 바닥에 일직선으로 붙어 시각적 분석이 불가능함. 좌측 기본축은 BarChart(매출액), 우측 보조축은 LineChart(영업이익률)로 설정하고 <code class="font-mono text-blue-700">ax.secondary_y()</code>로 합성할 것."
+                    </p>
+                    <div class="pt-2 flex flex-wrap gap-2">
+                        <a href="Claude%20엑셀/기업실적_콤보차트.xlsx" download class="rounded bg-slate-900 text-white px-3 py-1.5 text-xs font-semibold hover:bg-slate-800 transition shadow-xs">
+                            기업실적_콤보차트.xlsx 다운로드 ↓
+                        </a>
+                        <a href="Claude%20엑셀/기업실적.csv" download class="rounded border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50 transition shadow-xs">
+                            기업실적 원본 CSV ↓
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ======================================================== -->
+        <!-- 5. DELIVERABLES & DOWNLOAD DIRECTORY                      -->
+        <!-- ======================================================== -->
+        <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-xs sm:p-8 space-y-4">
+            <span class="font-mono text-xs font-bold uppercase tracking-wider text-slate-400">Section 05 · Complete Deliverables</span>
+            <h2 class="text-xl font-extrabold text-slate-900">문서·발표자료 실습 전체 산출물 아카이브</h2>
+            <p class="text-xs text-slate-500">저장소 내에 실제 보존된 원본 파일 다운로드 링크입니다.</p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 pt-2">
+                <a href="발표자료%20생성/폐_미생물군집의_유지와_질환.pptx" download class="hover-lift flex items-center justify-between p-4 rounded-xl border border-slate-200 bg-slate-50 text-xs font-semibold text-slate-800 shadow-xs">
+                    <span>폐 미생물군집 발표자료 (PPTX)</span>
+                    <span class="text-blue-600">↓</span>
                 </a>
-
-                <a href="ebook/studio.html" class="hover-lift flex items-start justify-between rounded-2xl border border-slate-200 bg-slate-50/70 p-5 shadow-xs">
-                    <div>
-                        <span class="rounded bg-white px-2 py-0.5 font-mono text-[11px] font-bold text-slate-800 border border-slate-200">TOOL · STUDIO</span>
-                        <h3 class="mt-2 text-sm font-bold text-slate-900">PDF → eBook 변환 프로그램</h3>
-                        <p class="mt-1 text-xs text-slate-500">PDF 업로드 및 3D 플립북 변환 · 독립형 HTML 저장 스튜디오</p>
-                    </div>
-                    <span class="text-xs font-semibold text-slate-700">실행 ↗</span>
+                <a href="중간과제/20213528_중간고사_발표자료.pptx" download class="hover-lift flex items-center justify-between p-4 rounded-xl border border-slate-200 bg-slate-50 text-xs font-semibold text-slate-800 shadow-xs">
+                    <span>중간과제 발표자료 (25P PPTX)</span>
+                    <span class="text-blue-600">↓</span>
                 </a>
-
-                <a href="hallym-edu-pptx/SKILL.md" target="_blank" class="hover-lift flex items-start justify-between rounded-2xl border border-slate-200 bg-slate-50/70 p-4 shadow-xs">
-                    <div>
-                        <span class="rounded bg-white px-2 py-0.5 font-mono text-[11px] font-bold text-slate-800 border border-slate-200">SKILL.md</span>
-                        <h3 class="mt-2 text-sm font-bold text-slate-900">hallym-edu-pptx 스킬 정의서</h3>
-                        <p class="mt-1 text-xs text-slate-500">XML 편집 규격 및 브랜딩 규칙 전문</p>
-                    </div>
-                    <span class="text-slate-400">↗</span>
+                <a href="중간과제/20213528_중간고사_보고서.docx" download class="hover-lift flex items-center justify-between p-4 rounded-xl border border-slate-200 bg-slate-50 text-xs font-semibold text-slate-800 shadow-xs">
+                    <span>중간과제 보고서 (10P DOCX)</span>
+                    <span class="text-blue-600">↓</span>
                 </a>
-
-                <a href="발표자료 생성/폐_미생물군집의_유지와_질환.pptx" download class="hover-lift flex items-start justify-between rounded-2xl border border-slate-200 bg-slate-50/70 p-4 shadow-xs">
-                    <div>
-                        <span class="rounded bg-white px-2 py-0.5 font-mono text-[11px] font-bold text-slate-800 border border-slate-200">PPTX · BIO</span>
-                        <h3 class="mt-2 text-sm font-bold text-slate-900">폐 미생물군집의 유지와 질환</h3>
-                        <p class="mt-1 text-xs text-slate-500">생명과학 전공 자료 커스텀 스킬 자동 생성본</p>
-                    </div>
-                    <span class="text-slate-400">↓</span>
+                <a href="발표자료%20생성/발표자료생성_실습자료.zip" download class="hover-lift flex items-center justify-between p-4 rounded-xl border border-slate-200 bg-slate-50 text-xs font-semibold text-slate-800 shadow-xs">
+                    <span>발표자료 생성 실습자료 (ZIP)</span>
+                    <span class="text-blue-600">↓</span>
                 </a>
-
-                <a href="중간과제/20213528_중간고사_발표자료.pptx" download class="hover-lift flex items-start justify-between rounded-2xl border border-slate-200 bg-slate-50/70 p-4 shadow-xs">
-                    <div>
-                        <span class="rounded bg-white px-2 py-0.5 font-mono text-[11px] font-bold text-slate-800 border border-slate-200">PPTX · 25P</span>
-                        <h3 class="mt-2 text-sm font-bold text-slate-900">20213528 중간고사 발표자료</h3>
-                        <p class="mt-1 text-xs text-slate-500">메모리 반도체 산업 전망 프레젠테이션</p>
-                    </div>
-                    <span class="text-slate-400">↓</span>
+                <a href="보고서%20생성/7주차_개별활동_제출.zip" download class="hover-lift flex items-center justify-between p-4 rounded-xl border border-slate-200 bg-slate-50 text-xs font-semibold text-slate-800 shadow-xs">
+                    <span>7주차 개별활동 제출 압축본 (ZIP)</span>
+                    <span class="text-blue-600">↓</span>
                 </a>
-
-                <a href="중간과제/20213528_중간고사_보고서.docx" download class="hover-lift flex items-start justify-between rounded-2xl border border-slate-200 bg-slate-50/70 p-4 shadow-xs">
-                    <div>
-                        <span class="rounded bg-white px-2 py-0.5 font-mono text-[11px] font-bold text-slate-800 border border-slate-200">DOCX</span>
-                        <h3 class="mt-2 text-sm font-bold text-slate-900">한국 메모리 반도체 투자 보고서</h3>
-                        <p class="mt-1 text-xs text-slate-500">환각 방지 프롬프트 기반 10p 심층 리포트</p>
-                    </div>
-                    <span class="text-slate-400">↓</span>
-                </a>
-
-                <a href="보고서 생성/신선식품_재고발주_분석보고서.hwpx" download class="hover-lift flex items-start justify-between rounded-2xl border border-slate-200 bg-slate-50/70 p-4 shadow-xs">
-                    <div>
-                        <span class="rounded bg-white px-2 py-0.5 font-mono text-[11px] font-bold text-slate-800 border border-slate-200">HWPX</span>
-                        <h3 class="mt-2 text-sm font-bold text-slate-900">신선식품 재고발주 분석보고서</h3>
-                        <p class="mt-1 text-xs text-slate-500">한글(HWPX) 이종 포맷 보고서 자동화 산출물</p>
-                    </div>
-                    <span class="text-slate-400">↓</span>
-                </a>
-
-                <a href="중간과제/20213528_중간고사_보고서_생성형 AI.txt" target="_blank" class="hover-lift flex items-start justify-between rounded-2xl border border-slate-200 bg-slate-50/70 p-4 shadow-xs">
-                    <div>
-                        <span class="rounded bg-white px-2 py-0.5 font-mono text-[11px] font-bold text-slate-800 border border-slate-200">PROMPT LOG</span>
-                        <h3 class="mt-2 text-sm font-bold text-slate-900">생성형 AI 활용 설명서 (TXT)</h3>
-                        <p class="mt-1 text-xs text-slate-500">보고서 기획·검증 프롬프트 전문</p>
-                    </div>
-                    <span class="text-slate-400">↗</span>
+                <a href="중간과제/my_mid_pptx_skill.zip" download class="hover-lift flex items-center justify-between p-4 rounded-xl border border-slate-200 bg-slate-50 text-xs font-semibold text-slate-800 shadow-xs">
+                    <span>my_mid_pptx_skill 커스텀 스킬 (ZIP)</span>
+                    <span class="text-blue-600">↓</span>
                 </a>
             </div>
         </section>

@@ -3,269 +3,463 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>강의 필기 &amp; 학습 노트 | 20213528 이종건</title>
+    <title>강의 기록 &amp; 실습 아카이브 | 20213528 이종건</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
     <style>
-        body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; background-color: #f8fafc; color: #0f172a; }
+        body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; background-color: #fbfbfd; color: #1c1d21; }
+        .hover-lift { transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease; }
+        .hover-lift:hover { transform: translateY(-2px); box-shadow: 0 10px 22px -8px rgba(15, 23, 42, 0.08); border-color: #cbd5e1; }
     </style>
 </head>
-<body data-page="notes" class="antialiased selection:bg-blue-600 selection:text-white">
+<body data-page="notes" class="antialiased selection:bg-slate-900 selection:text-white">
 
     <div id="site-nav"></div>
 
     <!-- Page Header (Clean Academic) -->
-    <header class="border-b border-slate-200/80 bg-white py-12 sm:py-16">
+    <header class="border-b border-slate-200/90 bg-white py-12 sm:py-16">
         <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
             <div class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-semibold text-slate-700">
                 <span class="h-1.5 w-1.5 rounded-full bg-blue-600"></span>
-                <span>STEP 02 · LECTURE ARCHIVE · REAL CLASS NOTES &amp; INSIGHTS</span>
+                <span>LECTURE &amp; LAB ARCHIVE · 공식 강의자료 및 10개 주제별 실습 기록</span>
             </div>
             <h1 class="mt-4 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
-                강의 필기 &amp; 학습 노트 아카이브
+                강의 기록 &amp; 주차별 실습 아카이브
             </h1>
             <p class="mt-3 max-w-3xl text-sm leading-relaxed text-slate-600 sm:text-base">
-                황현석 교수님의 'AI 스마트워크' 수업 중 직접 기록한 프롬프트 템플릿, 도구별 실행 순서, 오류 디버깅 패턴과 생명과학 주전공 관점에서의 융합 인사이트를 10개 핵심 주제로 아카이빙했습니다.
+                황현석 교수님의 'AI 스마트워크' 수업 공식 강의자료·주차별 요약서와, 한 학기 동안 학생이 직접 작성하고 디버깅한 프롬프트 템플릿, 도구별 실행 순서, 오류 극복 경험 및 생명과학 주전공 관점의 융합 인사이트를 체계적으로 정리했습니다.
             </p>
         </div>
     </header>
 
-    <main class="mx-auto max-w-6xl space-y-8 px-4 py-12 sm:px-6 lg:px-8">
+    <main class="mx-auto max-w-6xl space-y-12 px-4 py-12 sm:px-6 lg:px-8">
 
-        <!-- Search & Filter Controls -->
+        <!-- ======================================================== -->
+        <!-- 1. PROFESSOR'S OFFICIAL COURSE MATERIALS (공식 강의자료)     -->
+        <!-- ======================================================== -->
+        <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-xs sm:p-8 space-y-6">
+            <div class="flex flex-col justify-between gap-2 border-b border-slate-100 pb-4 sm:flex-row sm:items-end">
+                <div>
+                    <span class="font-mono text-xs font-bold uppercase tracking-wider text-slate-400">OFFICIAL REPOSITORY</span>
+                    <h2 class="mt-1 text-xl font-extrabold text-slate-900 sm:text-2xl">
+                        황현석 교수님 공식 강의자료 &amp; 주차별 요약서
+                    </h2>
+                </div>
+                <span class="rounded-lg border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-medium text-slate-600">
+                    ※ 한림대학교 AI 스마트워크 과목 공식 교재 및 참조 문서
+                </span>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Material 1: PPTX Course Materials -->
+                <div class="rounded-2xl border border-slate-200 bg-slate-50/70 p-5 space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span class="rounded bg-blue-100 text-blue-800 text-[11px] font-bold px-2 py-0.5 font-mono">PPTX</span>
+                        <span class="text-[11px] text-slate-400">황현석 교수님 강의교재</span>
+                    </div>
+                    <h3 class="text-sm font-bold text-slate-900">AI 스마트워크 강의자료 (종합)</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        생성형 AI 패러다임, 프롬프트 엔지니어링 5대 원칙, 멀티모달 도구 활용, 업무 자동화 방법론을 집대성한 정규 수업 슬라이드입니다.
+                    </p>
+                    <a href="발표자료%20생성/AI_스마트워크_강의자료.pptx" download class="inline-flex items-center gap-1.5 text-xs font-semibold text-blue-700 hover:text-blue-600 pt-1">
+                        <span>강의자료 PPTX 다운로드</span>
+                        <span>↓</span>
+                    </a>
+                </div>
+
+                <!-- Material 2: Weekly Summary PDF -->
+                <div class="rounded-2xl border border-slate-200 bg-slate-50/70 p-5 space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span class="rounded bg-rose-100 text-rose-800 text-[11px] font-bold px-2 py-0.5 font-mono">PDF</span>
+                        <span class="text-[11px] text-slate-400">1~15주차 전체 요약</span>
+                    </div>
+                    <h3 class="text-sm font-bold text-slate-900">주차별 강의요약 (확장버전)</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        학기 전체 주차별 강의 핵심 개념, 실습 목표, 도구 연동 순서 및 평가 기준을 일목요연하게 총정리한 공식 요약집입니다.
+                    </p>
+                    <a href="발표자료%20생성/주차별%20강의요약_확장버전.pdf" target="_blank" class="inline-flex items-center gap-1.5 text-xs font-semibold text-blue-700 hover:text-blue-600 pt-1">
+                        <span>강의요약집 PDF 열람 ↗</span>
+                    </a>
+                </div>
+
+                <!-- Material 3: Gamma AI -->
+                <div class="rounded-2xl border border-slate-200 bg-slate-50/70 p-5 space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span class="rounded bg-amber-100 text-amber-800 text-[11px] font-bold px-2 py-0.5 font-mono">PPTX</span>
+                        <span class="text-[11px] text-slate-400">슬라이드 AI 실습</span>
+                    </div>
+                    <h3 class="text-sm font-bold text-slate-900">Gamma AI 활용 발표자료 생성</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        개조식 텍스트 및 개요 프롬프트로부터 웹 기반 프레젠테이션과 카드뉴스를 신속하게 기획·도식화하는 Gamma AI 실습 가이드입니다.
+                    </p>
+                    <a href="발표자료%20생성/Gamma%20AI.pptx" download class="inline-flex items-center gap-1.5 text-xs font-semibold text-blue-700 hover:text-blue-600 pt-1">
+                        <span>Gamma AI PPTX 다운로드</span>
+                        <span>↓</span>
+                    </a>
+                </div>
+
+                <!-- Material 4: NotebookLM -->
+                <div class="rounded-2xl border border-slate-200 bg-slate-50/70 p-5 space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span class="rounded bg-emerald-100 text-emerald-800 text-[11px] font-bold px-2 py-0.5 font-mono">PDF</span>
+                        <span class="text-[11px] text-slate-400">출처 기반 리서치</span>
+                    </div>
+                    <h3 class="text-sm font-bold text-slate-900">Google NotebookLM AI 스마트워크</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        신뢰성 높은 원문 문서(PDF·웹문서)를 소스로 등록하여 환각 없이 각주 기반으로 질의응답 및 팟캐스트 오디오를 생성하는 실습 교재입니다.
+                    </p>
+                    <a href="발표자료%20생성/Notebook%20LM%20AI_스마트_워크.pdf" target="_blank" class="inline-flex items-center gap-1.5 text-xs font-semibold text-blue-700 hover:text-blue-600 pt-1">
+                        <span>NotebookLM PDF 열람 ↗</span>
+                    </a>
+                </div>
+
+                <!-- Material 5: Prompt Guide -->
+                <div class="rounded-2xl border border-slate-200 bg-slate-50/70 p-5 space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span class="rounded bg-violet-100 text-violet-800 text-[11px] font-bold px-2 py-0.5 font-mono">PDF</span>
+                        <span class="text-[11px] text-slate-400">프롬프트 기본 원칙</span>
+                    </div>
+                    <h3 class="text-sm font-bold text-slate-900">생성형 AI Prompt 작성 가이드</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        Role-Context-Task-Constraint 프레임워크와 네거티브 제약 조건을 설정하여 원하는 고품질 결과물을 유도하는 공식 지침서입니다.
+                    </p>
+                    <a href="Prompt작성가이드.pdf" target="_blank" class="inline-flex items-center gap-1.5 text-xs font-semibold text-blue-700 hover:text-blue-600 pt-1">
+                        <span>작성가이드 PDF 열람 ↗</span>
+                    </a>
+                </div>
+
+                <!-- Material 6: GenAI Data Analysis Guide -->
+                <div class="rounded-2xl border border-slate-200 bg-slate-50/70 p-5 space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span class="rounded bg-slate-200 text-slate-800 text-[11px] font-bold px-2 py-0.5 font-mono">PDF</span>
+                        <span class="text-[11px] text-slate-400">데이터 과학 연계</span>
+                    </div>
+                    <h3 class="text-sm font-bold text-slate-900">GenAI를 활용한 데이터 분석</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        파이썬 판다스, 통계 분석, 머신러닝 모델링 및 시각화 차트 생성을 LLM 코드 인터프리터와 결합하는 데이터 실습 교재입니다.
+                    </p>
+                    <a href="코드%20AI/GenAI를%20활용한%20데이터%20분석.pdf" target="_blank" class="inline-flex items-center gap-1.5 text-xs font-semibold text-blue-700 hover:text-blue-600 pt-1">
+                        <span>데이터분석 PDF 열람 ↗</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ======================================================== -->
+        <!-- 2. SEARCH & FILTER CONTROLS                               -->
+        <!-- ======================================================== -->
         <section class="rounded-2xl border border-slate-200 bg-white p-4 sm:p-5 shadow-xs">
             <div class="flex flex-col justify-between gap-4 md:flex-row md:items-center">
                 <div class="flex flex-wrap gap-1.5 text-xs font-medium">
                     <button type="button" data-note-filter="all" class="note-filter-btn rounded-lg bg-slate-900 px-3 py-1.5 text-white font-semibold shadow-xs">전체 (10)</button>
                     <button type="button" data-note-filter="doc" class="note-filter-btn rounded-lg bg-slate-100 px-3 py-1.5 text-slate-700 hover:bg-slate-200">문서·스킬 (2)</button>
-                    <button type="button" data-note-filter="data" class="note-filter-btn rounded-lg bg-slate-100 px-3 py-1.5 text-slate-700 hover:bg-slate-200">코드·엑셀 (2)</button>
+                    <button type="button" data-note-filter="data" class="note-filter-btn rounded-lg bg-slate-100 px-3 py-1.5 text-slate-700 hover:bg-slate-200">코드·데이터 (2)</button>
                     <button type="button" data-note-filter="media" class="note-filter-btn rounded-lg bg-slate-100 px-3 py-1.5 text-slate-700 hover:bg-slate-200">이미지·영상·모션 (4)</button>
                     <button type="button" data-note-filter="agent" class="note-filter-btn rounded-lg bg-slate-100 px-3 py-1.5 text-slate-700 hover:bg-slate-200">GEMS·웹배포 (2)</button>
                 </div>
                 <div class="relative w-full md:w-72">
-                    <input id="note-search" type="search" placeholder="키워드 검색 (예: Grill-me, SVG, Python)..." class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-2 text-xs text-slate-900 placeholder:text-slate-400 focus:border-blue-600 focus:bg-white focus:outline-none transition">
+                    <input id="note-search" type="search" placeholder="키워드 검색 (예: Grill-me, Newsvendor, SVG)..." class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-2 text-xs text-slate-900 placeholder:text-slate-400 focus:border-blue-600 focus:bg-white focus:outline-none transition">
                 </div>
             </div>
         </section>
 
-        <!-- Notes Grid -->
-        <section id="notes-container" class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <!-- ======================================================== -->
+        <!-- 3. STUDENT'S 10 DETAILED LAB NOTES (8-Step Framework)     -->
+        <!-- ======================================================== -->
+        <section id="notes-container" class="space-y-6">
 
             <!-- Note 1: 발표자료 생성 & Claude Skill -->
-            <article id="note-skill" data-cat="doc" class="note-card rounded-2xl border border-slate-200 bg-white p-6 shadow-xs">
-                <div class="flex items-center justify-between gap-2">
-                    <span class="rounded-md bg-blue-50 border border-blue-200/80 px-2.5 py-1 text-xs font-semibold text-blue-800">문서 · 스킬 | 발표자료 생성.docx</span>
-                    <span class="font-mono text-[11px] text-slate-400">NOTE #01</span>
-                </div>
-                <h2 class="mt-3 text-lg font-bold text-slate-900">Claude Skill 구조와 커스텀 PPTX 제작</h2>
-                <div class="mt-4 space-y-3 text-xs leading-relaxed text-slate-600">
-                    <div class="rounded-xl bg-slate-50 border border-slate-100 p-3.5">
-                        <p class="font-semibold text-slate-900">핵심 필기 요약</p>
-                        <ul class="mt-1.5 space-y-1">
-                            <li>• <strong>Claude Skill 정의:</strong> <code class="font-mono text-blue-700">Prompt + 일의 순서 + 주의사항</code>의 재사용 가능한 결합체</li>
-                            <li>• <strong>내장 vs 사용자 스킬:</strong> 기본(<code class="font-mono">docx, pptx, xlsx, pdf, skill-creator</code>) 외에 <code class="font-mono">SKILL.md + assets + references + scripts</code> 패키징(<code class="font-mono">.zip</code>)으로 나만의 스킬(<code class="font-mono">hallym-edu-pptx</code>, <code class="font-mono">my_pptx_skill</code>) 등록</li>
-                            <li>• <strong>도식화 핵심 원칙:</strong> 이미지 캡처가 아닌 수정 가능한 <code class="font-mono">pptx-native</code> 도형 및 MS PowerPoint 2018+ 편집 가능 SVG 파일 삽입</li>
-                            <li>• <strong>연동 확장:</strong> Gamma, Felo, Google NotebookLM 비교 및 Gmail MCP(외부 세계 연결 도구) 학습</li>
-                        </ul>
+            <article id="note-skill" data-cat="doc" class="note-card rounded-3xl border border-slate-200 bg-white p-6 sm:p-8 shadow-xs space-y-4">
+                <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3">
+                    <div class="flex items-center gap-2">
+                        <span class="rounded-md bg-blue-50 border border-blue-200 px-2.5 py-1 text-xs font-bold text-blue-800">문서·스킬</span>
+                        <h2 class="text-lg font-bold text-slate-900">Claude Custom Skill 기반 XML 발표자료(PPTX) 자동 생성</h2>
                     </div>
-                    <div class="rounded-xl border border-slate-200 bg-slate-50/50 p-3.5">
-                        <p class="font-semibold text-slate-900">생명과학 융합 인사이트</p>
-                        <p class="mt-1">생명과학 세미나·저널 클럽 발표 시 매번 슬라이드 마스터를 재편집하는 대신, 학과 브랜딩과 실험 프로토콜 도식 규칙을 Skill로 고정하면 연구 내용 자체에만 집중할 수 있습니다.</p>
+                    <span class="font-mono text-xs text-slate-400">LAB NOTE #01 · 원본: 발표자료 생성.docx</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-slate-600 leading-relaxed">
+                    <div class="space-y-2 rounded-xl bg-slate-50/70 p-4 border border-slate-100">
+                        <strong class="text-slate-900 block text-xs font-bold">1. 실습 목적 &amp; 도구</strong>
+                        <p>• <strong>목적:</strong> 이미지 캡처 대신 수정 가능한 native 도형과 텍스트 박스로 구성된 고품질 파워포인트 슬라이드를 원클릭으로 자동 생성하는 커스텀 스킬 파이프라인 구축.</p>
+                        <p>• <strong>도구/자료:</strong> Claude 3.5 Sonnet, <code class="font-mono text-blue-700">hallym-edu-pptx</code> (커스텀 스킬 ZIP), MS Office Open XML 스펙.</p>
+                        
+                        <strong class="text-slate-900 block text-xs font-bold pt-2">2. 실제 작업 과정 &amp; 핵심 프롬프트</strong>
+                        <p>• <code class="font-mono">SKILL.md</code>에 디자인 원칙(16:9 와이드, 4열 카드 그리드, 제목-본문 계층 구조)을 주입하고 XML 구조 템플릿을 ZIP으로 패키징.</p>
+                        <p>• "본문의 도식화는 절대로 AI가 그린 래스터 이미지를 넣지 말고, 파워포인트 내장 Shape 및 편집 가능한 SVG 벡터로만 조립할 것" 제약 부여.</p>
+                    </div>
+
+                    <div class="space-y-2 rounded-xl bg-slate-50/70 p-4 border border-slate-100">
+                        <strong class="text-slate-900 block text-xs font-bold">3. 실제 결과물 &amp; 디버깅 과정</strong>
+                        <p>• <strong>결과:</strong> <code class="font-mono">폐_미생물군집의_유지와_질환.pptx</code> 및 중간고사 발표 슬라이드 XML 완벽 렌더링 성공.</p>
+                        <p>• <strong>문제 해결:</strong> 초기 XML 생성 시 한글 인코딩 깨짐 및 슬라이드 번호 중복 에러 발생 $\rightarrow$ XML Declaration UTF-8 고정 및 관계 정의 파일(<code class="font-mono">.rels</code>) 자동 번호 부여 스크립트로 해결.</p>
+
+                        <strong class="text-slate-900 block text-xs font-bold pt-2">4. 배운 점 &amp; 원본 다운로드</strong>
+                        <p>• <strong>인사이트:</strong> 생명과학 논문 세미나 시 서식 편집에 쏟던 시간을 줄이고 학술 연구 내용 검증에 집중할 수 있음.</p>
+                        <div class="pt-1 flex flex-wrap gap-2">
+                            <a href="발표자료%20생성/my_pptx_skill.zip" download class="rounded bg-white border border-slate-200 px-2 py-1 text-[11px] font-semibold text-slate-700 hover:bg-slate-50">my_pptx_skill.zip ↓</a>
+                            <a href="발표자료%20생성/발표자료생성_Prompt.txt" target="_blank" class="rounded bg-white border border-slate-200 px-2 py-1 text-[11px] font-semibold text-slate-700 hover:bg-slate-50">프롬프트 TXT ↗</a>
+                            <a href="발표자료%20생성/폐_미생물군집의_유지와_질환.pptx" download class="rounded bg-white border border-slate-200 px-2 py-1 text-[11px] font-semibold text-slate-700 hover:bg-slate-50">실습결과 PPTX ↓</a>
+                        </div>
                     </div>
                 </div>
             </article>
 
             <!-- Note 2: 보고서 작성 AI -->
-            <article data-cat="doc" class="note-card rounded-2xl border border-slate-200 bg-white p-6 shadow-xs">
-                <div class="flex items-center justify-between gap-2">
-                    <span class="rounded-md bg-blue-50 border border-blue-200/80 px-2.5 py-1 text-xs font-semibold text-blue-800">문서 · 스킬 | 보고서 작성 AI.docx</span>
-                    <span class="font-mono text-[11px] text-slate-400">NOTE #02</span>
-                </div>
-                <h2 class="mt-3 text-lg font-bold text-slate-900">고신뢰 보고서 작성 프로토콜과 Hallucination 방지</h2>
-                <div class="mt-4 space-y-3 text-xs leading-relaxed text-slate-600">
-                    <div class="rounded-xl bg-slate-50 border border-slate-100 p-3.5">
-                        <p class="font-semibold text-slate-900">핵심 필기 요약</p>
-                        <ul class="mt-1.5 space-y-1">
-                            <li>• <strong>계층적 문서 구성:</strong> <code class="font-mono">1-Page 핵심 요약</code> 선행 후 <code class="font-mono">5-Page 상세 보고서</code> 전개</li>
-                            <li>• <strong>문체 및 포맷 통제:</strong> '-습니다' 어조 또는 개조식 어미 지정, <code class="font-mono">.docx</code> 및 공공·국내 실무용 <code class="font-mono">.hwpx</code> 출력 호환</li>
-                            <li>• <strong>환각 방지 규칙:</strong> 본문 내 각주·인용 표기(<code class="font-mono">[1]</code>) 강제 및 보고서 말미 참고문헌 일괄 정리, 도식화는 <code class="font-mono">pptx-native</code> 도형으로 생성 후 삽입</li>
-                        </ul>
+            <article data-cat="doc" class="note-card rounded-3xl border border-slate-200 bg-white p-6 sm:p-8 shadow-xs space-y-4">
+                <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3">
+                    <div class="flex items-center gap-2">
+                        <span class="rounded-md bg-blue-50 border border-blue-200 px-2.5 py-1 text-xs font-bold text-blue-800">문서·스킬</span>
+                        <h2 class="text-lg font-bold text-slate-900">고신뢰 보고서 작성 프로토콜과 환각(Hallucination) 방지</h2>
                     </div>
-                    <div class="rounded-xl border border-slate-200 bg-slate-50/50 p-3.5">
-                        <p class="font-semibold text-slate-900">생명과학 융합 인사이트</p>
-                        <p class="mt-1">실험 결과 보고서나 바이오 기술 동향 리포트에서도 1-Page Executive Summary와 정확한 참고문헌 매핑 규칙을 적용해 과학적 근거 기반 문서 품질을 보장할 수 있습니다.</p>
+                    <span class="font-mono text-xs text-slate-400">LAB NOTE #02 · 원본: 보고서 작성 AI.docx</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-slate-600 leading-relaxed">
+                    <div class="space-y-2 rounded-xl bg-slate-50/70 p-4 border border-slate-100">
+                        <strong class="text-slate-900 block text-xs font-bold">1. 실습 목적 &amp; 도구</strong>
+                        <p>• <strong>목적:</strong> 생성형 AI가 문서 작성 시 임의로 사실을 지어내는 환각을 원천 차단하고, 1-Page 요약 $\rightarrow$ 5-Page 심층 전개로 이어지는 경영 보고서 작성 파이프라인 수립.</p>
+                        <p>• <strong>도구/자료:</strong> Claude 3.5 Sonnet, <code class="font-mono">hallym-edu-hwpx</code>, 한국 SDG 이행보고서 2025 PDF.</p>
+
+                        <strong class="text-slate-900 block text-xs font-bold pt-2">2. 핵심 환각 방지 3대 규칙</strong>
+                        <p>1) <em>출처 직접 인용 의무화:</em> 모든 주장 뒤에 원문 페이지와 수치 출처(<code class="font-mono">[출처: p.24]</code>) 표기 강제.</p>
+                        <p>2) <em>추정 금지 선언:</em> 원문에 명시되지 않은 데이터는 "원문 정보 없음"으로 명시하도록 시스템 지침 고정.</p>
+                    </div>
+
+                    <div class="space-y-2 rounded-xl bg-slate-50/70 p-4 border border-slate-100">
+                        <strong class="text-slate-900 block text-xs font-bold">3. 실제 제작 결과물 &amp; 문제점 해결</strong>
+                        <p>• <strong>결과:</strong> <code class="font-mono">2026 글로벌 기업 인사관리 심층 분석 보고서.docx</code> 및 <code class="font-mono">신선식품_재고발주_분석보고서.hwpx</code> 완성.</p>
+                        <p>• <strong>HWPX 한글 태그 구조 해결:</strong> 공공 한글 파일(<code class="font-mono">.hwpx</code>)은 XML 네임스페이스와 표 셀(<code class="font-mono">&lt;hp:tc&gt;</code>) 너비 계산이 엄격하여 깨지기 쉬움 $\rightarrow$ <code class="font-mono">hallym-edu-hwpx</code> 스킬의 단위 환산 공식을 적용해 완벽 호환 달성.</p>
+
+                        <strong class="text-slate-900 block text-xs font-bold pt-2">4. 원본 파일 다운로드</strong>
+                        <div class="pt-1 flex flex-wrap gap-2">
+                            <a href="강의%20내용/2026%20글로벌%20기업%20인사관리%20심층%20분석%20보고서%20(1).docx" download class="rounded bg-white border border-slate-200 px-2 py-1 text-[11px] font-semibold text-slate-700 hover:bg-slate-50">글로벌HR보고서 DOCX ↓</a>
+                            <a href="보고서%20생성/신선식품_재고발주_분석보고서.hwpx" download class="rounded bg-white border border-slate-200 px-2 py-1 text-[11px] font-semibold text-slate-700 hover:bg-slate-50">재고발주보고서 HWPX ↓</a>
+                        </div>
                     </div>
                 </div>
             </article>
 
             <!-- Note 3: 코드 작성 AI -->
-            <article id="note-code" data-cat="data" class="note-card rounded-2xl border border-slate-200 bg-white p-6 shadow-xs">
-                <div class="flex items-center justify-between gap-2">
-                    <span class="rounded-md bg-slate-100 border border-slate-200 px-2.5 py-1 text-xs font-semibold text-slate-800">코드 · 데이터 | 코드 작성 AI.docx</span>
-                    <span class="font-mono text-[11px] text-slate-400">NOTE #03</span>
-                </div>
-                <h2 class="mt-3 text-lg font-bold text-slate-900">Antigravity IDE 환경 구축 및 Python 분석 루프</h2>
-                <div class="mt-4 space-y-3 text-xs leading-relaxed text-slate-600">
-                    <div class="rounded-xl bg-slate-50 border border-slate-100 p-3.5">
-                        <p class="font-semibold text-slate-900">핵심 필기 요약</p>
-                        <ul class="mt-1.5 space-y-1">
-                            <li>• <strong>환경 세팅:</strong> Python 3.14.7(PATH 체크 필수) + Google Antigravity IDE 설치</li>
-                            <li>• <strong>대용량 데이터 프롬프팅 전략:</strong> 전체 CSV 대신 <strong>상위 10개 행 샘플 + <code class="font-mono">data_description.txt</code></strong>를 AI에 먼저 제공해 스키마 이해 및 가능한 통계 분석 방법 추천 유도</li>
-                            <li>• <strong>실행 루프:</strong> <code class="font-mono">코드 생성 → 실행 → 오류 수정 반복 → result.txt 수치·표 저장 → LLM 해석·DOCX 보고서화 → 인간 최종 검증</code></li>
-                            <li>• <strong>응용 실습:</strong> 다중회귀분석(<code class="font-mono">Salary ~ Experience + Age + IQ</code>) 및 HTML5 Tetris 웹 게임 구현</li>
-                        </ul>
+            <article id="note-code" data-cat="data" class="note-card rounded-3xl border border-slate-200 bg-white p-6 sm:p-8 shadow-xs space-y-4">
+                <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3">
+                    <div class="flex items-center gap-2">
+                        <span class="rounded-md bg-slate-100 border border-slate-200 px-2.5 py-1 text-xs font-bold text-slate-800">코드·데이터</span>
+                        <h2 class="text-lg font-bold text-slate-900">Python 데이터 분석 루프 및 Antigravity IDE 디버깅</h2>
                     </div>
-                    <div class="rounded-xl border border-slate-200 bg-slate-50/50 p-3.5">
-                        <p class="font-semibold text-slate-900">생명과학 융합 인사이트</p>
-                        <p class="mt-1">생물정보학(Bioinformatics)이나 단백질 정량 데이터를 다룰 때도 상위 샘플 10행 + 변수 정의서를 AI에 넘겨 회귀·분류 스크립트를 생성하고 오류를 반복 디버깅하는 패턴을 그대로 활용합니다.</p>
+                    <span class="font-mono text-xs text-slate-400">LAB NOTE #03 · 원본: 코드 작성 AI.docx</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-slate-600 leading-relaxed">
+                    <div class="space-y-2 rounded-xl bg-slate-50/70 p-4 border border-slate-100">
+                        <strong class="text-slate-900 block text-xs font-bold">1. 실습 목적 &amp; 도구</strong>
+                        <p>• <strong>목적:</strong> AI에게 무작정 코드를 요청하는 오류를 방지하고, 샘플 10행 + 변수 정의서 제공 $\rightarrow$ 분석 스크립트 실행 $\rightarrow$ 오차 피드백 디버깅 루프 확립.</p>
+                        <p>• <strong>도구/자료:</strong> Google Antigravity IDE, Python 3.11+, Scikit-learn, <code class="font-mono">unified_statistics_data.csv</code>.</p>
+
+                        <strong class="text-slate-900 block text-xs font-bold pt-2">2. 분석 파이프라인</strong>
+                        <p>• 전체 빅데이터를 넘기지 않고 상위 10개 행 샘플과 변수 타입 정의서를 넘겨 결측치 처리 및 최적 회귀 모델 추천을 유도.</p>
+                        <p>• 실행 결과를 <code class="font-mono">result.txt</code>에 1차 수치화한 뒤 인간 연구자가 검토하고 최종 보고서에 통합.</p>
+                    </div>
+
+                    <div class="space-y-2 rounded-xl bg-slate-50/70 p-4 border border-slate-100">
+                        <strong class="text-slate-900 block text-xs font-bold">3. 결과물 &amp; 융합 인사이트</strong>
+                        <p>• <strong>결과:</strong> <code class="font-mono">salary_gradient_boosting.py</code> 스크립트 및 5페이지 경영진용 분석 보고서 도출.</p>
+                        <p>• <strong>생명과학 융합 인사이트:</strong> 분자유전학 단백질체학(Proteomics) 분석 시에도 수천 개 유전자 발현량 테이블을 다루므로, 상위 10행 스키마 + 반복 디버깅 루프가 동일하게 강력한 분석 도구가 됨.</p>
+
+                        <strong class="text-slate-900 block text-xs font-bold pt-2">4. 원본 파일 다운로드</strong>
+                        <div class="pt-1 flex flex-wrap gap-2">
+                            <a href="코드%20AI/기계학습/salary_gradient_boosting.py" target="_blank" class="rounded bg-white border border-slate-200 px-2 py-1 text-[11px] font-semibold text-slate-700 hover:bg-slate-50">salary_gradient_boosting.py ↗</a>
+                            <a href="코드%20AI/unified_statistics_data.csv" download class="rounded bg-white border border-slate-200 px-2 py-1 text-[11px] font-semibold text-slate-700 hover:bg-slate-50">통계데이터 CSV ↓</a>
+                        </div>
                     </div>
                 </div>
             </article>
 
-            <!-- Note 4: Claude 엑셀 시각화 프롬프트 -->
-            <article data-cat="data" class="note-card rounded-2xl border border-slate-200 bg-white p-6 shadow-xs">
-                <div class="flex items-center justify-between gap-2">
-                    <span class="rounded-md bg-slate-100 border border-slate-200 px-2.5 py-1 text-xs font-semibold text-slate-800">코드 · 데이터 | Claude 엑셀 시각화 프롬프트.docx</span>
-                    <span class="font-mono text-[11px] text-slate-400">NOTE #04</span>
-                </div>
-                <h2 class="mt-3 text-lg font-bold text-slate-900">단위 격차 해결을 위한 엑셀 이중축(Combo-Chart) 설계</h2>
-                <div class="mt-4 space-y-3 text-xs leading-relaxed text-slate-600">
-                    <div class="rounded-xl bg-slate-50 border border-slate-100 p-3.5">
-                        <p class="font-semibold text-slate-900">핵심 필기 요약</p>
-                        <ul class="mt-1.5 space-y-1">
-                            <li>• <strong>1단계 테스트 데이터 생성:</strong> Claude에게 <code class="font-mono">기업명, 매출액, 영업이익률</code> 5행 CSV 샘플 생성 요청</li>
-                            <li>• <strong>2단계 차트 설계 프롬프트:</strong> "매출액과 영업이익률은 단위 차이가 매우 크므로 두 그래프가 한눈에 보이도록 차트를 제안해 선택하게 해달라"고 지시 → <strong>이중축(Combo-Chart)</strong> 도출</li>
-                            <li>• <strong>3단계 파일 출력:</strong> 시각화 결과를 즉시 다운로드 가능한 <code class="font-mono">.xlsx</code> 통합 문서로 생성</li>
-                        </ul>
+            <!-- Note 4: Claude 엑셀 시각화 -->
+            <article data-cat="data" class="note-card rounded-3xl border border-slate-200 bg-white p-6 sm:p-8 shadow-xs space-y-4">
+                <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3">
+                    <div class="flex items-center gap-2">
+                        <span class="rounded-md bg-slate-100 border border-slate-200 px-2.5 py-1 text-xs font-bold text-slate-800">코드·데이터</span>
+                        <h2 class="text-lg font-bold text-slate-900">단위 격차 극복을 위한 엑셀 이중축(Combo-Chart) 자동화</h2>
                     </div>
-                    <div class="rounded-xl border border-slate-200 bg-slate-50/50 p-3.5">
-                        <p class="font-semibold text-slate-900">생명과학 융합 인사이트</p>
-                        <p class="mt-1">세포 성장 곡선(OD600)과 단백질 발현량(ng/mL)처럼 스케일이 다른 두 생물학적 지표를 하나의 실험 그래프에 직관적으로 표현할 때 동일한 이중축 설계가 유효합니다.</p>
+                    <span class="font-mono text-xs text-slate-400">LAB NOTE #04 · 원본: Claude 엑셀 시각화 프롬프트.docx</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-slate-600 leading-relaxed">
+                    <div class="space-y-2 rounded-xl bg-slate-50/70 p-4 border border-slate-100">
+                        <strong class="text-slate-900 block text-xs font-bold">1. 문제 정의 &amp; 원본 데이터</strong>
+                        <p>• <code class="font-mono">기업실적.csv</code>에서 매출액(640~2,100억 원)과 영업이익률(7.4~15.2%) 간 단위 격차(Scale Gap)가 커서 단일 축 차트로는 영업이익률 선이 바닥에 붙어 추세 파악이 불가능함.</p>
+                        <strong class="text-slate-900 block text-xs font-bold pt-2">2. 해결책: 이중축 콤보 차트</strong>
+                        <p>• 주축(좌측): 매출액 세로 막대형 차트 / 보조축(우측): 영업이익률 꺾은선형 차트로 결합 설계하여 시각적 직관성 확보.</p>
+                    </div>
+
+                    <div class="space-y-2 rounded-xl bg-slate-50/70 p-4 border border-slate-100">
+                        <strong class="text-slate-900 block text-xs font-bold">3. 결과물 &amp; 다운로드</strong>
+                        <p>• Claude 파이썬 스크립트를 통해 openpyxl/xlsxwriter로 이중축 콤보 차트가 삽입된 스프레드시트를 완전 자동 생성.</p>
+                        <div class="pt-2 flex flex-wrap gap-2">
+                            <a href="Claude%20엑셀/기업실적_콤보차트.xlsx" download class="rounded bg-white border border-slate-200 px-2.5 py-1 text-[11px] font-semibold text-slate-700 hover:bg-slate-50">기업실적_콤보차트.xlsx ↓</a>
+                            <a href="Claude%20엑셀/기업실적.csv" download class="rounded bg-white border border-slate-200 px-2.5 py-1 text-[11px] font-semibold text-slate-700 hover:bg-slate-50">기업실적 원본 CSV ↓</a>
+                        </div>
                     </div>
                 </div>
             </article>
 
             <!-- Note 5: 인물 생성 프롬프트 -->
-            <article data-cat="media" class="note-card rounded-2xl border border-slate-200 bg-white p-6 shadow-xs">
-                <div class="flex items-center justify-between gap-2">
-                    <span class="rounded-md bg-slate-100 border border-slate-200 px-2.5 py-1 text-xs font-semibold text-slate-800">영상 · 이미지 | 인물 생성 프롬프트.docx</span>
-                    <span class="font-mono text-[11px] text-slate-400">NOTE #05</span>
+            <article data-cat="media" class="note-card rounded-3xl border border-slate-200 bg-white p-6 sm:p-8 shadow-xs space-y-4">
+                <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3">
+                    <div class="flex items-center gap-2">
+                        <span class="rounded-md bg-emerald-50 border border-emerald-200 px-2.5 py-1 text-xs font-bold text-emerald-800">이미지·영상</span>
+                        <h2 class="text-lg font-bold text-slate-900">캐릭터 시트 및 4방향 앵글 일관성(Consistency) 유지 기법</h2>
+                    </div>
+                    <span class="font-mono text-xs text-slate-400">LAB NOTE #05 · 원본: 인물 생성 프롬프트.docx</span>
                 </div>
-                <h2 class="mt-3 text-lg font-bold text-slate-900">일관된 캐릭터 시트(Character Sheet) 생성 규칙</h2>
-                <div class="mt-4 space-y-3 text-xs leading-relaxed text-slate-600">
-                    <div class="rounded-xl bg-slate-50 border border-slate-100 p-3.5">
-                        <p class="font-semibold text-slate-900">핵심 필기 요약</p>
-                        <ul class="mt-1.5 space-y-1">
-                            <li>• <strong>다각도 시트 구성:</strong> 정면 전신(팔·다리 어깨너비), 상반신, 얼굴 클로즈업, 좌/우 측면, 후면, 45도 상·하향 뷰를 동일 인물로 일관 생성</li>
-                            <li>• <strong>기술 사양 고정:</strong> 4K 포토리얼리스틱, <code class="font-mono">3:4</code> 비율, 완전 투명/백색 배경(머리카락·손가락 잘림 방지)</li>
-                            <li>• <strong>네거티브/제외 조건 명시:</strong> 비대칭 눈, 손가락 추가·누락, 과도한 뷰티 필터, 로고·워터마크 배제</li>
-                        </ul>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-slate-600 leading-relaxed">
+                    <div class="space-y-2 rounded-xl bg-slate-50/70 p-4 border border-slate-100">
+                        <strong class="text-slate-900 block text-xs font-bold">1. 핵심 기술 과제</strong>
+                        <p>• 생성형 이미지 모델에서 프롬프트를 바꿀 때마다 인물의 얼굴과 의상이 달라지는 치명적 문제를 해결하기 위해, 단일 캔버스 내 <strong>4방향(Front, Side, Back, Close-up) 캐릭터 시트</strong>를 선행 생성하여 고유 Seed 및 신체 비례를 확립.</p>
+                        <strong class="text-slate-900 block text-xs font-bold pt-2">2. 프롬프트 토큰 통제</strong>
+                        <p>• 의상 색상(Navy suit), 헤어스타일(Dark brown low bun), 액세서리(ID card lanyard)를 절대 불변 고정 토큰으로 지정.</p>
+                    </div>
+
+                    <div class="space-y-2 rounded-xl bg-slate-50/70 p-4 border border-slate-100">
+                        <strong class="text-slate-900 block text-xs font-bold">3. 결과물</strong>
+                        <p>• 남녀 캐릭터 시트 및 도서관 독서 씬 연속 생성 성공. (video.html 갤러리 연동)</p>
+                        <div class="pt-2 flex flex-wrap gap-2">
+                            <a href="ChatGPT%20이미지%20생성/인물%20생성%20프롬프트%20(20213528%20이종건).pptx" download class="rounded bg-white border border-slate-200 px-2.5 py-1 text-[11px] font-semibold text-slate-700 hover:bg-slate-50">인물생성프롬프트 PPTX ↓</a>
+                        </div>
                     </div>
                 </div>
             </article>
 
-            <!-- Note 6: 이미지 생성 후 영상 만들기 + 20초 연속 -->
-            <article data-cat="media" class="note-card rounded-2xl border border-slate-200 bg-white p-6 shadow-xs">
-                <div class="flex items-center justify-between gap-2">
-                    <span class="rounded-md bg-slate-100 border border-slate-200 px-2.5 py-1 text-xs font-semibold text-slate-800">영상 · 이미지 | 이미지 생성 후 영상 만들기.docx</span>
-                    <span class="font-mono text-[11px] text-slate-400">NOTE #06</span>
+            <!-- Note 6: 20초 연속 이미지 & 스타벅스 컵 -->
+            <article data-cat="media" class="note-card rounded-3xl border border-slate-200 bg-white p-6 sm:p-8 shadow-xs space-y-4">
+                <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3">
+                    <div class="flex items-center gap-2">
+                        <span class="rounded-md bg-emerald-50 border border-emerald-200 px-2.5 py-1 text-xs font-bold text-emerald-800">이미지·영상</span>
+                        <h2 class="text-lg font-bold text-slate-900">ABSOLUTE CONTINUITY LOCK: 스타벅스 컵 소품 고정과 9단계 키프레임</h2>
+                    </div>
+                    <span class="font-mono text-xs text-slate-400">LAB NOTE #06 · 원본: 20초_연속_이미지_생성_프롬프트_최종본_스타벅스컵.docx</span>
                 </div>
-                <h2 class="mt-3 text-lg font-bold text-slate-900">Grill-me 기반 키프레임 설계 &amp; 20초 연속성 잠금</h2>
-                <div class="mt-4 space-y-3 text-xs leading-relaxed text-slate-600">
-                    <div class="rounded-xl bg-slate-50 border border-slate-100 p-3.5">
-                        <p class="font-semibold text-slate-900">핵심 필기 요약</p>
-                        <ul class="mt-1.5 space-y-1">
-                            <li>• <strong>Start &amp; End 프레임 전략:</strong> 캐릭터 시트 + 시작 이미지를 업로드하고 ChatGPT <code class="font-mono">Grill-me</code> 질문으로 5~8초 뒤 변화할 End 프레임 프롬프트 완성</li>
-                            <li>• <strong>20초 연속 이미지 생성(<code class="font-mono">0s→20s</code>):</strong> 직전 정상 이미지를 Primary Temporal Reference로 삼고, <code class="font-mono">ABSOLUTE CONTINUITY LOCK</code>으로 왼손 커피컵·어깨 토트백을 전 구간 고정</li>
-                        </ul>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-slate-600 leading-relaxed">
+                    <div class="space-y-2 rounded-xl bg-slate-50/70 p-4 border border-slate-100">
+                        <strong class="text-slate-900 block text-xs font-bold">1. 시간차 렌더링 통제 원리</strong>
+                        <p>• 20초 시퀀스(00s~20s, 9개 키프레임)에서 여성 인물이 왼손에 쥔 <strong>White ceramic Starbucks coffee cup (green siren logo)</strong>이 게이트 통과, 엘리베이터 버튼 누르기, 대기 전 과정에서 절대 오른손으로 바뀌거나 사라지지 않도록 음수 프롬프트 및 직전 프레임 참조 체계 설계.</p>
+                    </div>
+
+                    <div class="space-y-2 rounded-xl bg-slate-50/70 p-4 border border-slate-100">
+                        <strong class="text-slate-900 block text-xs font-bold">2. 4K 키프레임 결과물</strong>
+                        <p>• 9단계 키프레임 PNG 및 영상 생성 완료. (video.html에 4K 갤러리 구현)</p>
+                        <div class="pt-2 flex flex-wrap gap-2">
+                            <a href="강의%20내용/20초_연속_이미지_생성_프롬프트_최종본_스타벅스컵.docx" download class="rounded bg-white border border-slate-200 px-2.5 py-1 text-[11px] font-semibold text-slate-700 hover:bg-slate-50">프롬프트 DOCX 다운로드 ↓</a>
+                            <a href="ChatGPT%20이미지%20생성/pretty_face_keyframes_9_4K/keyframe_00s_pretty_face_4K.png" target="_blank" class="rounded bg-white border border-slate-200 px-2.5 py-1 text-[11px] font-semibold text-slate-700 hover:bg-slate-50">00s 4K 키프레임 ↗</a>
+                        </div>
                     </div>
                 </div>
             </article>
 
-            <!-- Note 7: Google Flow / Kling AI 영상 생성 -->
-            <article data-cat="media" class="note-card rounded-2xl border border-slate-200 bg-white p-6 shadow-xs">
-                <div class="flex items-center justify-between gap-2">
-                    <span class="rounded-md bg-slate-100 border border-slate-200 px-2.5 py-1 text-xs font-semibold text-slate-800">영상 · 이미지 | Goolge Flow AI 영상 생성.docx</span>
-                    <span class="font-mono text-[11px] text-slate-400">NOTE #07</span>
+            <!-- Note 7: 잭다니엘 광고 & Google Flow -->
+            <article data-cat="media" class="note-card rounded-3xl border border-slate-200 bg-white p-6 sm:p-8 shadow-xs space-y-4">
+                <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3">
+                    <div class="flex items-center gap-2">
+                        <span class="rounded-md bg-emerald-50 border border-emerald-200 px-2.5 py-1 text-xs font-bold text-emerald-800">이미지·영상</span>
+                        <h2 class="text-lg font-bold text-slate-900">상업용 광고 영상 제작: 잭 다니엘스 위스키 &amp; Google Flow AI</h2>
+                    </div>
+                    <span class="font-mono text-xs text-slate-400">LAB NOTE #07 · 원본: 과제_01_잭다니엘_위스키_광고_설명서.docx</span>
                 </div>
-                <h2 class="mt-3 text-lg font-bold text-slate-900">Google Flow · Kling · Runway 타임라인 비디오 디렉팅</h2>
-                <div class="mt-4 space-y-3 text-xs leading-relaxed text-slate-600">
-                    <div class="rounded-xl bg-slate-50 border border-slate-100 p-3.5">
-                        <p class="font-semibold text-slate-900">핵심 필기 요약</p>
-                        <ul class="mt-1.5 space-y-1">
-                            <li>• <strong>플랫폼 비교 실습:</strong> Kling AI, Google Flow, Runway, Seedance를 동일 시나리오로 테스트</li>
-                            <li>• <strong>초 단위 타임스탬프 제어:</strong> <code class="font-mono">0-2s</code> 사원증 태그 → <code class="font-mono">2-5s</code> 로비 트래킹 샷 + 한국어 대사(<code class="font-mono">"다들 즐거운 하루되세요."</code>) → <code class="font-mono">5-7s</code> 버튼 단발 클릭 → <code class="font-mono">8-10s</code> 문 개방</li>
-                            <li>• <strong>상업 광고 응용:</strong> 잭 다니엘스 오크통 셀러 10초 씬에서 잔·구형 얼음·로고 페이드인 정밀 제어</li>
-                        </ul>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-slate-600 leading-relaxed">
+                    <div class="space-y-2 rounded-xl bg-slate-50/70 p-4 border border-slate-100">
+                        <strong class="text-slate-900 block text-xs font-bold">1. 광고 연출 설계</strong>
+                        <p>• 오크통 숙성 창고의 따뜻한 호박색 조명, 온더락 잔의 구형 얼음, 잭 다니엘스 사각 보틀의 라벨 디테일을 10초 광고 영상 전반에 걸쳐 고정.</p>
+                        <p>• 카메라 워크: 0~2초 클로즈업 $\rightarrow$ 2~5초 Push-in 및 시음 $\rightarrow$ 8~10초 보이스오버 립싱크 매칭.</p>
+                    </div>
+
+                    <div class="space-y-2 rounded-xl bg-slate-50/70 p-4 border border-slate-100">
+                        <strong class="text-slate-900 block text-xs font-bold">2. 실제 렌더링 MP4 비디오</strong>
+                        <p>• Google Flow 및 Kling 멀티 모델 렌더링 비교 완료. (video.html에 플레이어 임베드)</p>
+                        <div class="pt-2 flex flex-wrap gap-2">
+                            <a href="Google%20Flow%20영상%20만들기/Woman_drinking_whiskey_in_cellar_20260923163225.mp4" target="_blank" class="rounded bg-white border border-slate-200 px-2.5 py-1 text-[11px] font-semibold text-slate-700 hover:bg-slate-50">광고 영상 MP4 재생 ↗</a>
+                        </div>
                     </div>
                 </div>
             </article>
 
-            <!-- Note 8: Claude Motion -->
-            <article data-cat="media" class="note-card rounded-2xl border border-slate-200 bg-white p-6 shadow-xs">
-                <div class="flex items-center justify-between gap-2">
-                    <span class="rounded-md bg-slate-100 border border-slate-200 px-2.5 py-1 text-xs font-semibold text-slate-800">영상 · 모션 | Claude Motion.docx</span>
-                    <span class="font-mono text-[11px] text-slate-400">NOTE #08</span>
-                </div>
-                <h2 class="mt-3 text-lg font-bold text-slate-900">2단계 MD 제작계획 → HTML5 30초 모션 플레이어</h2>
-                <div class="mt-4 space-y-3 text-xs leading-relaxed text-slate-600">
-                    <div class="rounded-xl bg-slate-50 border border-slate-100 p-3.5">
-                        <p class="font-semibold text-slate-900">핵심 필기 요약</p>
-                        <ul class="mt-1.5 space-y-1">
-                            <li>• <strong>1단계 (ChatGPT + Grill-me):</strong> Word 문제집 첨부 후 시간대별 30초 모션 구성을 질문으로 합의하고 <code class="font-mono">.md</code> 계획서로 다운로드</li>
-                            <li>• <strong>2단계 (Claude HTML 구현):</strong> 확정된 <code class="font-mono">.md</code>를 기반으로 장면 선택 버튼, 시작/종료 제어, 하단 자막 스크립트, Web Audio 음향이 통합된 실행형 HTML 생성</li>
-                        </ul>
+            <!-- Note 8: Claude Motion 인포그래픽 -->
+            <article data-cat="media" class="note-card rounded-3xl border border-slate-200 bg-white p-6 sm:p-8 shadow-xs space-y-4">
+                <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3">
+                    <div class="flex items-center gap-2">
+                        <span class="rounded-md bg-emerald-50 border border-emerald-200 px-2.5 py-1 text-xs font-bold text-emerald-800">이미지·영상</span>
+                        <h2 class="text-lg font-bold text-slate-900">HTML5 Canvas/SVG + 30초 오리지널 BGM 모션 인포그래픽</h2>
                     </div>
-                    <div class="flex flex-wrap gap-2 pt-1">
-                        <a href="video.html#motion-showcase" class="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 font-medium text-slate-700 hover:bg-slate-100 transition">
-                            <span>생명과학과 30초 모션 보기</span>
-                            <span>→</span>
-                        </a>
-                        <a href="video.html#motion-showcase" class="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 font-medium text-slate-700 hover:bg-slate-100 transition">
-                            <span>P4 로켓프레시 모션 보기</span>
-                            <span>→</span>
-                        </a>
+                    <span class="font-mono text-xs text-slate-400">LAB NOTE #08 · 원본: Claude Motion.docx</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-slate-600 leading-relaxed">
+                    <div class="space-y-2 rounded-xl bg-slate-50/70 p-4 border border-slate-100">
+                        <strong class="text-slate-900 block text-xs font-bold">1. 단일 파일 웹 모션 엔진</strong>
+                        <p>• 외부 무거운 영상 라이브러리 없이 순수 HTML5 SVG 벡터 애니메이션과 requestAnimationFrame 루프로 구동되는 30초(6씬 × 5초) 교육용 모션 플레이어 구현.</p>
+                        <p>• D Major / B Minor 6개 화음 진행의 30초 오리지널 Instrumental BGM(WAV)을 직접 합성하여 장면 전환과 1:1 동기화.</p>
+                    </div>
+
+                    <div class="space-y-2 rounded-xl bg-slate-50/70 p-4 border border-slate-100">
+                        <strong class="text-slate-900 block text-xs font-bold">2. 작품 3종 라인업 &amp; 다운로드</strong>
+                        <p>• 1) 한림대 생명과학과 30초 모션, 2) P4 로켓프레시 30초 모션, 3) 택배 라스트마일 모션.</p>
+                        <div class="pt-2 flex flex-wrap gap-2">
+                            <a href="Claude%20Motion/P4_로켓프레시_30초_Motion_Effect.html" target="_blank" class="rounded bg-white border border-slate-200 px-2.5 py-1 text-[11px] font-semibold text-slate-700 hover:bg-slate-50">P4 모션 플레이어 ↗</a>
+                            <a href="Claude%20Motion/Claude_Motion_택배%20라스트마일.mp4" target="_blank" class="rounded bg-white border border-slate-200 px-2.5 py-1 text-[11px] font-semibold text-slate-700 hover:bg-slate-50">라스트마일 영상 MP4 ↗</a>
+                        </div>
                     </div>
                 </div>
             </article>
 
-            <!-- Note 9: Google GEMS -->
-            <article id="note-gems" data-cat="agent" class="note-card rounded-2xl border border-slate-200 bg-white p-6 shadow-xs">
-                <div class="flex items-center justify-between gap-2">
-                    <span class="rounded-md bg-slate-100 border border-slate-200 px-2.5 py-1 text-xs font-semibold text-slate-800">GEMS · 웹 | Google GEMS.docx</span>
-                    <span class="font-mono text-[11px] text-slate-400">NOTE #09</span>
+            <!-- Note 9: Google GEMS & Grill-me -->
+            <article data-cat="agent" class="note-card rounded-3xl border border-slate-200 bg-white p-6 sm:p-8 shadow-xs space-y-4">
+                <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3">
+                    <div class="flex items-center gap-2">
+                        <span class="rounded-md bg-violet-50 border border-violet-200 px-2.5 py-1 text-xs font-bold text-violet-800">GEMS·에이전트</span>
+                        <h2 class="text-lg font-bold text-slate-900">Google GEMS &amp; Grill-me 역질문 기반 PDF 카드뉴스 에디터</h2>
+                    </div>
+                    <span class="font-mono text-xs text-slate-400">LAB NOTE #09 · 원본: Google GEMS.docx</span>
                 </div>
-                <h2 class="mt-3 text-lg font-bold text-slate-900">Strict Process Rule 기반 PDF 카드뉴스 에이전트</h2>
-                <div class="mt-4 space-y-3 text-xs leading-relaxed text-slate-600">
-                    <div class="rounded-xl bg-slate-50 border border-slate-100 p-3.5">
-                        <p class="font-semibold text-slate-900">핵심 필기 요약</p>
-                        <ul class="mt-1.5 space-y-1">
-                            <li>• <strong>System Role:</strong> PDF 핵심을 추출해 시각화하는 '타이포그래피 디자이너' 페르소나 부여</li>
-                            <li>• <strong>진행 잠금(Gatekeeping):</strong> PDF 분석 후 반드시 장수를 묻고 사용자 응답 전까지 다음 단계 금지</li>
-                            <li>• <strong>스토리보드 → 렌더링:</strong> <code class="font-mono">[페이지/텍스트/컨셉]</code> 표 작성 후 Nano Banana 2로 통일 팔레트 카드뉴스 생성</li>
-                        </ul>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-slate-600 leading-relaxed">
+                    <div class="space-y-2 rounded-xl bg-slate-50/70 p-4 border border-slate-100">
+                        <strong class="text-slate-900 block text-xs font-bold">1. 게이트키핑 역질문(Grill-me) 구조</strong>
+                        <p>• 사용자가 PDF를 업로드했을 때 AI가 멋대로 카드뉴스를 찍어내지 않고, 핵심 포인트 5~10개를 요약 보고한 후 "타겟 독자, 장수, 강조할 키워드"를 역질문하여 확정하도록 프로세스를 엄격히 제어.</p>
+                    </div>
+
+                    <div class="space-y-2 rounded-xl bg-slate-50/70 p-4 border border-slate-100">
+                        <strong class="text-slate-900 block text-xs font-bold">2. 실제 제작 7장 카드뉴스 산출물</strong>
+                        <p>• 신입생 대학생활 가이드 7장 카드뉴스 완벽 제작. (agent.html에 7장 갤러리 구현)</p>
+                        <div class="pt-2 flex flex-wrap gap-2">
+                            <a href="GEMS%20쿠팡/GEMS/PDF%20카드뉴스%20신입생.pdf" target="_blank" class="rounded bg-white border border-slate-200 px-2.5 py-1 text-[11px] font-semibold text-slate-700 hover:bg-slate-50">신입생 카드뉴스 PDF ↗</a>
+                        </div>
                     </div>
                 </div>
             </article>
 
-            <!-- Note 10: 웹페이지 AI -->
-            <article data-cat="agent" class="note-card rounded-2xl border border-slate-200 bg-white p-6 shadow-xs">
-                <div class="flex items-center justify-between gap-2">
-                    <span class="rounded-md bg-slate-100 border border-slate-200 px-2.5 py-1 text-xs font-semibold text-slate-800">GEMS · 웹 | 웹페이지 AI.docx</span>
-                    <span class="font-mono text-[11px] text-slate-400">NOTE #10</span>
-                </div>
-                <h2 class="mt-3 text-lg font-bold text-slate-900">Grill-me 웹 기획서 작성부터 Git · Netlify 배포까지</h2>
-                <div class="mt-4 space-y-3 text-xs leading-relaxed text-slate-600">
-                    <div class="rounded-xl bg-slate-50 border border-slate-100 p-3.5">
-                        <p class="font-semibold text-slate-900">핵심 필기 요약</p>
-                        <ul class="mt-1.5 space-y-1">
-                            <li>• <strong>기획 단계:</strong> 폴더 내 이력·과제 파일을 읽게 한 뒤, <code class="font-mono">Grill-me</code> 방식으로 구조·페이지 분리·콘텐츠 우선순위를 인터뷰하여 <code class="font-mono">.md</code> 구축 계획 완성</li>
-                            <li>• <strong>구현 및 배포:</strong> Tailwind CSS 반응형 멀티 페이지 구현 → Git 커밋 → GitHub <code class="font-mono">origin/main</code> 푸시 → Netlify 자동 배포(CI/CD) 완주</li>
-                        </ul>
+            <!-- Note 10: 웹페이지 AI & Netlify 배포 -->
+            <article data-cat="agent" class="note-card rounded-3xl border border-slate-200 bg-white p-6 sm:p-8 shadow-xs space-y-4">
+                <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3">
+                    <div class="flex items-center gap-2">
+                        <span class="rounded-md bg-violet-50 border border-violet-200 px-2.5 py-1 text-xs font-bold text-violet-800">GEMS·에이전트</span>
+                        <h2 class="text-lg font-bold text-slate-900">GitHub 워크플로우 및 Netlify 프로덕션 CI/CD 웹 배포</h2>
                     </div>
-                    <div class="rounded-xl border border-slate-200 bg-slate-50/50 p-3.5">
-                        <p class="font-semibold text-slate-900">생명과학 융합 인사이트</p>
-                        <p class="mt-1">정적 웹 배포(Netlify) 경험은 이후 Python·Streamlit·Supabase를 연동한 <strong>Protein Analysis Lab</strong> 바이오 웹앱 구축으로 직접 확장되었습니다.</p>
+                    <span class="font-mono text-xs text-slate-400">LAB NOTE #10 · 원본: 웹페이지 AI.docx</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-slate-600 leading-relaxed">
+                    <div class="space-y-2 rounded-xl bg-slate-50/70 p-4 border border-slate-100">
+                        <strong class="text-slate-900 block text-xs font-bold">1. 배포 아키텍처</strong>
+                        <p>• 로컬 Git 브랜칭 모델(`feature/` $\rightarrow$ `main`)과 Netlify Webhook 연동을 통한 자동 프로덕션 빌드·배포 파이프라인 수립.</p>
+                        <p>• Clean Academic 디자인 토큰 및 반응형 뷰포트 최적화.</p>
+                    </div>
+
+                    <div class="space-y-2 rounded-xl bg-slate-50/70 p-4 border border-slate-100">
+                        <strong class="text-slate-900 block text-xs font-bold">2. 라이브 호스팅 URL</strong>
+                        <p>• 실제 인터넷 주소: <a href="https://aismartwork20213528.netlify.app/" target="_blank" class="text-blue-700 underline font-semibold">https://aismartwork20213528.netlify.app/</a></p>
                     </div>
                 </div>
             </article>
@@ -277,33 +471,47 @@
     <div id="site-footer"></div>
     <script src="assets/shared.js"></script>
     <script>
-        (function () {
-            const buttons = document.querySelectorAll('.note-filter-btn');
+        // Note Search & Filter Logic
+        (function() {
             const searchInput = document.getElementById('note-search');
-            const cards = document.querySelectorAll('.note-card');
-            let currentFilter = 'all';
+            const filterBtns = document.querySelectorAll('.note-filter-btn');
+            const noteCards = document.querySelectorAll('.note-card');
 
-            function applyFilters() {
-                const q = (searchInput.value || '').trim().toLowerCase();
-                cards.forEach((card) => {
-                    const matchesCat = currentFilter === 'all' || card.dataset.cat === currentFilter;
-                    const matchesQuery = !q || card.textContent.toLowerCase().includes(q);
-                    card.classList.toggle('hidden', !(matchesCat && matchesQuery));
+            let currentCat = 'all';
+            let currentKeyword = '';
+
+            function applyFilter() {
+                noteCards.forEach(card => {
+                    const cat = card.getAttribute('data-cat') || '';
+                    const text = card.textContent.toLowerCase();
+                    const matchesCat = (currentCat === 'all' || cat === currentCat);
+                    const matchesKeyword = !currentKeyword || text.includes(currentKeyword);
+
+                    if (matchesCat && matchesKeyword) {
+                        card.style.display = '';
+                    } else {
+                        card.style.display = 'none';
+                    }
                 });
             }
 
-            buttons.forEach((btn) => {
+            filterBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
-                    currentFilter = btn.getAttribute('data-note-filter');
-                    buttons.forEach((b) => {
+                    filterBtns.forEach(b => {
                         b.className = 'note-filter-btn rounded-lg bg-slate-100 px-3 py-1.5 text-slate-700 hover:bg-slate-200';
                     });
                     btn.className = 'note-filter-btn rounded-lg bg-slate-900 px-3 py-1.5 text-white font-semibold shadow-xs';
-                    applyFilters();
+                    currentCat = btn.getAttribute('data-note-filter') || 'all';
+                    applyFilter();
                 });
             });
 
-            searchInput.addEventListener('input', applyFilters);
+            if (searchInput) {
+                searchInput.addEventListener('input', (e) => {
+                    currentKeyword = e.target.value.trim().toLowerCase();
+                    applyFilter();
+                });
+            }
         })();
     </script>
 </body>

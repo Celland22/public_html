@@ -17,7 +17,7 @@
     <div id="site-nav"></div>
 
     <!-- Page Header (Clean Academic) -->
-    <header class="border-b border-slate-200/80 bg-white py-12 sm:py-16">
+    <header id="p4-overview" class="border-b border-slate-200/80 bg-white py-12 sm:py-16">
         <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
             <div class="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50/70 px-3 py-1 text-xs font-semibold text-blue-800">
                 <span class="h-1.5 w-1.5 rounded-full bg-blue-600"></span>
@@ -140,7 +140,7 @@
         </section>
 
         <!-- Section 1: Category & Error Diagnosis -->
-        <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-xs sm:p-8">
+        <section id="analysis" class="rounded-3xl border border-slate-200 bg-white p-6 shadow-xs sm:p-8">
             <div class="border-b border-slate-100 pb-5">
                 <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Step 1 · Diagnostic EDA</span>
                 <h2 class="mt-1 text-2xl font-extrabold text-slate-900">카테고리별 폐기·품절 현황 및 기존 시스템 오차 진단</h2>
@@ -436,10 +436,70 @@
             </div>
         </section>
 
+        <!-- Section 5: 8-Step Academic Framework Analysis -->
+        <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-xs sm:p-8 space-y-6">
+            <div class="border-b border-slate-100 pb-4">
+                <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Methodology &amp; Evaluation · 8-Step Framework</span>
+                <h2 class="mt-1 text-2xl font-extrabold text-slate-900">쿠팡 기말 과제 8단계 학술 프레임워크 분석</h2>
+                <p class="mt-1.5 text-sm text-slate-600">생명과학 정량 분석 방법론과 머신러닝·수요예측 최적화 기법을 결합한 기말 캡스톤 프로젝트의 전 과정을 구조화한 분석입니다.</p>
+            </div>
+
+            <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+                <div class="rounded-2xl border border-slate-200 bg-slate-50/70 p-5 shadow-xs">
+                    <span class="font-mono text-xs font-bold text-blue-700">01. 실습 목적</span>
+                    <h3 class="mt-1.5 text-sm font-bold text-slate-900">신선식품 폐기율 급증 원인 규명 및 Newsvendor 발주 최적화</h3>
+                    <p class="mt-1.5 text-xs leading-relaxed text-slate-600">유통기한 제약(2~10일)이 있는 신선식품에서 과잉 발주로 인한 원가 폐기 손실(연간 10.8억)과 복합 이벤트(프로모션+공휴일) 시 발생하는 일평균 194건의 품절 사태를 해결하기 위해 ML 기반 수요 예측 및 확률론적 발주 알고리즘을 개발함.</p>
+                </div>
+
+                <div class="rounded-2xl border border-slate-200 bg-slate-50/70 p-5 shadow-xs">
+                    <span class="font-mono text-xs font-bold text-blue-700">02. 사용 AI 도구 및 원본 자료</span>
+                    <h3 class="mt-1.5 text-sm font-bold text-slate-900">Python 3.11 + Scikit-Learn + Claude Code</h3>
+                    <p class="mt-1.5 text-xs leading-relaxed text-slate-600"><code class="font-mono text-[11px] text-slate-800">P4_fresh_inventory_daily.csv</code> (10,860건 일별 시계열 데이터), Scikit-Learn (<code class="font-mono text-[11px] text-blue-700">HistGradientBoostingRegressor</code>, RandomForest, SARIMAX), Scipy Stats (Newsvendor 정규분포 분위수 계산), Claude Code (수학적 검증 파이프라인 <code class="font-mono text-[11px] text-slate-800">analysis.py</code> 및 spec 스크립트 작성).</p>
+                </div>
+
+                <div class="rounded-2xl border border-slate-200 bg-slate-50/70 p-5 shadow-xs">
+                    <span class="font-mono text-xs font-bold text-blue-700">03. 실제 작업 과정</span>
+                    <h3 class="mt-1.5 text-sm font-bold text-slate-900">탐색적 데이터 분석(EDA) → 3단계 시계열 분할 → 벤치마크 → 백테스트</h3>
+                    <p class="mt-1.5 text-xs leading-relaxed text-slate-600">10,860건 전수 오차 진단 → 시계열 누수 방지를 위해 1~4월(Train, 7,260건), 5월(Val, 1,800건), 6월(Test, 1,800건) 엄격 분할 → 4개 모델 비교 평가 → 카테고리별 Newsvendor 임계비율($CR$) 도출 → 6월 미지 테스트셋 대상 정책 백테스트 시뮬레이션.</p>
+                </div>
+
+                <div class="rounded-2xl border border-slate-200 bg-slate-50/70 p-5 shadow-xs">
+                    <span class="font-mono text-xs font-bold text-blue-700">04. 핵심 프롬프트 및 분석법</span>
+                    <h3 class="mt-1.5 text-sm font-bold text-slate-900">확률론적 Newsvendor 최적화 공식</h3>
+                    <p class="mt-1.5 text-xs leading-relaxed text-slate-600">과소비용 $C_u = P - C$ (품절 기회손실), 과대비용 $C_o = C - S$ (폐기 원가 손실)에 대해 임계비율 $CR = \frac{C_u}{C_u + C_o}$을 계산하고, ML 예측 수요 $\hat{y}$와 표준편차 $\sigma$에 기초하여 최적 발주량 $Q^* = \hat{y} + z_{CR} \times \sigma$를 동적으로 산출함.</p>
+                </div>
+
+                <div class="rounded-2xl border border-slate-200 bg-slate-50/70 p-5 shadow-xs">
+                    <span class="font-mono text-xs font-bold text-blue-700">05. 실제 제작 결과물</span>
+                    <h3 class="mt-1.5 text-sm font-bold text-slate-900">정밀 분석 보고서, 인터랙티브 Web Ebook, 7종 고해상도 차트</h3>
+                    <p class="mt-1.5 text-xs leading-relaxed text-slate-600">8개 챕터 완결형 웹 전자책(<code class="font-mono text-[11px] text-slate-800">p4-analysis/index.html</code>), 정밀 분석 보고서(<code class="font-mono text-[11px] text-slate-800">report.md</code>, DOCX, HWPX), SKU별 권장 발주량 CSV, 엑셀 이중축 콤보 차트, 30초 인터랙티브 모션 인포그래픽.</p>
+                </div>
+
+                <div class="rounded-2xl border border-slate-200 bg-slate-50/70 p-5 shadow-xs">
+                    <span class="font-mono text-xs font-bold text-blue-700">06. 문제점 및 공학적 해결</span>
+                    <h3 class="mt-1.5 text-sm font-bold text-slate-900">복합 이벤트 언더피팅 해소 및 데이터 수치 정합성 감사</h3>
+                    <p class="mt-1.5 text-xs leading-relaxed text-slate-600">기존 규칙 기반 시스템이 공휴일+프로모션 시 -193.73개 편향을 보이던 문제를 HistGradientBoosting의 비선형 상호작용 피처 학습을 통해 Bias -4.50개로 사실상 정상화함. 독립 품질 검토 감사 로그(<code class="font-mono text-[11px] text-slate-800">AI_REVIEW_LOG.md</code>)를 도입해 6월 실측치와 연간 총액 간의 직접 비교 오류를 교정함.</p>
+                </div>
+
+                <div class="rounded-2xl border border-slate-200 bg-slate-50/70 p-5 shadow-xs">
+                    <span class="font-mono text-xs font-bold text-blue-700">07. 배운 점 및 한계점</span>
+                    <h3 class="mt-1.5 text-sm font-bold text-slate-900">가상 데이터셋 제약 및 표본 내 적합(In-Sample Fit) 한계</h3>
+                    <p class="mt-1.5 text-xs leading-relaxed text-slate-600">본 분석은 교육용 10,860건 가상 시나리오 데이터셋에 기반하며, 복합 이벤트 성능 수치는 전체 데이터셋 내 37건의 표본 내 적합(In-Sample Fit) 결과임. +13.96% 순이익 개선은 2026년 6월 1개월 단일기간 백테스트 환경에서의 추정치이므로, 실제 운영 환경에서는 다기간 시계열 재고 이월 효과와 리드타임 변동성을 추가 반영해야 함.</p>
+                </div>
+
+                <div class="rounded-2xl border border-slate-200 bg-slate-50/70 p-5 shadow-xs">
+                    <span class="font-mono text-xs font-bold text-blue-700">08. 원본 산출물 보존 및 다운로드</span>
+                    <h3 class="mt-1.5 text-sm font-bold text-slate-900">데이터셋, 분석 코드, 보고서 파일 일체 공개</h3>
+                    <p class="mt-1.5 text-xs leading-relaxed text-slate-600">누구나 재현할 수 있도록 <code class="font-mono text-[11px] text-slate-800">P4_fresh_inventory_daily.csv</code>, <code class="font-mono text-[11px] text-slate-800">analysis.py</code>, <code class="font-mono text-[11px] text-slate-800">make_p4_spec.py</code>, <code class="font-mono text-[11px] text-slate-800">spec.json</code> 및 DOCX/HWPX 보고서 원본을 모두 제공함.</p>
+                </div>
+            </div>
+        </section>
+
         <!-- Deliverable Links -->
-        <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-xs sm:p-8 space-y-4">
+        <section id="deliverables" class="rounded-3xl border border-slate-200 bg-white p-6 shadow-xs sm:p-8 space-y-4">
             <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Deliverables &amp; Downloads</span>
-            <h2 class="text-xl font-extrabold text-slate-900">프로젝트 전체 산출물 및 다운로드 센터</h2>
+            <h2 class="text-xl font-extrabold text-slate-900">프로젝트 전체 산출물 및 원본 파일 다운로드 센터</h2>
+            <p class="text-xs text-slate-600">기말 캡스톤 프로젝트와 관련된 모든 코드, 데이터셋, 정밀 보고서 및 시각화 파일을 내려받을 수 있습니다.</p>
             
             <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4 pt-2">
                 <a href="p4-analysis/index.html" class="hover-lift flex items-center justify-between rounded-xl border border-blue-200 bg-blue-50/70 px-4 py-3 text-xs font-semibold text-blue-800 shadow-xs">
@@ -448,11 +508,29 @@
                 <a href="p4-analysis/report.md" download class="hover-lift flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50/70 px-4 py-3 text-xs font-semibold text-slate-800 hover:bg-white shadow-xs">
                     <span>최종 분석 보고서 (report.md)</span><span>↓</span>
                 </a>
-                <a href="p4-analysis/result.md" target="_blank" class="hover-lift flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50/70 px-4 py-3 text-xs font-semibold text-slate-800 hover:bg-white shadow-xs">
-                    <span>자동생성 결과 (result.md)</span><span>↗</span>
+                <a href="p4-analysis/신선식품_수요_예측_및_재고_발주_최적화_분석_보고서.docx" download class="hover-lift flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50/70 px-4 py-3 text-xs font-semibold text-slate-800 hover:bg-white shadow-xs">
+                    <span>수요예측 분석보고서 DOCX</span><span>↓</span>
+                </a>
+                <a href="p4-analysis/신선식품_재고발주_분석보고서.hwpx" download class="hover-lift flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50/70 px-4 py-3 text-xs font-semibold text-slate-800 hover:bg-white shadow-xs">
+                    <span>재고발주 분석보고서 HWPX</span><span>↓</span>
+                </a>
+                <a href="p4-analysis/신선식품_수요예측_분석보고서.pdf" download class="hover-lift flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50/70 px-4 py-3 text-xs font-semibold text-slate-800 hover:bg-white shadow-xs">
+                    <span>수요예측 분석보고서 PDF</span><span>↓</span>
                 </a>
                 <a href="p4-analysis/AI_REVIEW_LOG.md" target="_blank" class="hover-lift flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50/70 px-4 py-3 text-xs font-semibold text-slate-800 hover:bg-white shadow-xs">
                     <span>독립 품질 감사 로그</span><span>↗</span>
+                </a>
+                <a href="p4-analysis/P4_fresh_inventory_daily.csv" download class="hover-lift flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50/70 px-4 py-3 text-xs font-semibold text-slate-800 hover:bg-white shadow-xs">
+                    <span>원천 데이터셋 CSV (10,860건)</span><span>↓</span>
+                </a>
+                <a href="p4-analysis/analysis.py" target="_blank" class="hover-lift flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50/70 px-4 py-3 text-xs font-semibold text-slate-800 hover:bg-white shadow-xs">
+                    <span>전체 분석 파이프라인 (py)</span><span>↗</span>
+                </a>
+                <a href="p4-analysis/make_p4_spec.py" target="_blank" class="hover-lift flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50/70 px-4 py-3 text-xs font-semibold text-slate-800 hover:bg-white shadow-xs">
+                    <span>P4 Spec 생성기 (py)</span><span>↗</span>
+                </a>
+                <a href="p4-analysis/spec.json" target="_blank" class="hover-lift flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50/70 px-4 py-3 text-xs font-semibold text-slate-800 hover:bg-white shadow-xs">
+                    <span>P4 데이터 스펙 (JSON)</span><span>↗</span>
                 </a>
                 <a href="p4-analysis/outputs/policy_comparison.csv" download class="hover-lift flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50/70 px-4 py-3 text-xs font-semibold text-slate-800 hover:bg-white shadow-xs">
                     <span>정책 비교 CSV</span><span>↓</span>
@@ -460,8 +538,8 @@
                 <a href="p4-analysis/outputs/sku_recommendations.csv" download class="hover-lift flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50/70 px-4 py-3 text-xs font-semibold text-slate-800 hover:bg-white shadow-xs">
                     <span>SKU별 권장발주량 CSV</span><span>↓</span>
                 </a>
-                <a href="p4-analysis/analysis.py" target="_blank" class="hover-lift flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50/70 px-4 py-3 text-xs font-semibold text-slate-800 hover:bg-white shadow-xs">
-                    <span>전체 분석 파이프라인 (py)</span><span>↗</span>
+                <a href="Claude Motion/쿠팡_PBL_문제집_AI스마트워크_v2_학습자용.docx" download class="hover-lift flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50/70 px-4 py-3 text-xs font-semibold text-slate-800 hover:bg-white shadow-xs">
+                    <span>쿠팡 PBL 문제집 DOCX</span><span>↓</span>
                 </a>
                 <a href="Claude 엑셀/기업실적_콤보차트.xlsx" download class="hover-lift flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50/70 px-4 py-3 text-xs font-semibold text-slate-800 hover:bg-white shadow-xs">
                     <span>기업실적_콤보차트.xlsx</span><span>↓</span>

@@ -39,6 +39,7 @@
 <audio id="bgmAudio" preload="auto">
   <source src="p4_ambient_bgm.wav" type="audio/wav">
   <source src="../assets/audio/p4_ambient_bgm.wav" type="audio/wav">
+  <source src="/assets/audio/p4_ambient_bgm.wav" type="audio/wav">
 </audio>
 </main>
 <script>
@@ -77,6 +78,15 @@ function scene6(t){let p=rise(t,0,1.6),q=rise(t,1.3,2.5),end=rise(t,2.35,3.55);l
 const funcs=[scene1,scene2,scene3,scene4,scene5,scene6];
 function sceneIndex(t){return t>=duration?5:Math.min(5,Math.floor(t/5))}
 function render(){const idx=sceneIndex(current),local=current-idx*5;visual.innerHTML=defs+funcs[idx](cap(local,0,5));$('stageNumber').textContent=`SCENE ${String(idx+1).padStart(2,'0')} / 06`; const seconds=Math.floor(current+1e-8);$('time').textContent=`00:${String(seconds).padStart(2,'0')} / 00:30`; $('progressFill').style.width=`${current/duration*100}%`;const progress=$('progress');progress.setAttribute('aria-valuenow',String(Math.round(current*10)/10));progress.setAttribute('aria-valuetext',`${Math.floor(current)}초`);$('scriptTitle').textContent=`${String(idx+1).padStart(2,'0')} / ${scInfo[idx][0]}`;$('scriptText').textContent=scInfo[idx][1];document.querySelectorAll('.scene-button').forEach((b,i)=>{b.classList.toggle('active',i===idx);b.setAttribute('aria-current',i===idx?'step':'false')});$('play').textContent=playing?'▶ 재생 중':'▶ 시작 / 재생';$('pause').disabled=!playing;if(idx!==prevScene){prevScene=idx}}
+// Notify parent frame to pause global site BGM when video plays
+function notifyParent(action) {
+    try {
+        if (window.parent && window.parent !== window) {
+            window.parent.postMessage({ action: action, source: 'p4_motion_video' }, '*');
+        }
+    } catch(e) {}
+}
+
 // Instrumental BGM Audio Control with fallback
 async function playAudio(){
     if(!bgm) return;
@@ -84,18 +94,21 @@ async function playAudio(){
         bgm.currentTime = current;
         bgm.muted = muted;
         await bgm.play();
+        notifyParent('media_play');
     } catch(e) {
         console.warn('BGM auto-play caught by browser policy (user interaction required):', e);
     }
 }
 function pauseAudio(){
     if(bgm) bgm.pause();
+    notifyParent('media_pause');
 }
 function stopAudio(){
     if(bgm){
         bgm.pause();
         bgm.currentTime = 0;
     }
+    notifyParent('media_stop');
 }
 
 async function play(){

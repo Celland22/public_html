@@ -132,6 +132,86 @@
             </div>
         </section>
 
+        <!-- Section 3: 8-Step Academic Framework Analysis -->
+        <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-xs sm:p-8 space-y-6">
+            <div class="border-b border-slate-100 pb-4">
+                <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Methodology &amp; Evaluation · 8-Step Framework</span>
+                <h2 class="mt-1 text-2xl font-extrabold text-slate-900">에이전트 실습 8단계 학술 프레임워크 분석</h2>
+                <p class="mt-1.5 text-sm text-slate-600">Google GEMS 및 Grill-me 기반의 대화형 에이전트 구축 실습을 체계적으로 구조화한 분석입니다.</p>
+            </div>
+
+            <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+                <div class="rounded-2xl border border-slate-200 bg-slate-50/70 p-5 shadow-xs">
+                    <span class="font-mono text-xs font-bold text-blue-700">01. 실습 목적</span>
+                    <h3 class="mt-1.5 text-sm font-bold text-slate-900">단방향 텍스트 생성 한계 극복 및 양방향 협업 에이전트 구축</h3>
+                    <p class="mt-1.5 text-xs leading-relaxed text-slate-600">사용자의 대략적인 요구사항에 대해 AI가 성급히 결론을 내리지 않고, 문서를 심층 분석한 뒤 기획 의도(분량, 톤앤매너)를 역질문(Grill-me)하여 스토리보드 및 타이포그래피 카드뉴스를 자동 생성하는 파이프라인 구현.</p>
+                </div>
+
+                <div class="rounded-2xl border border-slate-200 bg-slate-50/70 p-5 shadow-xs">
+                    <span class="font-mono text-xs font-bold text-blue-700">02. 사용 AI 도구 및 원본 자료</span>
+                    <h3 class="mt-1.5 text-sm font-bold text-slate-900">Google GEMS + Gemini 1.5 Pro + Nano Banana</h3>
+                    <p class="mt-1.5 text-xs leading-relaxed text-slate-600">Google GEMS 환경의 시스템 프롬프트 커스텀 지침, 대용량 PDF 문서 토큰 분석(대학생의 생성형 AI 활용 가이드 보고서), Nano Banana 2 타이포그래피 특화 이미지 생성 엔진.</p>
+                </div>
+
+                <div class="rounded-2xl border border-slate-200 bg-slate-50/70 p-5 shadow-xs">
+                    <span class="font-mono text-xs font-bold text-blue-700">03. 실제 작업 과정</span>
+                    <h3 class="mt-1.5 text-sm font-bold text-slate-900">문서 업로드 → 게이트키핑 역질문 → 분량 합의 → 스토리보드 → 렌더링</h3>
+                    <p class="mt-1.5 text-xs leading-relaxed text-slate-600">신입생 가이드 PDF 업로드 → 핵심 10대 포인트 추출 → "총 몇 장의 카드뉴스로 구성할까요?" 역질문 출력 후 대기 → 7장 확정 수신 → 페이지별 핵심 문구 및 시각 컨셉 표 출력 → 7장 일괄 이미지 렌더링 및 PDF 패키징.</p>
+                </div>
+
+                <div class="rounded-2xl border border-slate-200 bg-slate-50/70 p-5 shadow-xs">
+                    <span class="font-mono text-xs font-bold text-blue-700">04. 핵심 프롬프트 및 시스템 지침</span>
+                    <h3 class="mt-1.5 text-sm font-bold text-slate-900">Strict Process Rule &amp; Human-in-the-Loop</h3>
+                    <p class="mt-1.5 text-xs leading-relaxed text-slate-600"><code class="font-mono text-[11px] text-blue-800">[Strict Process Rule: 사용자의 응답이 올 때까지 다음 단계를 절대 진행하지 마]</code>라는 강제 중단(Gatekeeping) 조건을 시스템 수준에서 부여하여 자의적 생성 환각을 방지.</p>
+                </div>
+
+                <div class="rounded-2xl border border-slate-200 bg-slate-50/70 p-5 shadow-xs">
+                    <span class="font-mono text-xs font-bold text-blue-700">05. 실제 제작 결과물</span>
+                    <h3 class="mt-1.5 text-sm font-bold text-slate-900">7부작 카드뉴스 PNG 세트 및 신입생 가이드 E-Book PDF</h3>
+                    <p class="mt-1.5 text-xs leading-relaxed text-slate-600">1장 새내기 주목부터 7장 대학 생활 마무리까지 일관된 플랫 디자인과 고대비 폰트로 제작된 완성형 이미지 7장 및 이를 묶은 <code class="font-mono text-[11px] text-slate-800">PDF 카드뉴스 신입생.pdf</code>.</p>
+                </div>
+
+                <div class="rounded-2xl border border-slate-200 bg-slate-50/70 p-5 shadow-xs">
+                    <span class="font-mono text-xs font-bold text-blue-700">06. 문제점 및 공학적 해결</span>
+                    <h3 class="mt-1.5 text-sm font-bold text-slate-900">AI의 임의 진행 환각 및 한글 폰트 뭉개짐 해결</h3>
+                    <p class="mt-1.5 text-xs leading-relaxed text-slate-600">사용자 확인 없이 단 3장만 생성해 버리던 문제를 상태 머신 기반 프롬프트로 봉쇄. 복잡한 한글 장문이 깨지는 현상은 장당 1개 핵심 키워드 대형 배치 및 고대비 플랫 그래픽으로 단순화하여 해결.</p>
+                </div>
+
+                <div class="rounded-2xl border border-slate-200 bg-slate-50/70 p-5 shadow-xs">
+                    <span class="font-mono text-xs font-bold text-blue-700">07. 배운 점 및 한계점</span>
+                    <h3 class="mt-1.5 text-sm font-bold text-slate-900">역질문 인터페이스의 효용 및 세밀한 텍스트 렌더링 한계</h3>
+                    <p class="mt-1.5 text-xs leading-relaxed text-slate-600">LLM이 주도권을 쥐고 사용자의 의도를 명확히 이끌어내는 역질문 기법이 실제 비즈니스 프로세스 자동화에 필수적임을 확인. 단, 현세대 확산 모델의 긴 문장 한글 타이포그래피 안정성은 추가 개선이 필요함.</p>
+                </div>
+
+                <div class="rounded-2xl border border-slate-200 bg-slate-50/70 p-5 shadow-xs">
+                    <span class="font-mono text-xs font-bold text-blue-700">08. 원본 산출물 보존 및 다운로드</span>
+                    <h3 class="mt-1.5 text-sm font-bold text-slate-900">가이드북 및 프롬프트 원본 전수 제공</h3>
+                    <p class="mt-1.5 text-xs leading-relaxed text-slate-600">실습에 투입된 원본 PDF 가이드, 결과물 PDF 전자책, GEMS 지침 원본 DOCX를 사이트 하단 다운로드 센터에 배치하여 재현 가능성을 보장함.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Deliverables & Raw Resource Center -->
+        <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-xs sm:p-8 space-y-4">
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Deliverables &amp; Downloads</span>
+            <h2 class="text-xl font-extrabold text-slate-900">에이전트 실습 전체 산출물 및 문서 다운로드</h2>
+
+            <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4 pt-2">
+                <a href="GEMS 쿠팡/GEMS/PDF 카드뉴스 신입생.pdf" download class="hover-lift flex items-center justify-between rounded-xl border border-blue-200 bg-blue-50/70 px-4 py-3 text-xs font-semibold text-blue-800 shadow-xs">
+                    <span>신입생 카드뉴스 PDF</span><span>↓</span>
+                </a>
+                <a href="GEMS 쿠팡/GEMS/6회차_GEMS 가이드와 카드뉴스 제작.pdf" download class="hover-lift flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50/70 px-4 py-3 text-xs font-semibold text-slate-800 hover:bg-white shadow-xs">
+                    <span>GEMS 제작 가이드 PDF</span><span>↓</span>
+                </a>
+                <a href="GEMS 쿠팡/GEMS/6회차_대학생의 생성형 AI 활용 가이드 및 전략 보고서.pdf" download class="hover-lift flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50/70 px-4 py-3 text-xs font-semibold text-slate-800 hover:bg-white shadow-xs">
+                    <span>입력 분석 보고서 PDF</span><span>↓</span>
+                </a>
+                <a href="강의 내용/Google GEMS.docx" download class="hover-lift flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50/70 px-4 py-3 text-xs font-semibold text-slate-800 hover:bg-white shadow-xs">
+                    <span>GEMS 지침 원본 DOCX</span><span>↓</span>
+                </a>
+            </div>
+        </section>
+
     </main>
 
     <div id="site-footer"></div>
