@@ -33,12 +33,232 @@
         /* Print & PDF Export Stylesheet */
         @media print {
             body { background: white !important; color: black !important; font-size: 11pt; }
-            .no-print, nav, #reading-progress-bar, #toc-drawer, .chapter-nav-btn { display: none !important; }
+            .no-print, nav, #reading-progress-bar, #toc-drawer, .chapter-nav-btn, #p4-book-section { display: none !important; }
             .print-page-break { page-break-before: always; break-before: page; }
             .print-cover { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; }
             img { max-width: 100% !important; page-break-inside: avoid; }
             table { page-break-inside: avoid; }
             .chapter-section { margin-top: 3rem !important; margin-bottom: 3rem !important; }
+        }
+
+        /* ======================================================== */
+        /* 3D FLIPBOOK STYLESHEET                                   */
+        /* ======================================================== */
+        .p4-flipbook-section {
+            position: relative;
+            background: radial-gradient(circle at 50% 20%, #1e293b 0%, #0b1120 100%);
+            border-radius: 1.5rem;
+            box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            color: #e2e8f0;
+        }
+        .p4-stage {
+            perspective: 2200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 640px;
+            padding: 1.5rem 1rem;
+            position: relative;
+            user-select: none;
+        }
+        .p4-bookcase {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6), 0 5px 15px rgba(0, 0, 0, 0.4);
+            border-radius: 6px;
+            background: #fdfbf7;
+            transition: width 0.3s ease, transform 0.3s ease;
+        }
+        /* Spread mode (Desktop & Tablet) */
+        @media (min-width: 768px) {
+            .p4-bookcase {
+                width: 900px;
+                height: 630px;
+            }
+            .p4-bookcase.cover-mode {
+                width: 450px;
+            }
+        }
+        /* Mobile single-page mode */
+        @media (max-width: 767px) {
+            .p4-bookcase {
+                width: 100%;
+                max-width: 440px;
+                min-height: 570px;
+            }
+        }
+
+        .p4-spread-view {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            position: relative;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        /* Page styles */
+        .p4-page {
+            flex: 1;
+            height: 100%;
+            background-color: #fcfbf8;
+            color: #1e293b;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem 1.5rem 1.15rem 1.5rem;
+            overflow-y: auto;
+            font-size: 0.8125rem;
+            line-height: 1.62;
+            box-sizing: border-box;
+        }
+        /* Left page paper edge and gutter shadow */
+        .p4-page.page-left {
+            border-right: 1px solid #e2ded4;
+            background: linear-gradient(to right, #f7f5ed 0%, #fcfbf8 10%, #fcfbf8 92%, #ebe6d9 100%);
+            box-shadow: inset 10px 0 20px rgba(0, 0, 0, 0.02);
+        }
+        /* Right page paper edge and gutter shadow */
+        .p4-page.page-right {
+            border-left: 1px solid #dcd7ca;
+            background: linear-gradient(to right, #ebe6d9 0%, #fcfbf8 8%, #fcfbf8 90%, #f7f5ed 100%);
+            box-shadow: inset -10px 0 20px rgba(0, 0, 0, 0.02);
+        }
+
+        /* Spine shadow in the center */
+        .p4-spine {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 32px;
+            margin-left: -16px;
+            background: linear-gradient(to right, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.06) 25%, rgba(0,0,0,0.01) 50%, rgba(0,0,0,0.06) 75%, rgba(0,0,0,0.18) 100%);
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        /* Running Header & Footer */
+        .p4-page-header {
+            border-bottom: 1px solid #e2ded4;
+            padding-bottom: 0.35rem;
+            margin-bottom: 0.75rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-size: 0.6875rem;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            flex-shrink: 0;
+        }
+        .p4-page-footer {
+            border-top: 1px solid #e2ded4;
+            padding-top: 0.35rem;
+            margin-top: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.6875rem;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            color: #64748b;
+            flex-shrink: 0;
+        }
+
+        /* Hardcover Pages (Page 0 and Page 15) */
+        .p4-cover-hard {
+            background: radial-gradient(circle at 50% 30%, #1e293b 0%, #0f172a 100%) !important;
+            color: #f1f5f9 !important;
+            border: 3px solid #334155;
+            position: relative;
+            box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.8);
+        }
+        .p4-cover-gold-border {
+            position: absolute;
+            inset: 12px;
+            border: 1px solid rgba(212, 175, 55, 0.45);
+            outline: 1px solid rgba(212, 175, 55, 0.2);
+            outline-offset: -5px;
+            pointer-events: none;
+        }
+        .p4-gold-text {
+            color: #fcd34d;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+        }
+
+        /* 3D Flip Layer Overlay */
+        .p4-flip-overlay {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            pointer-events: none;
+            z-index: 25;
+        }
+        .p4-flip-sheet {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 50%;
+            height: 100%;
+            transform-style: preserve-3d;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+        }
+        .p4-flip-sheet.forward {
+            right: 0;
+            transform-origin: left center;
+            animation: p4FlipForward 0.58s cubic-bezier(0.45, 0.05, 0.25, 1) both;
+        }
+        .p4-flip-sheet.backward {
+            left: 0;
+            transform-origin: right center;
+            animation: p4FlipBackward 0.58s cubic-bezier(0.45, 0.05, 0.25, 1) both;
+        }
+        @keyframes p4FlipForward {
+            0% { transform: rotateY(0deg); }
+            50% { transform: rotateY(-90deg) scale(1.02); }
+            100% { transform: rotateY(-180deg); }
+        }
+        @keyframes p4FlipBackward {
+            0% { transform: rotateY(0deg); }
+            50% { transform: rotateY(90deg) scale(1.02); }
+            100% { transform: rotateY(180deg); }
+        }
+        .p4-flip-face {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            overflow: hidden;
+            box-sizing: border-box;
+            background: #fcfbf8;
+        }
+        .p4-flip-face.back {
+            transform: rotateY(180deg);
+        }
+        .p4-flip-shade {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, rgba(15,23,42,0.4), transparent 50%, rgba(15,23,42,0.5));
+            pointer-events: none;
+            opacity: 0;
+            animation: p4ShadeOn 0.58s ease-in-out;
+        }
+        @keyframes p4ShadeOn {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 0.65; }
+        }
+
+        /* Lightbox Modal */
+        #p4-lightbox-modal {
+            transition: opacity 0.25s ease, visibility 0.25s ease;
+        }
+        #p4-lightbox-modal.active {
+            opacity: 1;
+            visibility: visible;
         }
     </style>
 </head>
@@ -64,8 +284,21 @@
                     </span>
                 </div>
 
+                <!-- Center: Reading Mode Switch -->
+                <div class="hidden md:flex items-center bg-slate-100 p-0.5 rounded-lg border border-slate-200 text-xs">
+                    <a href="#cover" id="nav-mode-scroll" class="px-3 py-1 rounded-md font-semibold text-slate-900 bg-white shadow-xs transition flex items-center gap-1">
+                        <span>📄</span><span>상세 분석 읽기</span>
+                    </a>
+                    <a href="#p4-book-section" id="nav-mode-book" class="px-3 py-1 rounded-md font-medium text-slate-600 hover:text-slate-900 transition flex items-center gap-1">
+                        <span>📖</span><span>3D 책으로 읽기</span>
+                    </a>
+                </div>
+
                 <!-- Right: Chapter TOC dropdown & Action Tools -->
                 <div class="flex items-center gap-2">
+                    <a href="#p4-book-section" class="md:hidden inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-indigo-50 border border-indigo-200 text-xs font-semibold text-indigo-700">
+                        <span>📖 3D책</span>
+                    </a>
                     <button id="toc-toggle-btn" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 bg-slate-50 hover:bg-slate-100 text-xs font-medium text-slate-700 transition">
                         <span>📑 목차</span>
                         <span id="current-ch-badge" class="font-mono text-[11px] text-slate-500 font-bold">Ch.01</span>
@@ -73,7 +306,7 @@
                     <button onclick="window.print()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-xs font-medium text-slate-700 transition shadow-xs" title="PDF 저장 또는 인쇄">
                         <span>🖨️ PDF/인쇄</span>
                     </button>
-                    <a href="report.md" download class="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-xs font-medium text-white transition shadow-xs">
+                    <a href="report.md" download class="hidden lg:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-xs font-medium text-white transition shadow-xs">
                         <span>원문 MD ↓</span>
                     </a>
                 </div>
@@ -123,6 +356,10 @@
                     <a href="#ch8" class="toc-link block p-2 rounded-lg hover:bg-slate-100 transition text-slate-700">
                         <span class="font-mono text-[10px] text-slate-400 block">CHAPTER 08</span>
                         <strong>결론 및 실제 도입의 한계</strong>
+                    </a>
+                    <a href="#p4-book-section" class="toc-link block p-2 rounded-lg bg-indigo-50/80 border border-indigo-200/80 hover:bg-indigo-100 transition text-indigo-950 sm:col-span-2">
+                        <span class="font-mono text-[10px] text-indigo-600 font-bold block">SPECIAL 3D INTERACTIVE</span>
+                        <strong>📖 P4 연구보고서 — 실제 책으로 읽기 (16p)</strong>
                     </a>
                     <a href="#appendix" class="toc-link block p-2 rounded-lg hover:bg-slate-100 transition text-slate-700">
                         <span class="font-mono text-[10px] text-slate-400 block">APPENDIX</span>
@@ -870,15 +1107,846 @@
                 <a href="#ch7" class="chapter-nav-btn text-slate-500 hover:text-slate-800 transition">
                     ← 07. 정책별 손익 비교 &amp; 백테스트
                 </a>
-                <a href="#appendix" class="chapter-nav-btn font-semibold text-slate-800 hover:text-blue-600 transition">
-                    부록: 독립 감사 로그 및 산출물 →
+                <a href="#p4-book-section" class="chapter-nav-btn font-semibold text-indigo-700 hover:text-indigo-900 transition flex items-center gap-1">
+                    <span>📖 P4 연구보고서 — 책으로 읽기 (3D Flipbook) →</span>
                 </a>
             </footer>
         </article>
 
         <!-- ======================================================== -->
-        <!-- APPENDIX: 독립 감사 로그 및 산출물 다운로드                         -->
+        <!-- SPECIAL SECTION: P4 연구보고서 — 책으로 읽기 (3D Flipbook)      -->
         <!-- ======================================================== -->
+        <section id="p4-book-section" class="chapter-section pt-8 pb-12 print-page-break space-y-6">
+            <header class="border-b border-slate-200 pb-4 flex flex-col sm:flex-row sm:items-end justify-between gap-3">
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="px-2.5 py-0.5 rounded-full bg-indigo-100 text-indigo-700 font-mono text-xs font-bold uppercase tracking-wider">
+                            Interactive 3D Flipbook
+                        </span>
+                        <span class="text-xs text-slate-400 font-mono">16 Academic Pages</span>
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">
+                        P4 연구보고서 — 책으로 읽기
+                    </h2>
+                    <p class="text-xs text-slate-500 mt-1">
+                        실제 양장본 도서의 책장을 넘기듯 3D 입체 효과로 읽는 학술 단행본 뷰어 (전체 7개 고화질 차트 및 분석 수록)
+                    </p>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button id="p4-fullscreen-btn" onclick="p4FlipEngine.toggleFullscreen()" class="px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-xs font-semibold text-slate-700 transition flex items-center gap-1.5 shadow-xs cursor-pointer">
+                        <span id="fs-icon">⛶</span><span id="fs-text">전체화면</span>
+                    </button>
+                    <a href="#cover" class="px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-xs font-semibold text-slate-700 transition flex items-center gap-1.5 shadow-xs">
+                        <span>📄 일반 스크롤 뷰</span>
+                    </a>
+                </div>
+            </header>
+
+            <!-- Flipbook Master Container -->
+            <div id="p4-flipbook-container" class="p4-flipbook-section p-4 sm:p-6">
+                <!-- Top Controls Toolbar -->
+                <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-slate-700/60 text-xs text-slate-300">
+                    <!-- Left: Navigation Jump Dropdown -->
+                    <div class="flex items-center gap-2">
+                        <span class="text-slate-400 hidden sm:inline">챕터 바로가기:</span>
+                        <select id="p4-toc-select" onchange="p4FlipEngine.goToPage(parseInt(this.value))" class="bg-slate-800 text-slate-200 border border-slate-600 rounded-lg px-2.5 py-1.5 text-xs font-medium focus:outline-none focus:border-indigo-400 cursor-pointer">
+                            <option value="0">표지 (Cover)</option>
+                            <option value="1">p.1 연구 요약 (Abstract)</option>
+                            <option value="2">p.2 전체 목차 (TOC)</option>
+                            <option value="3">p.3 제1장. 구조적 딜레마</option>
+                            <option value="4">p.4 제2장. 데이터셋 구조</option>
+                            <option value="5">p.5 제3장. 카테고리 진단 (Fig 1,2)</option>
+                            <option value="6">p.6 제4장. 오차 진단 (Fig 3)</option>
+                            <option value="7">p.7 제5장. ML 벤치마킹 (Fig 4)</option>
+                            <option value="8">p.8 제6장. 수요 추종력 (Fig 5)</option>
+                            <option value="9">p.9 제7장. Newsvendor 수리</option>
+                            <option value="10">p.10 제8장. 손익 비교 (Fig 6)</option>
+                            <option value="11">p.11 제9장. 성과 개선율 (Fig 7)</option>
+                            <option value="12">p.12 제10장. 연구의 한계 &amp; 윤리</option>
+                            <option value="13">p.13 제11장. 실무 로드맵</option>
+                            <option value="14">p.14 부록. 독립 감사 산출물</option>
+                            <option value="15">뒷표지 (Back Cover)</option>
+                        </select>
+                    </div>
+
+                    <!-- Center: Pagination Controls -->
+                    <div class="flex items-center gap-1.5 bg-slate-800/90 p-1 rounded-xl border border-slate-700/80 shadow-inner">
+                        <button onclick="p4FlipEngine.turnFirst()" class="p-1.5 px-2 rounded-lg hover:bg-slate-700 text-slate-300 hover:text-white transition font-bold cursor-pointer" title="맨 앞 (Home)">
+                            ⏮
+                        </button>
+                        <button onclick="p4FlipEngine.turnPrev()" class="p-1.5 px-2.5 rounded-lg hover:bg-slate-700 text-slate-200 hover:text-white transition font-bold flex items-center gap-1 cursor-pointer" title="이전 페이지">
+                            <span>◀</span><span class="hidden sm:inline text-[11px]">이전</span>
+                        </button>
+                        <div id="p4-page-indicator" class="px-3 py-1 font-mono font-bold text-xs bg-slate-900/90 text-amber-300 rounded-lg border border-slate-700/60 min-w-[90px] text-center">
+                            표지 (Cover)
+                        </div>
+                        <button onclick="p4FlipEngine.turnNext()" class="p-1.5 px-2.5 rounded-lg hover:bg-slate-700 text-slate-200 hover:text-white transition font-bold flex items-center gap-1 cursor-pointer" title="다음 페이지">
+                            <span class="hidden sm:inline text-[11px]">다음</span><span>▶</span>
+                        </button>
+                        <button onclick="p4FlipEngine.turnLast()" class="p-1.5 px-2 rounded-lg hover:bg-slate-700 text-slate-300 hover:text-white transition font-bold cursor-pointer" title="맨 뒤 (End)">
+                            ⏭
+                        </button>
+                    </div>
+
+                    <!-- Right: Keyboard & Interaction Hint -->
+                    <div class="flex items-center gap-2">
+                        <span class="text-[11px] text-slate-400 hidden lg:inline">
+                            ⌨️ 좌우 화살표키 또는 책 가장자리 클릭
+                        </span>
+                    </div>
+                </div>
+
+                <!-- 3D Interactive Stage -->
+                <div class="p4-stage" id="p4-stage-area">
+                    <div id="p4-bookcase" class="p4-bookcase cover-mode">
+                        <!-- Book Spread Display View (Holds Left and Right page) -->
+                        <div id="p4-spread-view" class="p4-spread-view">
+                            <!-- Injected dynamically by p4FlipEngine -->
+                        </div>
+                        <!-- Central Spine shadow -->
+                        <div id="p4-spine" class="p4-spine hidden md:block"></div>
+                        <!-- 3D Flipping Leaf Overlay Layer -->
+                        <div id="p4-flip-overlay" class="p4-flip-overlay"></div>
+                    </div>
+                </div>
+
+                <!-- Bottom Helper Status -->
+                <div class="pt-3 border-t border-slate-700/60 flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] text-slate-400">
+                    <div class="flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 inline-block animate-pulse"></span>
+                        <span>3D Flipbook 엔진 가동 중 · 데스크톱/태블릿 양면 스프레드 뷰 지원</span>
+                    </div>
+                    <div>
+                        🔍 도표 클릭 시 무손실 고화질 라이트박스 확대 지원
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lightbox Modal for Figures -->
+            <div id="p4-lightbox-modal" onclick="p4FlipEngine.closeLightbox()" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-sm flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-200">
+                <div onclick="event.stopPropagation()" class="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden border border-slate-200">
+                    <div class="p-4 border-b border-slate-200 flex justify-between items-center bg-slate-50">
+                        <h4 id="p4-lightbox-title" class="font-bold text-sm text-slate-900">차트 고화질 확대</h4>
+                        <button onclick="p4FlipEngine.closeLightbox()" class="w-8 h-8 rounded-full bg-slate-200 hover:bg-slate-300 text-slate-700 flex items-center justify-center font-bold text-sm transition cursor-pointer">
+                            ✕
+                        </button>
+                    </div>
+                    <div class="p-4 overflow-auto flex-1 flex items-center justify-center bg-slate-100/50">
+                        <img id="p4-lightbox-img" src="" alt="확대 이미지" class="max-w-full max-h-[70vh] object-contain rounded-lg shadow-sm">
+                    </div>
+                    <div class="p-3 bg-slate-50 border-t border-slate-200 text-center text-xs text-slate-500">
+                        ESC 키를 누르거나 창 바깥 배경을 클릭하면 닫힙니다.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chapter Navigation Footer -->
+            <footer class="pt-6 border-t border-slate-200 flex justify-between items-center text-xs no-print">
+                <a href="#ch8" class="chapter-nav-btn text-slate-500 hover:text-slate-800 transition">
+                    ← 08. 결론 및 실제 도입의 한계
+                </a>
+                <a href="#appendix" class="chapter-nav-btn font-semibold text-slate-800 hover:text-indigo-600 transition">
+                    부록: 독립 감사 로그 및 산출물 →
+                </a>
+            </footer>
+
+            <!-- ======================================================== -->
+            <!-- 16 RAW ACADEMIC PAGES REPOSITORY (FOR DYNAMIC RENDERING) -->
+            <!-- ======================================================== -->
+            <div id="p4-raw-pages" class="hidden">
+                <!-- Page 0: Hardcover Front Cover -->
+                <div id="p4-raw-p0">
+                    <div class="p4-page page-right p4-cover-hard text-center flex flex-col justify-between items-center h-full" data-page="0">
+                        <div class="p4-cover-gold-border"></div>
+                        <div class="space-y-2 pt-6 z-10">
+                            <span class="inline-block px-3 py-1 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-300 font-mono text-[11px] font-bold tracking-widest uppercase">
+                                Hallym Capstone Monograph · PBL 04
+                            </span>
+                            <div class="text-[11px] text-slate-400 tracking-wider">AI 스마트워크 디지털 연구보고서 단행본</div>
+                        </div>
+                        
+                        <div class="space-y-4 my-auto px-4 z-10">
+                            <h1 class="text-xl sm:text-2xl font-extrabold text-white leading-tight font-editorial-title">
+                                쿠팡 로켓프레시 신선식품 수요 예측 및<br>
+                                <span class="p4-gold-text">Newsvendor 재고 발주 최적화</span>
+                            </h1>
+                            <div class="h-0.5 w-16 bg-amber-400/60 mx-auto"></div>
+                            <p class="text-xs text-slate-300 leading-relaxed font-serif italic max-w-sm mx-auto">
+                                빅데이터 시계열 분석, 머신러닝(LightGBM) 및 비대칭 손실 Newsvendor 수리 모형을 활용한 폐기 손실 53% 절감과 수익성 극대화 연구
+                            </p>
+                        </div>
+
+                        <div class="space-y-2 pb-6 z-10 text-[11px] text-slate-300">
+                            <div class="font-medium">연구자: <strong class="text-white">이종건</strong> (생명과학과 주전공 · 경영학과 복수전공 20213528)</div>
+                            <div class="text-slate-400">지도교수: 황현석 교수님 · 한림대학교 AI 스마트워크</div>
+                            <div class="pt-2">
+                                <button onclick="p4FlipEngine.turnNext()" class="px-4 py-1.5 rounded-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition shadow-lg inline-flex items-center gap-1.5 cursor-pointer">
+                                    <span>책 펼쳐 읽기</span><span>📖 ▶</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Page 1: Half-title & Executive Abstract -->
+                <div id="p4-raw-p1">
+                    <div class="p4-page page-left h-full" data-page="1">
+                        <div class="p4-page-header">
+                            <span>Coupang Rocket Fresh Optimization</span>
+                            <span>Executive Summary</span>
+                        </div>
+                        <div class="space-y-3">
+                            <span class="font-mono text-[10px] font-bold text-indigo-700 uppercase tracking-widest">Executive Abstract</span>
+                            <h3 class="text-base font-extrabold text-slate-900 leading-snug">
+                                연구 요약 (Executive Abstract)
+                            </h3>
+                            <p class="text-[11px] text-slate-700 leading-relaxed">
+                                본 연구는 쿠팡 로켓프레시의 고질적인 '신선식품 폐기 vs 결품' 딜레마를 해결하기 위해, 1,000개 SKU 36.5만 건의 시계열 시뮬레이션 데이터를 바탕으로 머신러닝(LightGBM) 수요 예측과 Newsvendor 확률적 발주 최적화 수리 모형을 결합한 통합 재고 관리 솔루션을 제시합니다.
+                            </p>
+                            <div class="grid grid-cols-2 gap-2 my-2">
+                                <div class="p-2 rounded-lg border border-slate-200 bg-slate-50 text-center">
+                                    <span class="text-[9.5px] text-slate-500 block font-medium">폐기 손실액 절감</span>
+                                    <strong class="text-sm font-extrabold text-emerald-700">-53.09%</strong>
+                                    <span class="text-[9px] text-slate-500 block">21.8억 → 10.2억 원</span>
+                                </div>
+                                <div class="p-2 rounded-lg border border-slate-200 bg-slate-50 text-center">
+                                    <span class="text-[9.5px] text-slate-500 block font-medium">월 순이익 개선</span>
+                                    <strong class="text-sm font-extrabold text-indigo-700">+13.96%</strong>
+                                    <span class="text-[9px] text-slate-500 block">+1.18억 원 순증 (9.64억)</span>
+                                </div>
+                                <div class="p-2 rounded-lg border border-slate-200 bg-slate-50 text-center">
+                                    <span class="text-[9.5px] text-slate-500 block font-medium">품절률 개선</span>
+                                    <strong class="text-sm font-extrabold text-blue-700">-4.12%p</strong>
+                                    <span class="text-[9px] text-slate-500 block">9.80% → 5.68%</span>
+                                </div>
+                                <div class="p-2 rounded-lg border border-slate-200 bg-slate-50 text-center">
+                                    <span class="text-[9.5px] text-slate-500 block font-medium">LightGBM 적합도</span>
+                                    <strong class="text-sm font-extrabold text-purple-700">R² = 0.781</strong>
+                                    <span class="text-[9px] text-slate-500 block">RMSE 8.42 (최고 성능)</span>
+                                </div>
+                            </div>
+                            <p class="text-[10.5px] text-slate-600 leading-relaxed">
+                                단일기간 백테스트를 통해 입증된 본 연구의 수리적 모델은 신선식품 이커머스의 지속가능한 수익성과 ESG(음식물 쓰레기 저감) 가치를 동시에 실현할 수 있는 실증적 근거를 제공합니다.
+                            </p>
+                        </div>
+                        <div class="p4-page-footer">
+                            <span>AI 스마트워크 캡스톤 연구보고서</span>
+                            <span class="font-bold">1</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Page 2: Table of Contents & Structure -->
+                <div id="p4-raw-p2">
+                    <div class="p4-page page-right h-full" data-page="2">
+                        <div class="p4-page-header">
+                            <span>Table of Contents</span>
+                            <span>Monograph Structure</span>
+                        </div>
+                        <div class="space-y-1.5">
+                            <span class="font-mono text-[10px] font-bold text-slate-400 uppercase tracking-widest">Academic Index</span>
+                            <h3 class="text-base font-extrabold text-slate-900">전체 목차 및 연구 체계</h3>
+                            <p class="text-[10px] text-slate-500 pb-1 border-b border-slate-100">
+                                각 챕터를 클릭하면 해당 페이지로 즉시 이동합니다.
+                            </p>
+                            <div class="space-y-1 text-xs">
+                                <button onclick="p4FlipEngine.goToPage(3)" class="w-full text-left py-1 px-1.5 rounded hover:bg-slate-100 transition flex justify-between items-center group cursor-pointer">
+                                    <span class="text-slate-800 font-medium group-hover:text-indigo-600">제1장. 신선식품 이커머스의 구조적 딜레마</span>
+                                    <span class="font-mono text-slate-400 text-[11px]">p.3</span>
+                                </button>
+                                <button onclick="p4FlipEngine.goToPage(4)" class="w-full text-left py-1 px-1.5 rounded hover:bg-slate-100 transition flex justify-between items-center group cursor-pointer">
+                                    <span class="text-slate-800 font-medium group-hover:text-indigo-600">제2장. 데이터셋 구조 및 3단계 분할 방법론</span>
+                                    <span class="font-mono text-slate-400 text-[11px]">p.4</span>
+                                </button>
+                                <button onclick="p4FlipEngine.goToPage(5)" class="w-full text-left py-1 px-1.5 rounded hover:bg-slate-100 transition flex justify-between items-center group cursor-pointer">
+                                    <span class="text-slate-800 font-medium group-hover:text-indigo-600">제3장. 카테고리별 폐기율 및 결품 위험 진단</span>
+                                    <span class="font-mono text-slate-400 text-[11px]">p.5</span>
+                                </button>
+                                <button onclick="p4FlipEngine.goToPage(6)" class="w-full text-left py-1 px-1.5 rounded hover:bg-slate-100 transition flex justify-between items-center group cursor-pointer">
+                                    <span class="text-slate-800 font-medium group-hover:text-indigo-600">제4장. 기존 발주 시스템의 한계 및 오차 진단</span>
+                                    <span class="font-mono text-slate-400 text-[11px]">p.6</span>
+                                </button>
+                                <button onclick="p4FlipEngine.goToPage(7)" class="w-full text-left py-1 px-1.5 rounded hover:bg-slate-100 transition flex justify-between items-center group cursor-pointer">
+                                    <span class="text-slate-800 font-medium group-hover:text-indigo-600">제5장. 머신러닝 예측 모델 벤치마킹</span>
+                                    <span class="font-mono text-slate-400 text-[11px]">p.7</span>
+                                </button>
+                                <button onclick="p4FlipEngine.goToPage(8)" class="w-full text-left py-1 px-1.5 rounded hover:bg-slate-100 transition flex justify-between items-center group cursor-pointer">
+                                    <span class="text-slate-800 font-medium group-hover:text-indigo-600">제6장. LightGBM 실제 수요 추종력 및 적합도</span>
+                                    <span class="font-mono text-slate-400 text-[11px]">p.8</span>
+                                </button>
+                                <button onclick="p4FlipEngine.goToPage(9)" class="w-full text-left py-1 px-1.5 rounded hover:bg-slate-100 transition flex justify-between items-center group cursor-pointer">
+                                    <span class="text-slate-800 font-medium group-hover:text-indigo-600">제7장. Newsvendor 재고 최적화 수리적 메커니즘</span>
+                                    <span class="font-mono text-slate-400 text-[11px]">p.9</span>
+                                </button>
+                                <button onclick="p4FlipEngine.goToPage(10)" class="w-full text-left py-1 px-1.5 rounded hover:bg-slate-100 transition flex justify-between items-center group cursor-pointer">
+                                    <span class="text-slate-800 font-medium group-hover:text-indigo-600">제8장. 정책별 재무 손익 비교 및 백테스트</span>
+                                    <span class="font-mono text-slate-400 text-[11px]">p.10</span>
+                                </button>
+                                <button onclick="p4FlipEngine.goToPage(11)" class="w-full text-left py-1 px-1.5 rounded hover:bg-slate-100 transition flex justify-between items-center group cursor-pointer">
+                                    <span class="text-slate-800 font-medium group-hover:text-indigo-600">제9장. 핵심 성과 개선율 및 폐기 절감 효과</span>
+                                    <span class="font-mono text-slate-400 text-[11px]">p.11</span>
+                                </button>
+                                <button onclick="p4FlipEngine.goToPage(12)" class="w-full text-left py-1 px-1.5 rounded hover:bg-slate-100 transition flex justify-between items-center group cursor-pointer">
+                                    <span class="text-slate-800 font-medium group-hover:text-indigo-600">제10장. 연구의 학술적·실무적 한계 및 윤리</span>
+                                    <span class="font-mono text-slate-400 text-[11px]">p.12</span>
+                                </button>
+                                <button onclick="p4FlipEngine.goToPage(13)" class="w-full text-left py-1 px-1.5 rounded hover:bg-slate-100 transition flex justify-between items-center group cursor-pointer">
+                                    <span class="text-slate-800 font-medium group-hover:text-indigo-600">제11장. 로켓프레시 실무 적용 3단계 로드맵</span>
+                                    <span class="font-mono text-slate-400 text-[11px]">p.13</span>
+                                </button>
+                                <button onclick="p4FlipEngine.goToPage(14)" class="w-full text-left py-1 px-1.5 rounded hover:bg-slate-100 transition flex justify-between items-center group cursor-pointer">
+                                    <span class="text-slate-800 font-medium group-hover:text-indigo-600">부록. 독립 감사 산출물 및 데이터 거버넌스</span>
+                                    <span class="font-mono text-slate-400 text-[11px]">p.14</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p4-page-footer">
+                            <span>Chapter Index</span>
+                            <span class="font-bold">2</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Page 3: Chapter 1. Structural Dilemma -->
+                <div id="p4-raw-p3">
+                    <div class="p4-page page-left h-full" data-page="3">
+                        <div class="p4-page-header">
+                            <span>Chapter 01</span>
+                            <span>Structural Dilemma</span>
+                        </div>
+                        <div class="space-y-3">
+                            <span class="font-mono text-[10px] font-bold text-slate-400 uppercase tracking-widest">Chapter 01</span>
+                            <h3 class="text-base font-extrabold text-slate-900 leading-snug">
+                                신선식품 이커머스의 구조적 딜레마
+                            </h3>
+                            <p class="text-[11.5px] text-slate-700 leading-relaxed">
+                                쿠팡 로켓프레시의 비즈니스 모델은 '자정 전 주문 시 익일 새벽 7시 문 앞 배송'이라는 초신선 배송의 약속 위에 구축되어 있습니다. 그러나 이 모델은 다음과 같은 근원적 물류 딜레마를 내포합니다.
+                            </p>
+                            <div class="p-3 rounded-xl bg-amber-50/70 border border-amber-200 text-xs space-y-2">
+                                <strong class="text-amber-950 font-bold block">⚖️ 비대칭 손실 구조 (Asymmetric Loss):</strong>
+                                <p class="text-[11px] text-amber-900 leading-relaxed">
+                                    • <strong>과다 발주(Overstocking):</strong> 2~3일 내 소진되지 못한 신선식품은 유통기한 경과로 전액 폐기 처리되며 원가($C$) 손실이 직접 발생합니다.<br>
+                                    • <strong>과소 발주(Understocking):</strong> 품절(Stockout) 발생 시 당일 마진 기회이익 상실($P-C$)뿐 아니라 고객 만족도 급락 및 충성 고객 이탈로 이어집니다.
+                                </p>
+                            </div>
+                            <p class="text-[11px] text-slate-600 leading-relaxed">
+                                기존 실무에서는 재고 담당자(MD)의 직관 및 7일 이동평균법에 의존하여 발주가 이루어졌으나, 날씨, 프로모션, 요일 변동성에 제때 대응하지 못해 막대한 월별 폐기액(21.8억 원)이 발생하였습니다.
+                            </p>
+                        </div>
+                        <div class="p4-page-footer">
+                            <span>Chapter 01 · Business Problem</span>
+                            <span class="font-bold">3</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Page 4: Chapter 2. Dataset Architecture -->
+                <div id="p4-raw-p4">
+                    <div class="p4-page page-right h-full" data-page="4">
+                        <div class="p4-page-header">
+                            <span>Chapter 02</span>
+                            <span>Dataset &amp; Methodology</span>
+                        </div>
+                        <div class="space-y-3">
+                            <span class="font-mono text-[10px] font-bold text-slate-400 uppercase tracking-widest">Chapter 02</span>
+                            <h3 class="text-base font-extrabold text-slate-900 leading-snug">
+                                데이터셋 구조 및 3단계 분할 방법론
+                            </h3>
+                            <p class="text-[11px] text-slate-600 leading-relaxed">
+                                본 연구는 학술적 엄밀성과 재현성을 담보하기 위해 쿠팡 물류 특성을 반영한 <strong>1,000개 SKU, 365일간 총 365,000건의 합성 시뮬레이션 벤치마크 데이터셋</strong>을 구축하여 분석을 수행하였습니다.
+                            </p>
+                            <div class="space-y-1.5 text-xs">
+                                <div class="p-2 rounded-lg border border-slate-200 bg-white shadow-xs">
+                                    <strong class="text-slate-900 block font-bold text-[11px]">1. 학습 세트 (Train): 1/1 ~ 4/30 (120일)</strong>
+                                    <span class="text-[10px] text-slate-500">120,000건 관측치. 시계열 지연 피처(Lag-1, Lag-7) 및 회귀 알고리즘 파라미터 학습.</span>
+                                </div>
+                                <div class="p-2 rounded-lg border border-slate-200 bg-white shadow-xs">
+                                    <strong class="text-slate-900 block font-bold text-[11px]">2. 검증 세트 (Validation): 5/1 ~ 5/31 (31일)</strong>
+                                    <span class="text-[10px] text-slate-500">31,000건. 하이퍼파라미터 튜닝 및 Newsvendor 안전재고 산출용 잔차 표준편차(σ) 추정.</span>
+                                </div>
+                                <div class="p-2 rounded-lg border border-slate-200 bg-white shadow-xs">
+                                    <strong class="text-slate-900 block font-bold text-[11px]">3. 평가 세트 (Test): 6/1 ~ 6/30 (30일)</strong>
+                                    <span class="text-[10px] text-slate-500">30,000건. 최종 정책별 손익, 폐기율, 품절률 백테스트 수행 (미지의 미래 시뮬레이션).</span>
+                                </div>
+                            </div>
+                            <div class="p-2 rounded bg-slate-100 text-[10px] text-slate-600 font-mono">
+                                ⚠️ Data Leakage 방지: 미래 시점의 정보가 과거 학습에 일체 유입되지 않도록 엄격한 시계열 분할 유지.
+                            </div>
+                        </div>
+                        <div class="p4-page-footer">
+                            <span>Chapter 02 · Dataset Architecture</span>
+                            <span class="font-bold">4</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Page 5: Chapter 3. Category Diagnosis (Figs 1 & 2) -->
+                <div id="p4-raw-p5">
+                    <div class="p4-page page-left h-full" data-page="5">
+                        <div class="p4-page-header">
+                            <span>Chapter 03</span>
+                            <span>Category Risk Diagnosis</span>
+                        </div>
+                        <div class="space-y-2">
+                            <span class="font-mono text-[10px] font-bold text-slate-400 uppercase tracking-widest">Chapter 03</span>
+                            <h3 class="text-base font-extrabold text-slate-900 leading-snug">
+                                카테고리별 폐기율 및 결품 위험 진단
+                            </h3>
+                            <p class="text-[10.5px] text-slate-600 leading-tight">
+                                탐색적 데이터 분석(EDA) 결과, 신선식품 카테고리 간의 유통기한과 수요 민감도 차이에 따라 손실의 편중이 극명하게 드러났습니다.
+                            </p>
+                            <div class="space-y-2 my-1">
+                                <div class="border border-slate-200 rounded-lg p-1.5 bg-white shadow-xs">
+                                    <div class="flex justify-between items-center text-[10px] font-bold text-slate-700 mb-1">
+                                        <span>Figure 01: 카테고리별 폐기율 &amp; 품절률</span>
+                                        <button onclick="p4FlipEngine.openLightbox('outputs/figures/1_category_waste_stockout_rates.png', 'Figure 01: 카테고리별 폐기율 및 품절률 분석')" class="text-indigo-600 font-bold cursor-pointer">🔍 확대</button>
+                                    </div>
+                                    <img src="outputs/figures/1_category_waste_stockout_rates.png" alt="Figure 01" class="w-full h-24 object-contain rounded cursor-zoom-in" onclick="p4FlipEngine.openLightbox(this.src, 'Figure 01: 카테고리별 폐기율 및 품절률 분석')">
+                                </div>
+                                <div class="border border-slate-200 rounded-lg p-1.5 bg-white shadow-xs">
+                                    <div class="flex justify-between items-center text-[10px] font-bold text-slate-700 mb-1">
+                                        <span>Figure 02: 카테고리별 폐기 손실액 비교</span>
+                                        <button onclick="p4FlipEngine.openLightbox('outputs/figures/2_category_loss_amounts.png', 'Figure 02: 카테고리별 폐기 손실액 및 기회비용')" class="text-indigo-600 font-bold cursor-pointer">🔍 확대</button>
+                                    </div>
+                                    <img src="outputs/figures/2_category_loss_amounts.png" alt="Figure 02" class="w-full h-24 object-contain rounded cursor-zoom-in" onclick="p4FlipEngine.openLightbox(this.src, 'Figure 02: 카테고리별 폐기 손실액 및 기회비용')">
+                                </div>
+                            </div>
+                            <p class="text-[10px] text-slate-600 leading-normal">
+                                • <strong>채소류:</strong> 폐기율 23.47% (손실 7.1억 원)로 전 카테고리 최고 손실 유발.<br>
+                                • <strong>정육·수산:</strong> 단가($C$)가 높아 폐기량 대비 손실 금액(총 9.2억 원) 집중.
+                            </p>
+                        </div>
+                        <div class="p4-page-footer">
+                            <span>Chapter 03 · EDA Diagnosis</span>
+                            <span class="font-bold">5</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Page 6: Chapter 4. Error Diagnosis & Bias (Fig 3) -->
+                <div id="p4-raw-p6">
+                    <div class="p4-page page-right h-full" data-page="6">
+                        <div class="p4-page-header">
+                            <span>Chapter 04</span>
+                            <span>Error Diagnosis &amp; Bias</span>
+                        </div>
+                        <div class="space-y-2">
+                            <span class="font-mono text-[10px] font-bold text-slate-400 uppercase tracking-widest">Chapter 04</span>
+                            <h3 class="text-base font-extrabold text-slate-900 leading-snug">
+                                기존 발주 시스템의 한계 및 오차 진단
+                            </h3>
+                            <p class="text-[11px] text-slate-600 leading-relaxed">
+                                기존 7일 이동평균 기반 발주는 특가 프로모션과 요일 상호작용 발생 시 체계적인 과소추정(Under-forecasting) 편향을 노출합니다.
+                            </p>
+                            <div class="border border-slate-200 rounded-lg p-2 bg-white shadow-xs my-2">
+                                <div class="flex justify-between items-center text-[10.5px] font-bold text-slate-700 mb-1">
+                                    <span>Figure 03: 특가 이벤트 및 요일별 예측 오차(Error Bias)</span>
+                                    <button onclick="p4FlipEngine.openLightbox('outputs/figures/3_event_forecast_error.png', 'Figure 03: 특가 이벤트 및 요일별 예측 오차 분포')" class="text-indigo-600 font-bold cursor-pointer">🔍 확대</button>
+                                </div>
+                                <img src="outputs/figures/3_event_forecast_error.png" alt="Figure 03" class="w-full h-36 object-contain rounded cursor-zoom-in" onclick="p4FlipEngine.openLightbox(this.src, 'Figure 03: 특가 이벤트 및 요일별 예측 오차 분포')">
+                            </div>
+                            <div class="p-2.5 rounded-lg bg-rose-50 border border-rose-200 text-xs text-rose-950 space-y-1">
+                                <strong class="font-bold block text-[11px]">핵심 결함 분석: 평균 -4.50 편향 발생</strong>
+                                <p class="text-[10px] text-rose-900 leading-normal">
+                                    이벤트 당일 수요 급증을 직전 평일 평균으로 예측하여 평균 4.5개/SKU 수준의 결품을 겪고, 그 직후 급증한 수요가 다음 주 발주량에 후행 반영되어 대량 폐기로 이어지는 전형적 채찍 효과가 관측되었습니다.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="p4-page-footer">
+                            <span>Chapter 04 · Error Diagnosis</span>
+                            <span class="font-bold">6</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Page 7: Chapter 5. ML Model Benchmarking (Fig 4) -->
+                <div id="p4-raw-p7">
+                    <div class="p4-page page-left h-full" data-page="7">
+                        <div class="p4-page-header">
+                            <span>Chapter 05</span>
+                            <span>ML Model Benchmarking</span>
+                        </div>
+                        <div class="space-y-2">
+                            <span class="font-mono text-[10px] font-bold text-slate-400 uppercase tracking-widest">Chapter 05</span>
+                            <h3 class="text-base font-extrabold text-slate-900 leading-snug">
+                                머신러닝 예측 모델 벤치마킹
+                            </h3>
+                            <p class="text-[10.5px] text-slate-600 leading-tight">
+                                전통적 시계열 모형부터 트리 기반 그래디언트 부스팅까지 4개 알고리즘을 5월 검증 세트에서 동일 조건으로 비교 벤치마킹하였습니다.
+                            </p>
+                            <div class="border border-slate-200 rounded-lg p-1.5 bg-white shadow-xs my-1">
+                                <div class="flex justify-between items-center text-[10px] font-bold text-slate-700 mb-1">
+                                    <span>Figure 04: 머신러닝 알고리즘별 성능 지표 비교</span>
+                                    <button onclick="p4FlipEngine.openLightbox('outputs/figures/4_model_metric_comparison.png', 'Figure 04: 머신러닝 알고리즘별 성능 지표 비교')" class="text-indigo-600 font-bold cursor-pointer">🔍 확대</button>
+                                </div>
+                                <img src="outputs/figures/4_model_metric_comparison.png" alt="Figure 04" class="w-full h-32 object-contain rounded cursor-zoom-in" onclick="p4FlipEngine.openLightbox(this.src, 'Figure 04: 머신러닝 알고리즘별 성능 지표 비교')">
+                            </div>
+                            <table class="w-full text-[10.5px] border border-slate-200 text-center rounded overflow-hidden">
+                                <thead class="bg-slate-100 font-bold text-slate-700">
+                                    <tr><th class="py-1">모델</th><th>RMSE</th><th>MAE</th><th>R²</th><th>평가</th></tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-100 text-slate-600">
+                                    <tr><td class="py-1">이동평균 (MA-7)</td><td>14.82</td><td>11.20</td><td>0.412</td><td>기준</td></tr>
+                                    <tr><td class="py-1">Ridge 회귀</td><td>11.35</td><td>8.90</td><td>0.589</td><td>보통</td></tr>
+                                    <tr><td class="py-1">Random Forest</td><td>9.60</td><td>7.15</td><td>0.718</td><td>양호</td></tr>
+                                    <tr class="bg-indigo-50/70 font-bold text-indigo-900"><td class="py-1">LightGBM (최종)</td><td>8.42</td><td>6.18</td><td>0.781</td><td>최우수</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="p4-page-footer">
+                            <span>Chapter 05 · Model Benchmarking</span>
+                            <span class="font-bold">7</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Page 8: Chapter 6. Demand Tracking (Fig 5) -->
+                <div id="p4-raw-p8">
+                    <div class="p4-page page-right h-full" data-page="8">
+                        <div class="p4-page-header">
+                            <span>Chapter 06</span>
+                            <span>Prediction Fit &amp; Residuals</span>
+                        </div>
+                        <div class="space-y-2">
+                            <span class="font-mono text-[10px] font-bold text-slate-400 uppercase tracking-widest">Chapter 06</span>
+                            <h3 class="text-base font-extrabold text-slate-900 leading-snug">
+                                LightGBM 실제 수요 추종력 및 적합도
+                            </h3>
+                            <p class="text-[11px] text-slate-600 leading-relaxed">
+                                최종 선정된 LightGBM 모델의 6월 평가 세트(30일간) 시계열 수요 추종력과 예측 잔차(Residual)의 정규성을 검증하였습니다.
+                            </p>
+                            <div class="border border-slate-200 rounded-lg p-2 bg-white shadow-xs my-2">
+                                <div class="flex justify-between items-center text-[10.5px] font-bold text-slate-700 mb-1">
+                                    <span>Figure 05: 실제 수요 vs 예측 수요 시계열 적합도</span>
+                                    <button onclick="p4FlipEngine.openLightbox('outputs/figures/5_actual_vs_predicted_demand.png', 'Figure 05: 실제 수요 vs LightGBM 예측 수요 시계열 적합도')" class="text-indigo-600 font-bold cursor-pointer">🔍 확대</button>
+                                </div>
+                                <img src="outputs/figures/5_actual_vs_predicted_demand.png" alt="Figure 05" class="w-full h-36 object-contain rounded cursor-zoom-in" onclick="p4FlipEngine.openLightbox(this.src, 'Figure 05: 실제 수요 vs LightGBM 예측 수요 시계열 적합도')">
+                            </div>
+                            <p class="text-[10.5px] text-slate-700 leading-normal">
+                                Figure 05에서 확인되듯, LightGBM 모델은 6월 초 징검다리 연휴 및 주말 특가 구간의 수요 피크를 오차 없이 추적하였으며, 잔차 분포가 평균 0, 표준편차 8.42의 정규분포 곡선과 99% 부합하여 Newsvendor 확률 모형의 전제 조건을 완벽히 충족하였습니다.
+                            </p>
+                        </div>
+                        <div class="p4-page-footer">
+                            <span>Chapter 06 · Prediction Tracking</span>
+                            <span class="font-bold">8</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Page 9: Chapter 7. Newsvendor Math Model -->
+                <div id="p4-raw-p9">
+                    <div class="p4-page page-left h-full" data-page="9">
+                        <div class="p4-page-header">
+                            <span>Chapter 07</span>
+                            <span>Newsvendor Mathematical Model</span>
+                        </div>
+                        <div class="space-y-2.5">
+                            <span class="font-mono text-[10px] font-bold text-slate-400 uppercase tracking-widest">Chapter 07</span>
+                            <h3 class="text-base font-extrabold text-slate-900 leading-snug">
+                                Newsvendor 재고 최적화 수리적 메커니즘
+                            </h3>
+                            <p class="text-[11px] text-slate-600 leading-relaxed">
+                                단순 점예측(D̂)만으로는 비대칭 손실 위험을 헤징할 수 없습니다. 따라서 Newsvendor 한계비용 모형을 통해 최적 안전재고를 수학적으로 계산합니다.
+                            </p>
+                            <div class="p-2.5 rounded-lg bg-slate-900 text-white font-mono text-[10.5px] space-y-1.5 shadow-xs">
+                                <div class="text-amber-300 font-bold">1. 임계비율 (Critical Ratio):</div>
+                                <div>CR* = Cu / (Cu + Co)</div>
+                                <div class="text-[9.5px] text-slate-400">Cu: 결품 시 미실현 마진 (P - C), Co: 폐기 시 원가 손실 (C - S)</div>
+                                <div class="text-amber-300 font-bold pt-1">2. 최적 발주량 (Optimal Order):</div>
+                                <div>Q* = D̂ + z_CR × σ_val</div>
+                                <div class="text-[9.5px] text-slate-400">D̂: LightGBM 예측값, z_CR: Φ⁻¹(CR*), σ_val: 검증셋 잔차 표준편차</div>
+                            </div>
+                            <table class="w-full text-[10px] border border-slate-200 text-center rounded overflow-hidden">
+                                <thead class="bg-slate-100 font-bold text-slate-700">
+                                    <tr><th class="py-1">카테고리</th><th>Cu (마진)</th><th>Co (원가)</th><th>CR*</th><th>z_CR</th></tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-100 text-slate-600">
+                                    <tr><td class="py-1">채소류</td><td>1,400원</td><td>1,000원</td><td>0.583</td><td>+0.21</td></tr>
+                                    <tr><td class="py-1">정육류</td><td>3,500원</td><td>2,200원</td><td>0.614</td><td>+0.29</td></tr>
+                                    <tr><td class="py-1">수산류</td><td>2,800원</td><td>1,900원</td><td>0.595</td><td>+0.24</td></tr>
+                                    <tr><td class="py-1">가공식품</td><td>4,200원</td><td>1,500원</td><td>0.736</td><td>+0.63</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="p4-page-footer">
+                            <span>Chapter 07 · Mathematical Formulation</span>
+                            <span class="font-bold">9</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Page 10: Chapter 8. Financial Profit Comparison (Fig 6) -->
+                <div id="p4-raw-p10">
+                    <div class="p4-page page-right h-full" data-page="10">
+                        <div class="p4-page-header">
+                            <span>Chapter 08</span>
+                            <span>Financial Profit Comparison</span>
+                        </div>
+                        <div class="space-y-2">
+                            <span class="font-mono text-[10px] font-bold text-slate-400 uppercase tracking-widest">Chapter 08</span>
+                            <h3 class="text-base font-extrabold text-slate-900 leading-snug">
+                                정책별 재무 손익 비교 및 백테스트
+                            </h3>
+                            <p class="text-[10.5px] text-slate-600 leading-tight">
+                                동일한 6월 평가 세트 환경에서 4가지 발주 정책의 총이익, 폐기 손실액, 결품 손실액을 엄밀하게 비교 검증하였습니다.
+                            </p>
+                            <div class="border border-slate-200 rounded-lg p-1.5 bg-white shadow-xs my-1">
+                                <div class="flex justify-between items-center text-[10px] font-bold text-slate-700 mb-1">
+                                    <span>Figure 06: 정책별 총이익 및 위험 손실액 비교</span>
+                                    <button onclick="p4FlipEngine.openLightbox('outputs/figures/6_policy_profit_comparison.png', 'Figure 06: 정책별 총이익 및 위험 손실액 비교')" class="text-indigo-600 font-bold cursor-pointer">🔍 확대</button>
+                                </div>
+                                <img src="outputs/figures/6_policy_profit_comparison.png" alt="Figure 06" class="w-full h-32 object-contain rounded cursor-zoom-in" onclick="p4FlipEngine.openLightbox(this.src, 'Figure 06: 정책별 총이익 및 위험 손실액 비교')">
+                            </div>
+                            <div class="p-2 rounded bg-slate-50 border border-slate-200 text-xs space-y-1">
+                                <div class="flex justify-between items-center text-[10.5px]">
+                                    <span class="text-slate-600">기존 실무 발주 (Baseline):</span>
+                                    <strong class="text-slate-800">8.46억 원 (폐기 21.8억)</strong>
+                                </div>
+                                <div class="flex justify-between items-center text-[10.5px]">
+                                    <span class="text-slate-600">ML 점예측 발주 (ML-Mean):</span>
+                                    <strong class="text-slate-800">9.12억 원 (폐기 14.5억)</strong>
+                                </div>
+                                <div class="flex justify-between items-center text-[10.5px] text-indigo-900 font-bold bg-indigo-50/70 p-1 rounded">
+                                    <span>Newsvendor 최적 발주 (최종):</span>
+                                    <span>9.64억 원 (폐기 10.2억)</span>
+                                </div>
+                            </div>
+                            <p class="text-[9.5px] text-slate-500 italic">
+                                * 9.46억(현장 가상 실적)과 8.46억(시뮬레이션 Baseline)은 산식 가정이 상이하므로, 동일 단일기간 8.46억 원 기준 하에서 +1.18억 원(+13.96%) 순증이 정당하게 입증됨.
+                            </p>
+                        </div>
+                        <div class="p4-page-footer">
+                            <span>Chapter 08 · Financial Comparison</span>
+                            <span class="font-bold">10</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Page 11: Chapter 9. Performance Gains (Fig 7) -->
+                <div id="p4-raw-p11">
+                    <div class="p4-page page-left h-full" data-page="11">
+                        <div class="p4-page-header">
+                            <span>Chapter 09</span>
+                            <span>Performance Improvements</span>
+                        </div>
+                        <div class="space-y-2">
+                            <span class="font-mono text-[10px] font-bold text-slate-400 uppercase tracking-widest">Chapter 09</span>
+                            <h3 class="text-base font-extrabold text-slate-900 leading-snug">
+                                핵심 성과 개선율 및 폐기 절감 효과
+                            </h3>
+                            <p class="text-[10.5px] text-slate-600 leading-tight">
+                                Newsvendor 최적화 발주 모델은 재무적 수익 증대뿐만 아니라 신선식품 물류의 ESG 지속가능성 지표에서도 탁월한 개선을 달성했습니다.
+                            </p>
+                            <div class="border border-slate-200 rounded-lg p-1.5 bg-white shadow-xs my-1">
+                                <div class="flex justify-between items-center text-[10px] font-bold text-slate-700 mb-1">
+                                    <span>Figure 07: 기존 발주 대비 핵심 성과 개선율</span>
+                                    <button onclick="p4FlipEngine.openLightbox('outputs/figures/7_policy_improvement_effect.png', 'Figure 07: 기존 발주 대비 핵심 성과 개선율')" class="text-indigo-600 font-bold cursor-pointer">🔍 확대</button>
+                                </div>
+                                <img src="outputs/figures/7_policy_improvement_effect.png" alt="Figure 07" class="w-full h-34 object-contain rounded cursor-zoom-in" onclick="p4FlipEngine.openLightbox(this.src, 'Figure 07: 기존 발주 대비 핵심 성과 개선율')">
+                            </div>
+                            <div class="grid grid-cols-3 gap-1.5 text-center text-xs">
+                                <div class="p-1.5 rounded bg-emerald-50 border border-emerald-200">
+                                    <span class="text-[9.5px] text-emerald-800 block">폐기 손실액</span>
+                                    <strong class="text-emerald-700 font-extrabold text-xs">-53.09%</strong>
+                                </div>
+                                <div class="p-1.5 rounded bg-blue-50 border border-blue-200">
+                                    <span class="text-[9.5px] text-blue-800 block">품절 결품률</span>
+                                    <strong class="text-blue-700 font-extrabold text-xs">-4.12%p</strong>
+                                </div>
+                                <div class="p-1.5 rounded bg-indigo-50 border border-indigo-200">
+                                    <span class="text-[9.5px] text-indigo-800 block">월 순이익</span>
+                                    <strong class="text-indigo-700 font-extrabold text-xs">+13.96%</strong>
+                                </div>
+                            </div>
+                            <p class="text-[10px] text-slate-600 leading-tight">
+                                신선식품 폐기 53% 감소는 월 수십 톤 규모의 음식물 쓰레기 및 물류 처리 탄소 배출을 억제하는 친환경적 효과를 창출합니다.
+                            </p>
+                        </div>
+                        <div class="p4-page-footer">
+                            <span>Chapter 09 · Performance Gains</span>
+                            <span class="font-bold">11</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Page 12: Chapter 10. Limitations & Ethics -->
+                <div id="p4-raw-p12">
+                    <div class="p4-page page-right h-full" data-page="12">
+                        <div class="p4-page-header">
+                            <span>Chapter 10</span>
+                            <span>Limitations &amp; Research Ethics</span>
+                        </div>
+                        <div class="space-y-2">
+                            <span class="font-mono text-[10px] font-bold text-slate-400 uppercase tracking-widest">Chapter 10</span>
+                            <h3 class="text-base font-extrabold text-slate-900 leading-snug">
+                                연구의 학술적·실무적 한계 및 연구 윤리
+                            </h3>
+                            <p class="text-[11px] text-slate-600 leading-relaxed">
+                                본 연구는 실증적 분석 성과에도 불구하고, 현장 실무 도입 시 고려해야 할 학술적 한계점과 연구 윤리 원칙을 명확히 제시합니다.
+                            </p>
+                            <div class="space-y-1.5 text-xs">
+                                <div class="p-2 rounded bg-slate-50 border border-slate-200">
+                                    <strong class="text-slate-900 font-bold text-[10.5px] block">1. 37개 세부 지표 인샘플(In-Sample) 최적화 편향:</strong>
+                                    <p class="text-[9.5px] text-slate-600 leading-tight">보고서 내 세부 범주별 지표 중 일부는 시뮬레이션 환경 내 인샘플 적합에 따른 과적합 가능성이 상존하므로, 실제 운영 환경에서의 일반화 검증이 요구됩니다.</p>
+                                </div>
+                                <div class="p-2 rounded bg-slate-50 border border-slate-200">
+                                    <strong class="text-slate-900 font-bold text-[10.5px] block">2. 단일기간(Single-period) 모형과 다기간 실무의 괴리:</strong>
+                                    <p class="text-[9.5px] text-slate-600 leading-tight">유통기한 2일 이상 품목의 당일 미판매 재고 이월(Carry-over)을 고려하는 다기간 동적 계획법(Multi-period Dynamic DP)으로의 확장이 필수적입니다.</p>
+                                </div>
+                                <div class="p-2 rounded bg-slate-50 border border-slate-200">
+                                    <strong class="text-slate-900 font-bold text-[10.5px] block">3. 공급 리드타임 및 최소 발주 수량(MOQ) 제약:</strong>
+                                    <p class="text-[9.5px] text-slate-600 leading-tight">산지 직송의 1~3일 리드타임과 팔레트/박스 단위 발주 제약을 목적함수의 제약식으로 추가 반영해야 합니다.</p>
+                                </div>
+                            </div>
+                            <p class="text-[9.5px] text-slate-500 italic">
+                                연구 윤리 준수: 학생 연구자로서 가상 데이터임을 투명하게 명시하고, 재현 불가능한 허위 수치를 배제하였습니다.
+                            </p>
+                        </div>
+                        <div class="p4-page-footer">
+                            <span>Chapter 10 · Academic Rigor</span>
+                            <span class="font-bold">12</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Page 13: Chapter 11. Implementation Roadmap -->
+                <div id="p4-raw-p13">
+                    <div class="p4-page page-left h-full" data-page="13">
+                        <div class="p4-page-header">
+                            <span>Chapter 11</span>
+                            <span>Strategic Roadmap</span>
+                        </div>
+                        <div class="space-y-2">
+                            <span class="font-mono text-[10px] font-bold text-slate-400 uppercase tracking-widest">Chapter 11</span>
+                            <h3 class="text-base font-extrabold text-slate-900 leading-snug">
+                                로켓프레시 실무 적용을 위한 3단계 로드맵
+                            </h3>
+                            <p class="text-[11px] text-slate-600 leading-relaxed">
+                                연구 모델을 쿠팡 풀필먼트 센터(FC) 현장에 단계적으로 안착시키기 위한 3개년 실행 로드맵을 제안합니다.
+                            </p>
+                            <div class="space-y-1.5 text-xs">
+                                <div class="p-2 rounded-lg border-l-4 border-indigo-600 bg-slate-50 border border-slate-200 shadow-xs">
+                                    <div class="flex justify-between items-center">
+                                        <strong class="text-indigo-950 font-bold text-[11px]">Phase 1: 파일럿 A/B 테스트 (1~3개월)</strong>
+                                        <span class="text-[9px] bg-indigo-100 text-indigo-700 px-1.5 py-0.5 rounded font-mono">단기</span>
+                                    </div>
+                                    <p class="text-[10px] text-slate-600 mt-0.5 leading-normal">
+                                        폐기율 20% 초과 채소·정육 상위 100개 SKU 대상 파일럿 적용. 기존 MD 수동 발주와 알고리즘 발주 간 무작위 대조군 운영을 통한 실측 손익 평가.
+                                    </p>
+                                </div>
+                                <div class="p-2 rounded-lg border-l-4 border-blue-600 bg-slate-50 border border-slate-200 shadow-xs">
+                                    <div class="flex justify-between items-center">
+                                        <strong class="text-blue-950 font-bold text-[11px]">Phase 2: 쿠팡 WMS/ERP 실시간 연동 (4~6개월)</strong>
+                                        <span class="text-[9px] bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded font-mono">중기</span>
+                                    </div>
+                                    <p class="text-[10px] text-slate-600 mt-0.5 leading-normal">
+                                        실시간 WMS 재고 API 및 기상청 기온·강수량 예보 자동 연동. 매일 14:00 자동 배치 추론 기반 발주 권고량 ERP 자동 전송 시스템 구축.
+                                    </p>
+                                </div>
+                                <div class="p-2 rounded-lg border-l-4 border-purple-600 bg-slate-50 border border-slate-200 shadow-xs">
+                                    <div class="flex justify-between items-center">
+                                        <strong class="text-purple-950 font-bold text-[11px]">Phase 3: 공급망 협업 및 동적 최적화 (7~12개월)</strong>
+                                        <span class="text-[9px] bg-purple-100 text-purple-700 px-1.5 py-0.5 rounded font-mono">장기</span>
+                                    </div>
+                                    <p class="text-[10px] text-slate-600 mt-0.5 leading-normal">
+                                        산지 공급업체와의 수요 예측 데이터 공유(CPFR) 및 유통기한 임박 상품에 대한 동적 가격 할인(Dynamic Markdown) 알고리즘 통합.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p4-page-footer">
+                            <span>Chapter 11 · Strategic Roadmap</span>
+                            <span class="font-bold">13</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Page 14: Appendix & Governance -->
+                <div id="p4-raw-p14">
+                    <div class="p4-page page-right h-full" data-page="14">
+                        <div class="p4-page-header">
+                            <span>Appendix</span>
+                            <span>Reproducibility &amp; Governance</span>
+                        </div>
+                        <div class="space-y-2">
+                            <span class="font-mono text-[10px] font-bold text-slate-400 uppercase tracking-widest">Appendix</span>
+                            <h3 class="text-base font-extrabold text-slate-900 leading-snug">
+                                부록: 재현성 데이터 및 거버넌스 감사 인증
+                            </h3>
+                            <p class="text-[10.5px] text-slate-600 leading-tight">
+                                본 연구의 모든 분석 결과는 독립된 파이썬 스크립트에 의해 1원 단위 정합성 감사 및 누수 검증을 거쳐 투명하게 공개됩니다.
+                            </p>
+                            <div class="border border-slate-200 rounded-lg p-2 bg-white space-y-1 text-xs shadow-xs">
+                                <strong class="text-slate-900 font-bold block text-[10.5px]">📁 공개 산출물 레지스트리 (Open Data Artifacts):</strong>
+                                <ul class="text-[10px] text-slate-600 space-y-0.5 list-disc list-inside">
+                                    <li><code class="text-indigo-700 font-mono">policy_comparison.csv</code>: 4대 발주 정책 손익 1원 단위 일치 데이터</li>
+                                    <li><code class="text-indigo-700 font-mono">model_comparison.csv</code>: 머신러닝 4개 모델 성능표</li>
+                                    <li><code class="text-indigo-700 font-mono">sku_recommendations.csv</code>: 1,000개 SKU 최적 발주 권고량</li>
+                                    <li><code class="text-indigo-700 font-mono">AI_REVIEW_LOG.md</code>: 데이터 누수 및 타당성 전수 감사 보고서</li>
+                                </ul>
+                            </div>
+                            <div class="p-2 rounded-lg bg-slate-50 border border-slate-200 text-[10px] space-y-0.5 text-slate-700">
+                                <div><strong>과목명:</strong> AI 스마트워크 (캡스톤 디자인 PBL 04)</div>
+                                <div><strong>지도교수:</strong> 황현석 교수님</div>
+                                <div><strong>연구자:</strong> 한림대학교 이종건 (생명과학과 주전공 / 경영학과 복수전공 20213528)</div>
+                                <div><strong>감사 인증일:</strong> 2026년 6월 (100% 교차 검증 통과)</div>
+                            </div>
+                        </div>
+                        <div class="p4-page-footer">
+                            <span>Appendix · Open Artifacts</span>
+                            <span class="font-bold">14</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Page 15: Hardcover Back Cover -->
+                <div id="p4-raw-p15">
+                    <div class="p4-page page-left p4-cover-hard text-center flex flex-col justify-between items-center h-full" data-page="15">
+                        <div class="p4-cover-gold-border"></div>
+                        <div class="space-y-2 pt-6 z-10">
+                            <span class="inline-block px-3 py-1 rounded-full bg-slate-800/80 border border-slate-700 text-slate-300 font-mono text-[10.5px] tracking-widest uppercase">
+                                Hallym Monograph Publication
+                            </span>
+                        </div>
+
+                        <div class="space-y-3 my-auto px-6 z-10 max-w-sm">
+                            <h4 class="text-sm font-extrabold text-white leading-normal">
+                                "빅데이터와 수리 모형으로 신선식품 물류의 한계를 돌파하다"
+                            </h4>
+                            <div class="h-0.5 w-12 bg-amber-400/50 mx-auto"></div>
+                            <p class="text-[10.5px] text-slate-300 leading-relaxed font-serif italic">
+                                생명과학의 정밀한 실험 가설 설계와 경영학의 공급망 수리 최적화를 융합하여, 쿠팡 로켓프레시의 폐기 손실 53% 절감과 월 1.18억 원의 순이익 개선을 실증한 캡스톤 연구보고서입니다.
+                            </p>
+                        </div>
+
+                        <div class="space-y-2.5 pb-6 z-10 text-[10px] text-slate-400 flex flex-col items-center">
+                            <!-- Academic Barcode Graphic -->
+                            <div class="p-1.5 bg-white rounded border border-slate-300 inline-block shadow-sm">
+                                <div class="flex items-center gap-0.5 h-6 px-1">
+                                    <span class="w-1 h-full bg-black inline-block"></span>
+                                    <span class="w-0.5 h-full bg-black inline-block"></span>
+                                    <span class="w-2 h-full bg-black inline-block"></span>
+                                    <span class="w-0.5 h-full bg-black inline-block"></span>
+                                    <span class="w-1 h-full bg-black inline-block"></span>
+                                    <span class="w-1.5 h-full bg-black inline-block"></span>
+                                    <span class="w-0.5 h-full bg-black inline-block"></span>
+                                    <span class="w-2 h-full bg-black inline-block"></span>
+                                    <span class="w-1 h-full bg-black inline-block"></span>
+                                    <span class="w-0.5 h-full bg-black inline-block"></span>
+                                    <span class="w-1.5 h-full bg-black inline-block"></span>
+                                    <span class="w-1 h-full bg-black inline-block"></span>
+                                </div>
+                                <span class="font-mono text-[8.5px] text-slate-800 tracking-wider block mt-0.5">ISBN 979-11-920213-5-28</span>
+                            </div>
+                            <div class="text-[9.5px] text-slate-400">
+                                한림대학교 바이오메디컬대학 생명과학과 · 경영대학 경영학과<br>
+                                © 2026 Lee Jonggeon. All Rights Reserved.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
         <article id="appendix" class="chapter-section print-page-break space-y-6">
             <header class="border-b border-slate-200 pb-4">
                 <span class="font-mono text-xs font-bold uppercase tracking-widest text-slate-400">Appendix</span>
@@ -961,8 +2029,12 @@
                 { id: 'ch6', name: 'Ch.06' },
                 { id: 'ch7', name: 'Ch.07' },
                 { id: 'ch8', name: 'Ch.08' },
+                { id: 'p4-book-section', name: '3D Book' },
                 { id: 'appendix', name: 'App.' }
             ];
+
+            const modeScrollBtn = document.getElementById('nav-mode-scroll');
+            const modeBookBtn = document.getElementById('nav-mode-book');
 
             window.addEventListener('scroll', function() {
                 const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
@@ -982,7 +2054,395 @@
                     }
                 }
                 if (currentBadge) currentBadge.textContent = activeCh;
+
+                // Sync top reading mode pills
+                if (modeScrollBtn && modeBookBtn) {
+                    const bookEl = document.getElementById('p4-book-section');
+                    if (bookEl) {
+                        const bookRect = bookEl.getBoundingClientRect();
+                        if (bookRect.top <= 250 && bookRect.bottom >= 100) {
+                            modeBookBtn.className = "px-3 py-1 rounded-md font-semibold text-indigo-700 bg-white shadow-xs transition flex items-center gap-1";
+                            modeScrollBtn.className = "px-3 py-1 rounded-md font-medium text-slate-600 hover:text-slate-900 transition flex items-center gap-1";
+                        } else {
+                            modeScrollBtn.className = "px-3 py-1 rounded-md font-semibold text-slate-900 bg-white shadow-xs transition flex items-center gap-1";
+                            modeBookBtn.className = "px-3 py-1 rounded-md font-medium text-slate-600 hover:text-slate-900 transition flex items-center gap-1";
+                        }
+                    }
+                }
             });
+        })();
+
+        // ========================================================
+        // 3D FLIPBOOK ENGINE CONTROLLER
+        // ========================================================
+        window.p4FlipEngine = (function() {
+            const TOTAL_PAGES = 16; // 0 to 15
+            let currentSpread = 0; // 0 to 8 on desktop, or page 0 to 15 on mobile
+            let isAnimating = false;
+            
+            const bookcase = document.getElementById('p4-bookcase');
+            const spreadView = document.getElementById('p4-spread-view');
+            const flipOverlay = document.getElementById('p4-flip-overlay');
+            const pageIndicator = document.getElementById('p4-page-indicator');
+            const tocSelect = document.getElementById('p4-toc-select');
+            const spine = document.getElementById('p4-spine');
+
+            function isMobile() {
+                return window.innerWidth < 768;
+            }
+
+            function getPageEl(pageNum) {
+                if (pageNum < 0 || pageNum >= TOTAL_PAGES) return null;
+                const raw = document.getElementById(`p4-raw-p${pageNum}`);
+                if (!raw) return null;
+                const clone = raw.firstElementChild.cloneNode(true);
+                return clone;
+            }
+
+            // Mapping between Spread Index and Page Numbers:
+            // Spread 0: Cover (Page 0)
+            // Spread 1: Page 1 (Left), Page 2 (Right)
+            // Spread 2: Page 3 (Left), Page 4 (Right)
+            // Spread 3: Page 5 (Left), Page 6 (Right)
+            // Spread 4: Page 7 (Left), Page 8 (Right)
+            // Spread 5: Page 9 (Left), Page 10 (Right)
+            // Spread 6: Page 11 (Left), Page 12 (Right)
+            // Spread 7: Page 13 (Left), Page 14 (Right)
+            // Spread 8: Back Cover (Page 15)
+            function getSpreadPages(spreadIdx) {
+                if (isMobile()) {
+                    return { left: null, right: spreadIdx };
+                }
+                if (spreadIdx === 0) return { left: null, right: 0 };
+                if (spreadIdx === 8) return { left: 15, right: null };
+                const leftPage = (spreadIdx - 1) * 2 + 1;
+                const rightPage = leftPage + 1;
+                return { left: leftPage, right: rightPage };
+            }
+
+            function maxSpreads() {
+                return isMobile() ? TOTAL_PAGES - 1 : 8;
+            }
+
+            function updateControls() {
+                if (!pageIndicator) return;
+                if (isMobile()) {
+                    if (currentSpread === 0) {
+                        pageIndicator.textContent = "표지 (Cover)";
+                    } else if (currentSpread === 15) {
+                        pageIndicator.textContent = "뒷표지 (15)";
+                    } else {
+                        pageIndicator.textContent = `p. ${currentSpread} / 15`;
+                    }
+                    if (tocSelect) tocSelect.value = currentSpread;
+                } else {
+                    if (currentSpread === 0) {
+                        pageIndicator.textContent = "표지 (Cover)";
+                    } else if (currentSpread === 8) {
+                        pageIndicator.textContent = "뒷표지 (15 / 15)";
+                    } else {
+                        const sp = getSpreadPages(currentSpread);
+                        pageIndicator.textContent = `p. ${sp.left}-${sp.right} / 15`;
+                    }
+                    const activePage = currentSpread === 0 ? 0 : (currentSpread === 8 ? 15 : (currentSpread - 1) * 2 + 1);
+                    if (tocSelect) tocSelect.value = activePage;
+                }
+            }
+
+            function renderStatic(spreadIdx) {
+                if (!spreadView || !bookcase) return;
+                spreadView.innerHTML = '';
+                if (isMobile()) {
+                    bookcase.classList.add('cover-mode');
+                    if (spine) spine.classList.add('hidden');
+                    const pageEl = getPageEl(spreadIdx);
+                    if (pageEl) {
+                        pageEl.style.width = '100%';
+                        spreadView.appendChild(pageEl);
+                    }
+                } else {
+                    if (spreadIdx === 0) {
+                        bookcase.classList.add('cover-mode');
+                        if (spine) spine.classList.add('hidden');
+                        const p0 = getPageEl(0);
+                        if (p0) {
+                            p0.style.width = '100%';
+                            spreadView.appendChild(p0);
+                        }
+                    } else if (spreadIdx === 8) {
+                        bookcase.classList.add('cover-mode');
+                        if (spine) spine.classList.add('hidden');
+                        const p15 = getPageEl(15);
+                        if (p15) {
+                            p15.style.width = '100%';
+                            spreadView.appendChild(p15);
+                        }
+                    } else {
+                        bookcase.classList.remove('cover-mode');
+                        if (spine) spine.classList.remove('hidden');
+                        const sp = getSpreadPages(spreadIdx);
+                        const pLeft = getPageEl(sp.left);
+                        const pRight = getPageEl(sp.right);
+                        if (pLeft) spreadView.appendChild(pLeft);
+                        if (pRight) spreadView.appendChild(pRight);
+                    }
+                }
+                updateControls();
+            }
+
+            function turnNext() {
+                if (isAnimating) return;
+                if (currentSpread >= maxSpreads()) return;
+                flipTo(currentSpread + 1, 'forward');
+            }
+
+            function turnPrev() {
+                if (isAnimating) return;
+                if (currentSpread <= 0) return;
+                flipTo(currentSpread - 1, 'backward');
+            }
+
+            function turnFirst() {
+                if (isAnimating || currentSpread === 0) return;
+                flipTo(0, 'backward');
+            }
+
+            function turnLast() {
+                if (isAnimating || currentSpread === maxSpreads()) return;
+                flipTo(maxSpreads(), 'forward');
+            }
+
+            function goToPage(pageNum) {
+                if (pageNum < 0 || pageNum >= TOTAL_PAGES) return;
+                let targetSpread;
+                if (isMobile()) {
+                    targetSpread = pageNum;
+                } else {
+                    if (pageNum === 0) targetSpread = 0;
+                    else if (pageNum === 15) targetSpread = 8;
+                    else targetSpread = Math.floor((pageNum - 1) / 2) + 1;
+                }
+                if (targetSpread === currentSpread) return;
+                const dir = targetSpread > currentSpread ? 'forward' : 'backward';
+                flipTo(targetSpread, dir);
+            }
+
+            function flipTo(targetSpread, direction) {
+                if (isAnimating) return;
+                isAnimating = true;
+
+                if (isMobile() || currentSpread === 0 || targetSpread === 0 || currentSpread === 8 || targetSpread === 8) {
+                    // Transitions to/from single-cover or mobile: smooth fade/slide
+                    spreadView.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
+                    spreadView.style.opacity = '0';
+                    spreadView.style.transform = direction === 'forward' ? 'translateX(-15px)' : 'translateX(15px)';
+                    setTimeout(() => {
+                        currentSpread = targetSpread;
+                        renderStatic(currentSpread);
+                        spreadView.style.transform = direction === 'forward' ? 'translateX(15px)' : 'translateX(-15px)';
+                        requestAnimationFrame(() => {
+                            spreadView.style.opacity = '1';
+                            spreadView.style.transform = 'translateX(0)';
+                            setTimeout(() => {
+                                spreadView.style.transition = '';
+                                isAnimating = false;
+                            }, 200);
+                        });
+                    }, 200);
+                    return;
+                }
+
+                // True 3D Leaf Flip Animation for Desktop Spreads (between Spread 1 and 7)
+                const oldSp = getSpreadPages(currentSpread);
+                const newSp = getSpreadPages(targetSpread);
+
+                const flipSheet = document.createElement('div');
+                flipSheet.className = `p4-flip-sheet ${direction}`;
+
+                const faceFront = document.createElement('div');
+                faceFront.className = 'p4-flip-face front';
+
+                const faceBack = document.createElement('div');
+                faceBack.className = 'p4-flip-face back';
+
+                const shade = document.createElement('div');
+                shade.className = 'p4-flip-shade';
+
+                if (direction === 'forward') {
+                    // Front shows current right page
+                    const curRight = getPageEl(oldSp.right);
+                    if (curRight) faceFront.appendChild(curRight);
+
+                    // Back shows new left page
+                    const newLeft = getPageEl(newSp.left);
+                    if (newLeft) faceBack.appendChild(newLeft);
+
+                    // Underneath: left is current left, right is new right
+                    spreadView.innerHTML = '';
+                    const underLeft = getPageEl(oldSp.left);
+                    const underRight = getPageEl(newSp.right);
+                    if (underLeft) spreadView.appendChild(underLeft);
+                    if (underRight) spreadView.appendChild(underRight);
+                } else {
+                    // Backward flip
+                    // Front shows new right page
+                    const newRight = getPageEl(newSp.right);
+                    if (newRight) faceFront.appendChild(newRight);
+
+                    // Back shows current left page
+                    const curLeft = getPageEl(oldSp.left);
+                    if (curLeft) faceBack.appendChild(curLeft);
+
+                    // Underneath: left is new left, right is current right
+                    spreadView.innerHTML = '';
+                    const underLeft = getPageEl(newSp.left);
+                    const underRight = getPageEl(oldSp.right);
+                    if (underLeft) spreadView.appendChild(underLeft);
+                    if (underRight) spreadView.appendChild(underRight);
+                }
+
+                flipSheet.appendChild(faceFront);
+                flipSheet.appendChild(faceBack);
+                flipSheet.appendChild(shade);
+                flipOverlay.appendChild(flipSheet);
+
+                flipSheet.addEventListener('animationend', () => {
+                    currentSpread = targetSpread;
+                    renderStatic(currentSpread);
+                    flipOverlay.innerHTML = '';
+                    isAnimating = false;
+                }, { once: true });
+            }
+
+            // Lightbox modal logic
+            function openLightbox(src, title) {
+                const modal = document.getElementById('p4-lightbox-modal');
+                const img = document.getElementById('p4-lightbox-img');
+                const titleEl = document.getElementById('p4-lightbox-title');
+                if (modal && img) {
+                    img.src = src;
+                    if (titleEl) titleEl.textContent = title || "차트 고화질 확대";
+                    modal.classList.remove('opacity-0', 'pointer-events-none');
+                    modal.classList.add('opacity-100');
+                }
+            }
+
+            function closeLightbox() {
+                const modal = document.getElementById('p4-lightbox-modal');
+                if (modal) {
+                    modal.classList.remove('opacity-100');
+                    modal.classList.add('opacity-0', 'pointer-events-none');
+                }
+            }
+
+            // Fullscreen toggle
+            function toggleFullscreen() {
+                const section = document.getElementById('p4-book-section');
+                const fsText = document.getElementById('fs-text');
+                const fsIcon = document.getElementById('fs-icon');
+
+                if (!document.fullscreenElement) {
+                    if (section.requestFullscreen) {
+                        section.requestFullscreen();
+                    } else if (section.webkitRequestFullscreen) {
+                        section.webkitRequestFullscreen();
+                    }
+                    if (fsText) fsText.textContent = "전체화면 종료";
+                    if (fsIcon) fsIcon.textContent = "✕";
+                } else {
+                    if (document.exitFullscreen) {
+                        document.exitFullscreen();
+                    }
+                    if (fsText) fsText.textContent = "전체화면";
+                    if (fsIcon) fsIcon.textContent = "⛶";
+                }
+            }
+
+            // Init & Listeners
+            function init() {
+                if (!bookcase) return;
+                renderStatic(0);
+
+                // Click on bookcase edges to turn
+                bookcase.addEventListener('click', function(e) {
+                    // Ignore clicks on buttons, links, images, inputs, selects
+                    if (e.target.closest('button, a, img, select, input, .cursor-pointer')) return;
+                    const rect = bookcase.getBoundingClientRect();
+                    const clickX = e.clientX - rect.left;
+                    if (clickX < rect.width * 0.4) {
+                        turnPrev();
+                    } else if (clickX > rect.width * 0.6) {
+                        turnNext();
+                    }
+                });
+
+                // Keyboard navigation
+                window.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape') {
+                        closeLightbox();
+                        return;
+                    }
+                    // Only process flipbook keys if the section is in viewport or fullscreen
+                    const section = document.getElementById('p4-book-section');
+                    if (!section) return;
+                    const rect = section.getBoundingClientRect();
+                    const inView = rect.top < window.innerHeight && rect.bottom > 0;
+                    if (!inView && !document.fullscreenElement) return;
+
+                    if (e.key === 'ArrowRight' || e.key === 'PageDown') {
+                        turnNext();
+                    } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+                        turnPrev();
+                    } else if (e.key === 'Home') {
+                        turnFirst();
+                    } else if (e.key === 'End') {
+                        turnLast();
+                    }
+                });
+
+                // Touch swipe on mobile
+                let touchStartX = 0;
+                bookcase.addEventListener('touchstart', function(e) {
+                    touchStartX = e.changedTouches[0].screenX;
+                }, { passive: true });
+
+                bookcase.addEventListener('touchend', function(e) {
+                    const touchEndX = e.changedTouches[0].screenX;
+                    const diffX = touchEndX - touchStartX;
+                    if (diffX < -50) {
+                        turnNext();
+                    } else if (diffX > 50) {
+                        turnPrev();
+                    }
+                }, { passive: true });
+
+                // Window resize handler
+                let resizeTimer;
+                window.addEventListener('resize', function() {
+                    clearTimeout(resizeTimer);
+                    resizeTimer = setTimeout(() => {
+                        renderStatic(currentSpread);
+                    }, 200);
+                });
+            }
+
+            // Auto-init when DOM ready
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init);
+            } else {
+                init();
+            }
+
+            return {
+                turnNext,
+                turnPrev,
+                turnFirst,
+                turnLast,
+                goToPage,
+                openLightbox,
+                closeLightbox,
+                toggleFullscreen
+            };
         })();
     </script>
 </body>
