@@ -73,6 +73,13 @@
                                         <div class="text-[11px] text-slate-500">PDF 업로드 및 3D 플립북 변환</div>
                                     </div>
                                 </a>
+                                <a href="p4-analysis/index.html" class="flex items-start gap-2.5 rounded-xl p-2 hover:bg-sky-50 transition group/item">
+                                    <span class="mt-0.5 text-base">🥬</span>
+                                    <div>
+                                        <div class="text-xs font-bold text-slate-900 group-hover/item:text-sky-900">③ P4 신선식품 최적화 Web Ebook</div>
+                                        <div class="text-[11px] text-slate-500">ML 수요예측 &amp; Newsvendor 발주 (기말)</div>
+                                    </div>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -101,6 +108,10 @@
                             <a href="ebook/studio.html" class="mt-1 flex items-center justify-between rounded-lg bg-slate-50 px-3.5 py-2.5 text-sm font-semibold text-slate-800 hover:bg-slate-100">
                                 <span class="flex items-center gap-2"><span>⚙️</span> ② PDF → eBook 변환기</span>
                                 <span class="text-xs text-slate-400">실행 →</span>
+                            </a>
+                            <a href="p4-analysis/index.html" class="mt-1 flex items-center justify-between rounded-lg bg-sky-50 px-3.5 py-2.5 text-sm font-bold text-sky-950 hover:bg-sky-100">
+                                <span class="flex items-center gap-2"><span>🥬</span> ③ P4 신선식품 최적화 Web Ebook</span>
+                                <span class="text-xs text-sky-600">열기 →</span>
                             </a>
                         </div>
                     </div>

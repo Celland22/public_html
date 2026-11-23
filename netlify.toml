@@ -1,0 +1,12 @@
+[build]
+  publish = "."
+
+[[headers]]
+  for = "/*.md"
+  [headers.values]
+    Content-Type = "text/markdown; charset=utf-8"
+
+[[headers]]
+  for = "/p4-analysis/*.md"
+  [headers.values]
+    Content-Type = "text/markdown; charset=utf-8"

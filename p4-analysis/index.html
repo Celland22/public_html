@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>P4 신선식품 수요 예측 &amp; 재고 발주 최적화 | Interactive Web Ebook</title>
+    <meta name="description" content="한림대학교 AI 스마트워크 쿠팡 PBL 문제 4(P4) 인터랙티브 데이터 분석 보고서 및 웹 전자책">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Pretendard 폰트 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif'],
+                    },
+                    colors: {
+                        coupang: {
+                            red: '#e61e2b',
+                            blue: '#0074e9',
+                            dark: '#111827'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Pretendard', sans-serif; background-color: #f8fafc; color: #0f172a; }
+        .gradient-header { background: linear-gradient(135deg, #091e3a 0%, #0f3959 50%, #1a5276 100%); }
+        .chart-card { transition: all 0.25s ease; }
+        .chart-card:hover { transform: translateY(-3px); box-shadow: 0 12px 24px -10px rgba(0,0,0,0.15); }
+    </style>
+</head>
+<body class="antialiased text-slate-800">
+
+    <!-- Top Navigation Bar -->
+    <nav class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-slate-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center gap-3">
+                    <a href="../data.html" class="flex items-center gap-2 text-slate-600 hover:text-sky-600 transition text-sm font-semibold">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                        포트폴리오 돌아가기
+                    </a>
+                    <span class="text-slate-300">|</span>
+                    <span class="text-xs font-bold uppercase tracking-wider text-sky-700 bg-sky-50 px-2.5 py-1 rounded-full border border-sky-200">
+                        PBL 04 Web Ebook
+                    </span>
+                </div>
+                <!-- Section Links -->
+                <div class="hidden md:flex items-center space-x-6 text-xs font-semibold text-slate-600">
+                    <a href="#summary" class="hover:text-sky-600 transition">01. 요약</a>
+                    <a href="#eda" class="hover:text-sky-600 transition">02. 진단 EDA</a>
+                    <a href="#models" class="hover:text-sky-600 transition">03. 머신러닝 비교</a>
+                    <a href="#newsvendor" class="hover:text-sky-600 transition">04. Newsvendor 최적화</a>
+                    <a href="#simulation" class="hover:text-sky-600 transition">05. 정책 시뮬레이션</a>
+                    <a href="#figures" class="hover:text-sky-600 transition">06. 시각화 갤러리</a>
+                    <a href="#review" class="hover:text-sky-600 transition">07. 독립 검증</a>
+                </div>
+                <!-- Action Buttons -->
+                <div class="flex items-center gap-2">
+                    <a href="report.md" download class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-lg transition">
+                        <span>보고서 MD</span>
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                    </a>
+                    <a href="result.md" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-white bg-sky-600 hover:bg-sky-500 rounded-lg transition shadow-sm">
+                        <span>result.md 열람</span>
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <header class="gradient-header py-16 text-white">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-xs font-bold tracking-wide text-sky-200 mb-4">
+                HANLYM UNIVERSITY · AI SMART WORK · CAPSTONE CASE STUDY
+            </div>
+            <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight">
+                신선식품 수요 예측 고도화 및<br>
+                Newsvendor 재고 발주 최적화 웹 전자책
+            </h1>
+            <p class="mt-4 text-base sm:text-lg text-slate-300 max-w-3xl leading-relaxed">
+                가상 쿠팡 로켓프레시 풀필먼트 센터(이천·대구) 30개 SKU의 6개월 운영 빅데이터(10,860건)를 기반으로, 
+                <span class="text-sky-300 font-semibold">HistGradientBoosting</span> 머신러닝 수요 예측과 <span class="text-emerald-300 font-semibold">Newsvendor</span> 확률적 재고 최적화를 융합하여 
+                폐기 손실 <strong class="text-emerald-300">53.09% 감축</strong> 및 월 순이익 <strong class="text-emerald-300">+1억 1,808만 원(+13.96%) 개선</strong>을 입증한 전과정 분석 보고서입니다.
+            </p>
+            <div class="mt-6 flex flex-wrap gap-4 text-xs text-slate-300">
+                <span class="flex items-center gap-1.5"><strong class="text-white">분석기간:</strong> 2026.01.01 ~ 2026.06.30 (181일)</span>
+                <span>•</span>
+                <span class="flex items-center gap-1.5"><strong class="text-white">표본수:</strong> 10,860건 (결측치 0)</span>
+                <span>•</span>
+                <span class="flex items-center gap-1.5"><strong class="text-white">평가세트:</strong> 2026년 6월 미지 테스트 세트 (1,800건)</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
+
+        <!-- 01. KPI Highlights -->
+        <section id="summary" class="space-y-6">
+            <div class="flex items-center justify-between border-b border-slate-200 pb-3">
+                <div>
+                    <span class="text-xs font-bold uppercase tracking-wider text-sky-700">Chapter 01 · Executive Summary</span>
+                    <h2 class="text-2xl font-extrabold text-slate-900 mt-1">핵심 경영 성과 지표 (6월 테스트 기준)</h2>
+                </div>
+                <span class="text-xs text-slate-500 font-mono">Evaluation Period: 2026-06</span>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                <!-- Card 1 -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm chart-card">
+                    <span class="text-xs font-bold text-slate-500 uppercase">기존 실제 발주 총이익</span>
+                    <p class="text-2xl font-mono font-extrabold text-slate-900 mt-2">846,090,348원</p>
+                    <p class="text-xs text-slate-500 mt-1">폐기손실 2.18억 / 기회손실 7,936만</p>
+                </div>
+                <!-- Card 2 -->
+                <div class="bg-gradient-to-br from-emerald-50 to-teal-50/40 p-6 rounded-2xl border border-emerald-200 shadow-sm chart-card">
+                    <span class="text-xs font-bold text-emerald-800 uppercase">HGB + Newsvendor 총이익</span>
+                    <p class="text-2xl font-mono font-extrabold text-emerald-900 mt-2">964,166,014원</p>
+                    <p class="text-xs font-bold text-emerald-700 mt-1">▲ +118,075,666원 (+13.96% 개선)</p>
+                </div>
+                <!-- Card 3 -->
+                <div class="bg-gradient-to-br from-sky-50 to-blue-50/40 p-6 rounded-2xl border border-sky-200 shadow-sm chart-card">
+                    <span class="text-xs font-bold text-sky-800 uppercase">폐기 손실 절감 효과</span>
+                    <p class="text-2xl font-mono font-extrabold text-sky-900 mt-2">102,430,222원</p>
+                    <p class="text-xs font-bold text-emerald-700 mt-1">▼ -115,949,781원 (-53.09% 절감)</p>
+                </div>
+                <!-- Card 4 -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm chart-card">
+                    <span class="text-xs font-bold text-slate-500 uppercase">복합이벤트 예측 편향 (Bias)</span>
+                    <p class="text-2xl font-mono font-extrabold text-indigo-700 mt-2">-4.50개</p>
+                    <p class="text-xs font-semibold text-slate-600 mt-1">기존 -193.73개 $\rightarrow$ 사실상 정상화</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 02. Exploratory Data Analysis (EDA) -->
+        <section id="eda" class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
+            <div class="border-b border-slate-100 pb-4">
+                <span class="text-xs font-bold uppercase tracking-wider text-sky-700">Chapter 02 · Diagnostic EDA</span>
+                <h2 class="text-2xl font-extrabold text-slate-900 mt-1">카테고리별 재고 위험 및 기존 시스템 예측 오차 진단</h2>
+                <p class="text-sm text-slate-600 mt-1">
+                    6개월 전체 관측 폐기율은 <strong class="text-rose-600">9.79%</strong>(폐기손실 10.87억 원), 품절률은 <strong class="text-sky-600">2.38%</strong>(기회손실 1.65억 원)였습니다. 특히 고단가 품목인 정육과 수산에 전체 폐기 손실의 65.3%가 집중되었습니다.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <!-- Table -->
+                <div class="lg:col-span-7 overflow-x-auto rounded-2xl border border-slate-200">
+                    <table class="min-w-full text-xs text-left divide-y divide-slate-200">
+                        <thead class="bg-slate-900 text-white font-semibold">
+                            <tr>
+                                <th class="px-3.5 py-3">카테고리</th>
+                                <th class="px-3 py-3 text-right">발주량</th>
+                                <th class="px-3 py-3 text-right">실수요</th>
+                                <th class="px-3 py-3 text-right">폐기율</th>
+                                <th class="px-3 py-3 text-right">품절률</th>
+                                <th class="px-3.5 py-3 text-right">폐기 손실액(원)</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100 bg-white font-mono">
+                            <tr class="bg-rose-50/40">
+                                <td class="px-3.5 py-2.5 font-sans font-bold text-slate-900">정육</td>
+                                <td class="px-3 py-2.5 text-right">395,275</td>
+                                <td class="px-3 py-2.5 text-right">356,802</td>
+                                <td class="px-3 py-2.5 text-right text-amber-700 font-bold">10.77%</td>
+                                <td class="px-3 py-2.5 text-right">1.48%</td>
+                                <td class="px-3.5 py-2.5 text-right font-bold text-rose-700">397,972,600</td>
+                            </tr>
+                            <tr class="bg-rose-50/40">
+                                <td class="px-3.5 py-2.5 font-sans font-bold text-slate-900">수산</td>
+                                <td class="px-3 py-2.5 text-right">316,050</td>
+                                <td class="px-3 py-2.5 text-right">285,557</td>
+                                <td class="px-3 py-2.5 text-right text-rose-700 font-bold">11.95%</td>
+                                <td class="px-3 py-2.5 text-right">2.63%</td>
+                                <td class="px-3.5 py-2.5 text-right font-bold text-rose-700">312,503,569</td>
+                            </tr>
+                            <tr>
+                                <td class="px-3.5 py-2.5 font-sans font-bold text-slate-900">과일</td>
+                                <td class="px-3 py-2.5 text-right">450,189</td>
+                                <td class="px-3 py-2.5 text-right">428,768</td>
+                                <td class="px-3 py-2.5 text-right">7.37%</td>
+                                <td class="px-3 py-2.5 text-right font-bold text-sky-700">2.81%</td>
+                                <td class="px-3.5 py-2.5 text-right">136,341,930</td>
+                            </tr>
+                            <tr class="bg-sky-50/30">
+                                <td class="px-3.5 py-2.5 font-sans font-bold text-slate-900">간편식</td>
+                                <td class="px-3 py-2.5 text-right">355,332</td>
+                                <td class="px-3 py-2.5 text-right">339,623</td>
+                                <td class="px-3 py-2.5 text-right">8.94%</td>
+                                <td class="px-3 py-2.5 text-right font-bold text-rose-600">4.83%</td>
+                                <td class="px-3.5 py-2.5 text-right">114,330,471</td>
+                            </tr>
+                            <tr>
+                                <td class="px-3.5 py-2.5 font-sans font-bold text-slate-900">채소</td>
+                                <td class="px-3 py-2.5 text-right">360,014</td>
+                                <td class="px-3 py-2.5 text-right">324,623</td>
+                                <td class="px-3 py-2.5 text-right text-amber-700">10.94%</td>
+                                <td class="px-3 py-2.5 text-right">1.44%</td>
+                                <td class="px-3.5 py-2.5 text-right">82,203,166</td>
+                            </tr>
+                            <tr>
+                                <td class="px-3.5 py-2.5 font-sans font-bold text-slate-900">유제품</td>
+                                <td class="px-3 py-2.5 text-right">306,573</td>
+                                <td class="px-3 py-2.5 text-right">277,537</td>
+                                <td class="px-3 py-2.5 text-right">9.50%</td>
+                                <td class="px-3 py-2.5 text-right">0.71%</td>
+                                <td class="px-3.5 py-2.5 text-right">43,760,450</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Event Error Cards -->
+                <div class="lg:col-span-5 space-y-3.5">
+                    <h3 class="text-sm font-bold text-slate-900 flex items-center justify-between">
+                        <span>이벤트별 기존 시스템 예측 오차 진단</span>
+                        <span class="text-[11px] text-slate-400 font-normal">N=10,860</span>
+                    </h3>
+                    <div class="space-y-2 text-xs">
+                        <div class="flex justify-between items-center bg-slate-50 border border-slate-200 px-3.5 py-2.5 rounded-xl">
+                            <div>
+                                <span class="font-bold text-slate-700">평시 (비프로모션/평일)</span>
+                                <p class="text-[11px] text-slate-500">평균 실수요 180.2개</p>
+                            </div>
+                            <span class="font-mono font-bold text-slate-800">MAPE 18.16% · Bias +1.78</span>
+                        </div>
+                        <div class="flex justify-between items-center bg-amber-50/60 border border-amber-200 px-3.5 py-2.5 rounded-xl">
+                            <div>
+                                <span class="font-bold text-amber-900">프로모션 단독</span>
+                                <p class="text-[11px] text-amber-700">평균 실수요 258.4개</p>
+                            </div>
+                            <span class="font-mono font-bold text-amber-800">MAPE 22.59% · Bias -61.49</span>
+                        </div>
+                        <div class="flex justify-between items-center bg-amber-50/60 border border-amber-200 px-3.5 py-2.5 rounded-xl">
+                            <div>
+                                <span class="font-bold text-amber-900">명절/공휴일 단독</span>
+                                <p class="text-[11px] text-amber-700">평균 실수요 249.1개</p>
+                            </div>
+                            <span class="font-mono font-bold text-amber-800">MAPE 25.26% · Bias -62.58</span>
+                        </div>
+                        <div class="flex justify-between items-center bg-rose-50 border border-rose-300 px-3.5 py-2.5 rounded-xl shadow-xs">
+                            <div>
+                                <span class="font-extrabold text-rose-900">프로모션 + 명절 동시 (고위험)</span>
+                                <p class="text-[11px] text-rose-700">수요 폭증 441.7개 (예측 248.0개)</p>
+                            </div>
+                            <span class="font-mono font-extrabold text-rose-700">MAPE 44.67% · Bias -193.73</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 03. Machine Learning Model Comparison -->
+        <section id="models" class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
+            <div class="border-b border-slate-100 pb-4">
+                <span class="text-xs font-bold uppercase tracking-wider text-indigo-700">Chapter 03 · Model Benchmarking</span>
+                <h2 class="text-2xl font-extrabold text-slate-900 mt-1">머신러닝 다중 모델 성능 비교 (2026년 6월 미지 테스트 세트)</h2>
+                <p class="text-sm text-slate-600 mt-1">
+                    시간순 3분할(Train: 1~4월 / Validation: 5월 / Test: 6월)을 적용하여 미래 데이터 누수를 원천 차단하고 공정하게 평가했습니다.
+                </p>
+            </div>
+
+            <div class="overflow-x-auto rounded-2xl border border-slate-200">
+                <table class="min-w-full text-xs text-left divide-y divide-slate-200">
+                    <thead class="bg-slate-900 text-white font-semibold">
+                        <tr>
+                            <th class="px-4 py-3">모델명</th>
+                            <th class="px-3.5 py-3 text-right">6월 MAPE(%)</th>
+                            <th class="px-3.5 py-3 text-right">6월 MAE(개)</th>
+                            <th class="px-3.5 py-3 text-right">6월 RMSE(개)</th>
+                            <th class="px-3.5 py-3 text-right">6월 편향(Bias)</th>
+                            <th class="px-3.5 py-3 text-right">복합이벤트 MAPE</th>
+                            <th class="px-4 py-3 text-right">복합이벤트 편향</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100 bg-white font-mono">
+                        <tr>
+                            <td class="px-4 py-3 font-sans font-medium text-slate-700">기존 시스템 예측 (Baseline)</td>
+                            <td class="px-3.5 py-3 text-right">18.76%</td>
+                            <td class="px-3.5 py-3 text-right">35.82</td>
+                            <td class="px-3.5 py-3 text-right text-rose-600">53.42</td>
+                            <td class="px-3.5 py-3 text-right">-11.90</td>
+                            <td class="px-3.5 py-3 text-right text-rose-600 font-bold">44.67%</td>
+                            <td class="px-4 py-3 text-right text-rose-600 font-bold">-193.73개</td>
+                        </tr>
+                        <tr>
+                            <td class="px-4 py-3 font-sans font-semibold text-slate-900">RandomForestRegressor</td>
+                            <td class="px-3.5 py-3 text-right font-bold text-sky-700">14.52%</td>
+                            <td class="px-3.5 py-3 text-right">25.61</td>
+                            <td class="px-3.5 py-3 text-right">37.02</td>
+                            <td class="px-3.5 py-3 text-right font-bold text-emerald-700">-1.53</td>
+                            <td class="px-3.5 py-3 text-right">8.69%</td>
+                            <td class="px-4 py-3 text-right">-24.96개</td>
+                        </tr>
+                        <tr class="bg-indigo-50/40 border-l-4 border-indigo-600">
+                            <td class="px-4 py-3 font-sans font-bold text-indigo-900 flex items-center gap-1.5">
+                                <span>HistGradientBoosting (최적)</span>
+                                <span class="bg-indigo-600 text-white text-[10px] px-1.5 py-0.5 rounded font-sans">선정</span>
+                            </td>
+                            <td class="px-3.5 py-3 text-right font-bold text-indigo-900">14.78%</td>
+                            <td class="px-3.5 py-3 text-right font-bold text-indigo-900">25.10</td>
+                            <td class="px-3.5 py-3 text-right font-bold text-indigo-900">35.80</td>
+                            <td class="px-3.5 py-3 text-right">+4.04</td>
+                            <td class="px-3.5 py-3 text-right font-bold text-emerald-700">5.90%</td>
+                            <td class="px-4 py-3 text-right font-bold text-emerald-700">-4.50개</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Model Selection Insights -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                    <strong class="text-slate-900 block text-sm">RMSE 32.9% 대폭 감축</strong>
+                    <p class="text-slate-600 mt-1">기존 53.42개에서 35.80개로 오차 극단치를 제거하여 대량 결품 및 과잉 입고 리스크를 사전에 차단했습니다.</p>
+                </div>
+                <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                    <strong class="text-slate-900 block text-sm">복합 이벤트 극단치 추종</strong>
+                    <p class="text-slate-600 mt-1">프로모션과 명절 동시 발생 시 기존 시스템의 -193.7개 과소예측 편향을 -4.5개로 정상화하여 대형 품절을 완벽 방어했습니다.</p>
+                </div>
+                <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                    <strong class="text-slate-900 block text-sm">SARIMAX 한계 및 제외 사유</strong>
+                    <p class="text-slate-600 mt-1">대표 SKU001 적합 시 MAPE 23.58%로 열위하였으며, 60개 시계열 전수 확장 시 수렴 실패 및 계산량 급증으로 트리 앙상블을 최종 채택했습니다.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 04. Newsvendor Optimization -->
+        <section id="newsvendor" class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
+            <div class="border-b border-slate-100 pb-4">
+                <span class="text-xs font-bold uppercase tracking-wider text-emerald-700">Chapter 04 · Optimization Math</span>
+                <h2 class="text-2xl font-extrabold text-slate-900 mt-1">Newsvendor(신문팔이) 재고 최적화 및 안전계수 도출</h2>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <div class="lg:col-span-6 space-y-4 text-sm text-slate-600 leading-relaxed">
+                    <p>
+                        품목별 원가($C$)와 판매가($P$)에 따라 과소 발주 기회비용($C_u = P - C$)과 과잉 발주 폐기비용($C_o = C$)이 다릅니다. Newsvendor 임계비율은 다음과 같이 정의됩니다.
+                    </p>
+                    <div class="p-4 rounded-xl bg-slate-900 text-white font-mono text-xs sm:text-sm">
+                        Critical Ratio (CR) = Margin / (Margin + Cost) = (P - C) / P<br><br>
+                        Optimal Order (Q*) = max(0, round( ML_Forecast + Z_score * Sigma ))
+                    </div>
+                    <ul class="space-y-2 text-xs text-slate-600 list-disc list-inside">
+                        <li><strong>불확실성($\sigma$) 산출:</strong> 5월 검증 세트의 실제 잔차 표준편차를 SKU 및 센터별로 산출하여 과적합 방지.</li>
+                        <li><strong>Z-score 클리핑:</strong> 정규분포 역함수 $Z = \Phi^{-1}(CR)$을 $[-2.5, 2.5]$로 클리핑하여 극단치 억제.</li>
+                        <li><strong>카테고리별 차등:</strong> 정육·수산(낮은 $CR$)은 보수적 발주로 폐기 억제, 간편식·과일(높은 $CR$)은 버퍼 확보로 품절 방어.</li>
+                    </ul>
+                </div>
+
+                <div class="lg:col-span-6 bg-slate-950 p-5 rounded-2xl text-white font-mono text-xs overflow-x-auto">
+                    <div class="flex justify-between items-center pb-2 border-b border-white/10 text-slate-400 text-[11px]">
+                        <span>analysis.py — Core Math Execution</span>
+                        <span class="text-emerald-400">Scipy.stats · norm.ppf</span>
+                    </div>
+                    <pre class="mt-3 text-slate-300 leading-relaxed"><code># 1. 5월 Validation 잔차 불확실성(표준편차) 산출
+valid['residual'] = valid['actual_demand'] - valid['pred_hgb']
+sku_sigma = valid.groupby(['center', 'sku_id'])['residual'].std()
+
+# 2. 임계비율 산출 및 안전계수 클리핑
+test['cr'] = (test['margin'] / test['unit_price']).clip(0.05, 0.95)
+test['z_score'] = norm.ppf(test['cr']).clip(-2.5, 2.5)
+
+# 3. 최적 권장 발주량 산출
+test['q_star'] = np.maximum(
+    0, np.rint(test['pred_hgb'] + test['z_score'] * test['sigma'])
+).astype(int)</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- 05. Policy Simulation -->
+        <section id="simulation" class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
+            <div class="border-b border-slate-100 pb-4">
+                <span class="text-xs font-bold uppercase tracking-wider text-emerald-700">Chapter 05 · Policy Backtesting</span>
+                <h2 class="text-2xl font-extrabold text-slate-900 mt-1">2026년 6월 5대 발주 정책 시뮬레이션 및 손익 비교</h2>
+                <p class="text-sm text-slate-600 mt-1">
+                    동일한 6월 1,800건 테스트 세트에 대해 동일한 단일기간 손익 계산식을 적용하여 사과 대 사과(Apple-to-Apple) 비교를 수행했습니다.
+                </p>
+            </div>
+
+            <div class="overflow-x-auto rounded-2xl border border-slate-200">
+                <table class="min-w-full text-xs text-left divide-y divide-slate-200">
+                    <thead class="bg-slate-900 text-white font-semibold">
+                        <tr>
+                            <th class="px-4 py-3">정책명</th>
+                            <th class="px-3.5 py-3 text-right">총발주량</th>
+                            <th class="px-3.5 py-3 text-right">폐기손실액(원)</th>
+                            <th class="px-3.5 py-3 text-right">기회손실액(원)</th>
+                            <th class="px-3.5 py-3 text-right">총이익(원)</th>
+                            <th class="px-3.5 py-3 text-right">이익개선율</th>
+                            <th class="px-4 py-3 text-right">폐기절감율</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100 bg-white font-mono">
+                        <tr>
+                            <td class="px-4 py-3 font-sans font-medium text-slate-700">정책 1: 기존 실제 발주 정책</td>
+                            <td class="px-3.5 py-3 text-right">362,103</td>
+                            <td class="px-3.5 py-3 text-right text-rose-600">218,380,003</td>
+                            <td class="px-3.5 py-3 text-right">79,357,987</td>
+                            <td class="px-3.5 py-3 text-right">846,090,348</td>
+                            <td class="px-3.5 py-3 text-right text-slate-400">기준</td>
+                            <td class="px-4 py-3 text-right text-slate-400">기준</td>
+                        </tr>
+                        <tr class="bg-rose-50/30">
+                            <td class="px-4 py-3 font-sans font-medium text-rose-900">정책 2: 기존 예측 + 12% 룰</td>
+                            <td class="px-3.5 py-3 text-right">362,949</td>
+                            <td class="px-3.5 py-3 text-right text-rose-700">220,850,236</td>
+                            <td class="px-3.5 py-3 text-right">78,200,018</td>
+                            <td class="px-3.5 py-3 text-right text-rose-700">844,778,084</td>
+                            <td class="px-3.5 py-3 text-right text-rose-700 font-bold">-0.16%</td>
+                            <td class="px-4 py-3 text-right text-rose-700">-1.13%</td>
+                        </tr>
+                        <tr>
+                            <td class="px-4 py-3 font-sans font-medium text-slate-700">정책 3: Baseline + Newsvendor</td>
+                            <td class="px-3.5 py-3 text-right">305,556</td>
+                            <td class="px-3.5 py-3 text-right text-emerald-700">81,107,639</td>
+                            <td class="px-3.5 py-3 text-right text-rose-600">168,960,437</td>
+                            <td class="px-3.5 py-3 text-right">893,760,262</td>
+                            <td class="px-3.5 py-3 text-right text-emerald-700 font-bold">+5.63%</td>
+                            <td class="px-4 py-3 text-right text-emerald-700 font-bold">+62.86%</td>
+                        </tr>
+                        <tr>
+                            <td class="px-4 py-3 font-sans font-medium text-slate-700">정책 4: RF + Newsvendor</td>
+                            <td class="px-3.5 py-3 text-right">329,217</td>
+                            <td class="px-3.5 py-3 text-right text-emerald-700">80,931,390</td>
+                            <td class="px-3.5 py-3 text-right">98,897,077</td>
+                            <td class="px-3.5 py-3 text-right text-emerald-700 font-bold">963,999,871</td>
+                            <td class="px-3.5 py-3 text-right text-emerald-700 font-bold">+13.94%</td>
+                            <td class="px-4 py-3 text-right text-emerald-700 font-bold">+62.94%</td>
+                        </tr>
+                        <tr class="bg-emerald-50/50 border-l-4 border-emerald-600">
+                            <td class="px-4 py-3 font-sans font-bold text-emerald-950 flex items-center gap-1.5">
+                                <span>정책 5: HGB + Newsvendor (권장)</span>
+                                <span class="bg-emerald-600 text-white text-[10px] px-1.5 py-0.5 rounded font-sans">최적</span>
+                            </td>
+                            <td class="px-3.5 py-3 text-right font-bold text-emerald-950">339,700</td>
+                            <td class="px-3.5 py-3 text-right font-bold text-emerald-800">102,430,222</td>
+                            <td class="px-3.5 py-3 text-right font-bold text-emerald-800">77,232,102</td>
+                            <td class="px-3.5 py-3 text-right font-bold text-emerald-900 text-sm">964,166,014</td>
+                            <td class="px-3.5 py-3 text-right font-extrabold text-emerald-700">+13.96%</td>
+                            <td class="px-4 py-3 text-right font-extrabold text-emerald-700">+53.09%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Previous vs Current Explanation Box -->
+            <div class="p-5 rounded-2xl bg-amber-50/80 border border-amber-200 text-xs text-amber-900 space-y-2">
+                <strong class="text-sm font-bold block text-amber-950">💡 과거 1차 분석(`5_advanced_simulation_comparison.csv`) 수치와의 차이점 소명:</strong>
+                <p class="leading-relaxed text-amber-800">
+                    과거 분석의 기존 발주 수치(폐기손실 1억 5,760만 원, 총이익 9억 4,584만 원)는 데이터셋 6월의 <strong>실제 다기간 유통기한 누적 관측값</strong>이었습니다. 
+                    반면 새 정책은 일별 단일기간 독립 Newsvendor 산식을 적용하여 서로 다른 기준으로 비교하는 한계가 있었습니다. 
+                    본 보고서의 새 분석은 <strong>모든 정책에 엄격하게 동일한 단일기간 손익 공식</strong>을 적용하여 완벽한 사과 대 사과(Apple-to-Apple) 비교를 완성했습니다.
+                </p>
+            </div>
+        </section>
+
+        <!-- 06. Figures Gallery -->
+        <section id="figures" class="space-y-6">
+            <div class="border-b border-slate-200 pb-3">
+                <span class="text-xs font-bold uppercase tracking-wider text-sky-700">Chapter 06 · Visualization Gallery</span>
+                <h2 class="text-2xl font-extrabold text-slate-900 mt-1">분석 시각화 그래프 7종 갤러리</h2>
+                <p class="text-sm text-slate-600 mt-1">모든 그래프는 Python Matplotlib을 통해 고화질(300 DPI)로 생성되었으며 한글 폰트를 완벽히 지원합니다.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Fig 1 -->
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm chart-card">
+                    <span class="text-xs font-bold text-sky-700 uppercase">Figure 01 · Diagnostic</span>
+                    <h3 class="text-sm font-bold text-slate-900 mt-1">카테고리별 폐기율 vs 품절률 비교</h3>
+                    <img src="outputs/figures/1_category_waste_stockout_rates.png" alt="카테고리별 폐기율 품절률" class="mt-3 rounded-xl w-full border border-slate-100">
+                    <p class="mt-3 text-xs text-slate-500">수산(11.95%)과 채소(10.94%), 정육(10.77%)의 폐기율이 높은 반면 간편식은 품절률(4.83%)이 높음.</p>
+                </div>
+
+                <!-- Fig 2 -->
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm chart-card">
+                    <span class="text-xs font-bold text-sky-700 uppercase">Figure 02 · Financial Scale</span>
+                    <h3 class="text-sm font-bold text-slate-900 mt-1">카테고리별 폐기 손실액 vs 기회 손실액</h3>
+                    <img src="outputs/figures/2_category_loss_amounts.png" alt="카테고리별 손실 규모" class="mt-3 rounded-xl w-full border border-slate-100">
+                    <p class="mt-3 text-xs text-slate-500">고단가 품목인 정육(3.98억 원)과 수산(3.13억 원)의 폐기 손실이 전체의 65.3%를 차지함.</p>
+                </div>
+
+                <!-- Fig 3 -->
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm chart-card">
+                    <span class="text-xs font-bold text-rose-700 uppercase">Figure 03 · Vulnerability</span>
+                    <h3 class="text-sm font-bold text-slate-900 mt-1">이벤트 조건별 기존 시스템 예측 오차 및 편향</h3>
+                    <img src="outputs/figures/3_event_forecast_error.png" alt="이벤트별 예측오차" class="mt-3 rounded-xl w-full border border-slate-100">
+                    <p class="mt-3 text-xs text-slate-500">프로모션과 명절이 겹치는 날 MAPE 44.67%, 편향 -193.73개로 극심한 과소예측 발생.</p>
+                </div>
+
+                <!-- Fig 4 -->
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm chart-card">
+                    <span class="text-xs font-bold text-indigo-700 uppercase">Figure 04 · Model Evaluation</span>
+                    <h3 class="text-sm font-bold text-slate-900 mt-1">6월 테스트 세트 모델별 MAPE·MAE·RMSE</h3>
+                    <img src="outputs/figures/4_model_metric_comparison.png" alt="모델별 지표 비교" class="mt-3 rounded-xl w-full border border-slate-100">
+                    <p class="mt-3 text-xs text-slate-500">HistGradientBoosting이 RMSE 35.80개로 최저 오차를 달성하여 최적 모델로 최종 채택.</p>
+                </div>
+
+                <!-- Fig 5 -->
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm chart-card md:col-span-2">
+                    <span class="text-xs font-bold text-sky-700 uppercase">Figure 05 · Time Series Tracking</span>
+                    <h3 class="text-sm font-bold text-slate-900 mt-1">2026년 6월 전체 SKU 일별 실제 수요 vs 모델별 예측 궤적</h3>
+                    <img src="outputs/figures/5_actual_vs_predicted_demand.png" alt="시계열 궤적 비교" class="mt-3 rounded-xl w-full border border-slate-100">
+                    <p class="mt-3 text-xs text-slate-500">기존 시스템이 놓치는 수요 급증 구간을 HistGradientBoosting 모델이 실제 수요 궤적과 가장 근접하게 추종함.</p>
+                </div>
+
+                <!-- Fig 6 -->
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm chart-card">
+                    <span class="text-xs font-bold text-emerald-700 uppercase">Figure 06 · Financial Trade-off</span>
+                    <h3 class="text-sm font-bold text-slate-900 mt-1">발주 정책별 총이익 및 위험 손실액 비교</h3>
+                    <img src="outputs/figures/6_policy_profit_comparison.png" alt="손익 비교 차트" class="mt-3 rounded-xl w-full border border-slate-100">
+                    <p class="mt-3 text-xs text-slate-500">HGB+Newsvendor 정책이 폐기 손실을 1억 원대로 낮추면서 총이익 9.64억 원을 기록함.</p>
+                </div>
+
+                <!-- Fig 7 -->
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm chart-card">
+                    <span class="text-xs font-bold text-emerald-700 uppercase">Figure 07 · ROI Improvement</span>
+                    <h3 class="text-sm font-bold text-slate-900 mt-1">기존 발주 대비 정책별 핵심 성과 개선율</h3>
+                    <img src="outputs/figures/7_policy_improvement_effect.png" alt="개선율 비교 차트" class="mt-3 rounded-xl w-full border border-slate-100">
+                    <p class="mt-3 text-xs text-slate-500">기존 룰(+12%)은 이익이 -0.16% 역성장한 반면, HGB+NV는 폐기 53.09% 절감 및 이익 13.96% 개선 달성.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 07. Independent Verification & Deliverables -->
+        <section id="review" class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
+            <div class="border-b border-slate-100 pb-4">
+                <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Chapter 07 · Governance &amp; Deliverables</span>
+                <h2 class="text-2xl font-extrabold text-slate-900 mt-1">독립 검증 결과 및 분석 산출물 다운로드</h2>
+            </div>
+
+            <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 text-xs text-slate-700 space-y-2">
+                <strong class="text-sm font-bold block text-slate-900">🔍 독립 감사(Audit) 결과 요약 (`AI_REVIEW_LOG.md`):</strong>
+                <p>1. <strong>수치 일치성:</strong> 보고서, result.md 및 CSV 간의 모든 수치가 1원 단위까지 100% 일치함을 파이썬 감사 스크립트로 확인 완료.</p>
+                <p>2. <strong>데이터 누수(Leakage):</strong> 당일 실수요 및 재고 결과 변수가 피처에서 완전 배제되었음을 코드 감사 완료.</p>
+                <p>3. <strong>산식 정합성:</strong> Newsvendor $CR$, 정규분포 $Z$-score, 5월 Validation 잔차 $\sigma$ 적용 공식이 수학적으로 타당함을 검증 완료.</p>
+            </div>
+
+            <!-- Download Links Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-2">
+                <a href="outputs/policy_comparison.csv" download class="flex items-center justify-between p-4 rounded-xl border border-slate-200 bg-slate-50 hover:bg-sky-50 hover:border-sky-300 transition text-xs font-bold text-slate-800">
+                    <span>정책 비교 CSV</span>
+                    <span class="text-sky-600">↓</span>
+                </a>
+                <a href="outputs/model_comparison.csv" download class="flex items-center justify-between p-4 rounded-xl border border-slate-200 bg-slate-50 hover:bg-sky-50 hover:border-sky-300 transition text-xs font-bold text-slate-800">
+                    <span>모델 성능 비교 CSV</span>
+                    <span class="text-sky-600">↓</span>
+                </a>
+                <a href="outputs/sku_recommendations.csv" download class="flex items-center justify-between p-4 rounded-xl border border-slate-200 bg-slate-50 hover:bg-sky-50 hover:border-sky-300 transition text-xs font-bold text-slate-800">
+                    <span>SKU별 권장발주량 CSV</span>
+                    <span class="text-sky-600">↓</span>
+                </a>
+                <a href="AI_REVIEW_LOG.md" target="_blank" class="flex items-center justify-between p-4 rounded-xl border border-slate-200 bg-slate-50 hover:bg-emerald-50 hover:border-emerald-300 transition text-xs font-bold text-slate-800">
+                    <span>AI 검토 로그 (MD)</span>
+                    <span class="text-emerald-600">↗</span>
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-12 border-t border-slate-800 text-xs">
+        <div class="max-w-6xl mx-auto px-4 text-center space-y-3">
+            <p class="font-bold text-white text-sm">한림대학교 AI 스마트워크 캡스톤 프로젝트 · 20213528 이종건</p>
+            <p>본 사이트 및 보고서의 모든 분석 결과는 <code class="text-sky-400 font-mono">analysis.py</code> 및 <code class="text-sky-400 font-mono">P4_fresh_inventory_daily.csv</code>에서 100% 재현 가능합니다.</p>
+            <p class="text-slate-500">© 2026 Jonggeon Lee. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
