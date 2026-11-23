@@ -1,6 +1,7 @@
 /**
  * AI 스마트워크 2026학년도 2학기 포트폴리오 공통 네비게이션 및 푸터 스크립트
- * 작성자: 20213528 이종건 (생명과학과 · 경영학과 복수전공)
+ * 작성자: 20213528 이종건 (생명과학과 주전공 · 경영학과 복수전공)
+ * 디자인 시스템: Clean Academic Portfolio (Apple / Notion / Linear cues)
  */
 (function () {
     // 1. 단일 메뉴 및 드롭다운 그룹 정의
@@ -54,10 +55,10 @@
         const singlesHtml = NAV_CONFIG.singles.map(item => {
             const isActive = item.id === activeId;
             return `
-                <a href="${item.href}" class="whitespace-nowrap px-3 py-1.5 rounded-lg text-[13px] font-semibold transition-all ${
+                <a href="${item.href}" class="whitespace-nowrap px-3 py-1.5 rounded-lg text-[13px] font-medium transition-colors ${
                     isActive 
-                        ? 'bg-slate-900 text-white font-bold shadow-sm' 
-                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                        ? 'bg-slate-900 text-white font-semibold shadow-xs'
+                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/80'
                 }" title="${item.subtitle}">
                     ${item.label}
                 </a>
@@ -73,13 +74,13 @@
                 const isChildActive = child.id === activeId;
                 return `
                     <a href="${child.href}" class="flex items-start gap-2.5 rounded-xl p-2.5 transition-colors ${
-                        isChildActive 
-                            ? 'bg-sky-50 text-sky-950 font-bold' 
-                            : 'hover:bg-slate-50 text-slate-800'
+                        isChildActive
+                            ? 'bg-blue-50/80 text-blue-950 font-semibold'
+                            : 'hover:bg-slate-50 text-slate-700'
                     }">
                         <span class="mt-0.5 text-base shrink-0">${child.icon}</span>
                         <div>
-                            <div class="text-xs font-bold ${isChildActive ? 'text-sky-700' : 'text-slate-900'}">${child.label}</div>
+                            <div class="text-xs font-semibold ${isChildActive ? 'text-blue-700' : 'text-slate-900'}">${child.label}</div>
                             <div class="text-[11px] text-slate-500 font-normal leading-tight mt-0.5">${child.desc}</div>
                         </div>
                     </a>
@@ -88,21 +89,21 @@
 
             return `
                 <div class="relative group" data-dropdown="${group.id}">
-                    <button type="button" aria-haspopup="true" aria-expanded="false" class="inline-flex items-center gap-1.5 whitespace-nowrap rounded-lg px-3 py-1.5 text-[13px] font-semibold transition-all ${
+                    <button type="button" aria-haspopup="true" aria-expanded="false" class="inline-flex items-center gap-1.5 whitespace-nowrap rounded-lg px-3 py-1.5 text-[13px] font-medium transition-colors ${
                         hasActiveChild
-                            ? 'bg-slate-900 text-white font-bold shadow-sm'
+                            ? 'bg-slate-900 text-white font-semibold shadow-xs'
                             : isHighlight
-                            ? 'bg-sky-50 text-sky-900 border border-sky-200 hover:bg-sky-100 font-bold'
-                            : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                            ? 'bg-blue-50 text-blue-900 border border-blue-200/80 hover:bg-blue-100/70 font-semibold'
+                            : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/80'
                     }">
                         <span>${group.label}</span>
-                        <svg class="h-3 w-3 transition-transform duration-200 group-hover:rotate-180 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                        <svg class="h-3 w-3 transition-transform duration-200 group-hover:rotate-180 opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
                         </svg>
                     </button>
                     <!-- Dropdown Menu -->
-                    <div class="dropdown-menu absolute right-0 mt-1.5 w-64 origin-top-right rounded-2xl border border-slate-200 bg-white p-2 shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 z-50">
-                        <div class="px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wider text-slate-400 border-b border-slate-100 mb-1">
+                    <div class="dropdown-menu absolute right-0 mt-2 w-64 origin-top-right rounded-2xl border border-slate-200 bg-white p-2 shadow-xl ring-1 ring-slate-950/5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 z-50">
+                        <div class="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-slate-400 border-b border-slate-100 mb-1">
                             ${group.label} · ${group.badge}
                         </div>
                         ${itemsList}
@@ -115,11 +116,11 @@
         const mobileSinglesHtml = NAV_CONFIG.singles.map(item => {
             const isActive = item.id === activeId;
             return `
-                <a href="${item.href}" class="flex items-center justify-between rounded-lg px-3.5 py-2.5 text-sm font-semibold transition-colors ${
-                    isActive ? 'bg-slate-900 text-white font-bold' : 'text-slate-700 hover:bg-slate-100'
+                <a href="${item.href}" class="flex items-center justify-between rounded-xl px-3.5 py-2.5 text-sm font-medium transition-colors ${
+                    isActive ? 'bg-slate-900 text-white font-semibold' : 'text-slate-700 hover:bg-slate-100'
                 }">
                     <span>${item.label}</span>
-                    <span class="text-xs opacity-60">→</span>
+                    <span class="text-xs opacity-50">→</span>
                 </a>
             `;
         }).join('');
@@ -128,8 +129,8 @@
             const items = group.items.map(child => {
                 const isChildActive = child.id === activeId;
                 return `
-                    <a href="${child.href}" class="flex items-center justify-between rounded-lg px-3 py-2 text-xs font-semibold ${
-                        isChildActive ? 'bg-sky-100 text-sky-900 font-bold' : 'text-slate-600 hover:bg-slate-50'
+                    <a href="${child.href}" class="flex items-center justify-between rounded-xl px-3 py-2 text-xs font-medium ${
+                        isChildActive ? 'bg-blue-50 text-blue-900 font-semibold' : 'text-slate-600 hover:bg-slate-50'
                     }">
                         <span class="flex items-center gap-2"><span>${child.icon}</span> ${child.label}</span>
                         <span class="text-[11px] text-slate-400">열기 →</span>
@@ -148,19 +149,19 @@
         }).join('');
 
         navContainer.innerHTML = `
-            <nav class="sticky top-0 z-50 border-b border-slate-200/90 bg-white/95 backdrop-blur-md shadow-xs">
+            <nav class="sticky top-0 z-50 border-b border-slate-200/80 bg-white/95 backdrop-blur-md shadow-xs">
                 <div class="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-2.5 sm:px-6 lg:px-8">
                     <!-- Brand -->
                     <a href="index.html" class="flex shrink-0 items-center gap-2.5 group">
-                        <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-slate-900 text-[11px] font-extrabold tracking-tight text-emerald-400 shadow-sm group-hover:scale-105 transition-transform">
-                            BIO·AI
+                        <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-slate-900 text-[11px] font-bold tracking-tight text-white shadow-xs group-hover:bg-blue-600 transition-colors">
+                            AI
                         </span>
                         <div class="leading-tight">
                             <div class="flex items-center gap-1.5">
-                                <span class="text-sm font-extrabold text-slate-900 tracking-tight">AI SMARTWORK</span>
-                                <span class="text-[10px] font-extrabold text-sky-700 bg-sky-50 px-1.5 py-0.5 rounded border border-sky-200">2026 FALL</span>
+                                <span class="text-sm font-bold text-slate-900 tracking-tight">AI SMARTWORK</span>
+                                <span class="text-[10px] font-semibold text-blue-700 bg-blue-50 px-1.5 py-0.5 rounded border border-blue-200/80">2026-2</span>
                             </div>
-                            <span class="block text-[11px] font-medium text-slate-500">생명과학 · 경영학 | 20213528 이종건</span>
+                            <span class="block text-[11px] font-normal text-slate-500">생명과학 · 경영학 | 20213528 이종건</span>
                         </div>
                     </a>
 
@@ -172,11 +173,11 @@
 
                     <!-- Right Tag & Mobile Button -->
                     <div class="flex items-center gap-2">
-                        <span class="hidden items-center gap-1.5 whitespace-nowrap rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-[11px] font-bold text-emerald-800 xl:inline-flex">
-                            <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                        <span class="hidden items-center gap-1.5 whitespace-nowrap rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1 text-[11px] font-medium text-slate-600 xl:inline-flex">
+                            <span class="h-1.5 w-1.5 rounded-full bg-blue-500"></span>
                             황현석 교수님
                         </span>
-                        <button id="mobile-menu-btn" type="button" aria-label="메뉴 열기" class="inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white p-2 text-slate-700 hover:bg-slate-50 lg:hidden focus:outline-none focus:ring-2 focus:ring-sky-500">
+                        <button id="mobile-menu-btn" type="button" aria-label="메뉴 열기" class="inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white p-2 text-slate-700 hover:bg-slate-50 lg:hidden focus:outline-none focus:ring-2 focus:ring-blue-500">
                             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
                             </svg>
@@ -233,25 +234,25 @@
         const nextItem = idx >= 0 && idx < LINEAR_STEPS.length - 1 ? LINEAR_STEPS[idx + 1] : null;
 
         const stepNav = `
-            <div class="border-b border-slate-100 bg-slate-50/70">
-                <div class="mx-auto flex max-w-6xl flex-col items-stretch justify-between gap-3 px-4 py-4 sm:flex-row sm:items-center sm:px-6 lg:px-8">
+            <div class="border-b border-slate-200/80 bg-slate-50/70">
+                <div class="mx-auto flex max-w-6xl flex-col items-stretch justify-between gap-3 px-4 py-3.5 sm:flex-row sm:items-center sm:px-6 lg:px-8">
                     ${
                         prevItem
-                            ? `<a href="${prevItem.href}" class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-slate-700 transition hover:border-slate-300 hover:text-slate-900">
+                            ? `<a href="${prevItem.href}" class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-xs font-medium text-slate-700 transition hover:border-slate-300 hover:text-slate-900 shadow-xs">
                                 <span>← 이전: ${prevItem.step}. ${prevItem.label}</span>
                                </a>`
-                            : `<span class="text-xs font-medium text-slate-400">STEP 01 · 포트폴리오 첫 페이지</span>`
+                            : `<span class="text-xs font-normal text-slate-400">STEP 01 · 포트폴리오 시작</span>`
                     }
                     ${
                         nextItem
                             ? `<a href="${nextItem.href}" class="inline-flex items-center gap-2 rounded-xl ${
                                   nextItem.capstone
-                                      ? 'bg-sky-600 text-white hover:bg-sky-500'
-                                      : 'bg-slate-900 text-white hover:bg-slate-800'
-                              } px-4 py-2 text-xs font-bold shadow-sm transition">
+                                      ? 'bg-blue-600 text-white hover:bg-blue-500 font-semibold'
+                                      : 'bg-slate-900 text-white hover:bg-slate-800 font-medium'
+                              } px-3.5 py-2 text-xs shadow-xs transition">
                                 <span>다음: ${nextItem.step}. ${nextItem.label} →</span>
                                </a>`
-                            : `<a href="index.html" class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2 text-xs font-bold text-slate-800 transition hover:bg-slate-100">
+                            : `<a href="index.html" class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-xs font-medium text-slate-700 transition hover:bg-slate-50 shadow-xs">
                                 <span>처음으로: 01. 소개 ↺</span>
                                </a>`
                     }
@@ -260,30 +261,30 @@
         `;
 
         footerContainer.innerHTML = `
-            <footer class="mt-16 border-t border-slate-200 bg-white">
+            <footer class="mt-20 border-t border-slate-200/80 bg-white">
                 ${stepNav}
-                <div class="mx-auto max-w-6xl px-4 py-9 sm:px-6 lg:px-8">
+                <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
                     <div class="flex flex-col justify-between gap-6 md:flex-row md:items-center">
                         <div>
                             <div class="flex items-center gap-2">
-                                <span class="text-xs font-extrabold text-sky-700 bg-sky-50 px-2 py-0.5 rounded border border-sky-200">AI SMARTWORK · 2026 FALL</span>
+                                <span class="text-xs font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-200/80">AI SMARTWORK · 2026-2</span>
                                 <p class="text-sm font-bold text-slate-900">
                                     한림대학교 · 황현석 교수님 'AI 스마트워크' 최종 포트폴리오
                                 </p>
                             </div>
-                            <p class="mt-1 text-xs text-slate-500">
+                            <p class="mt-1.5 text-xs text-slate-500">
                                 주전공: 생명과학 (Dept. of Life Science) · 복수전공: 경영학과 (Business Administration) · 20213528 이종건
                             </p>
                         </div>
-                        <div class="flex flex-wrap gap-2 text-xs font-medium">
-                            <a href="index.html" class="px-2.5 py-1 rounded-md border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700">소개</a>
-                            <a href="notes.html" class="px-2.5 py-1 rounded-md border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700">강의 아카이브</a>
-                            <a href="reports.html" class="px-2.5 py-1 rounded-md border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700">문서 자동화</a>
-                            <a href="video.html" class="px-2.5 py-1 rounded-md border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700">AI 영상·모션</a>
-                            <a href="agent.html" class="px-2.5 py-1 rounded-md border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700">인터랙티브 AI</a>
-                            <a href="data.html" class="px-2.5 py-1 rounded-md border border-sky-300 bg-sky-50 font-bold text-sky-900 hover:bg-sky-100">수요·재고 분석</a>
-                            <a href="p4-analysis/index.html" class="px-2.5 py-1 rounded-md border border-sky-300 bg-sky-50 font-bold text-sky-900 hover:bg-sky-100">P4 Web Ebook</a>
-                            <a href="CONTENT_SOURCES.md" target="_blank" class="px-2.5 py-1 rounded-md border border-emerald-300 bg-emerald-50 text-emerald-900 font-semibold hover:bg-emerald-100">근거 자료 명세</a>
+                        <div class="flex flex-wrap gap-1.5 text-xs">
+                            <a href="index.html" class="px-2.5 py-1 rounded-lg border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 transition">소개</a>
+                            <a href="notes.html" class="px-2.5 py-1 rounded-lg border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 transition">강의 아카이브</a>
+                            <a href="reports.html" class="px-2.5 py-1 rounded-lg border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 transition">문서 자동화</a>
+                            <a href="video.html" class="px-2.5 py-1 rounded-lg border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 transition">AI 영상·모션</a>
+                            <a href="agent.html" class="px-2.5 py-1 rounded-lg border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 transition">인터랙티브 AI</a>
+                            <a href="data.html" class="px-2.5 py-1 rounded-lg border border-blue-200 bg-blue-50 font-semibold text-blue-800 hover:bg-blue-100 transition">수요·재고 분석</a>
+                            <a href="p4-analysis/index.html" class="px-2.5 py-1 rounded-lg border border-blue-200 bg-blue-50 font-semibold text-blue-800 hover:bg-blue-100 transition">P4 Web Ebook</a>
+                            <a href="CONTENT_SOURCES.md" target="_blank" class="px-2.5 py-1 rounded-lg border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 transition">근거 자료 명세</a>
                         </div>
                     </div>
                 </div>
@@ -297,15 +298,15 @@
 
         const modal = document.createElement('div');
         modal.id = 'image-lightbox';
-        modal.className = 'fixed inset-0 z-[100] hidden items-center justify-center bg-slate-950/85 p-4 backdrop-blur-sm';
+        modal.className = 'fixed inset-0 z-[100] hidden items-center justify-center bg-slate-950/80 p-4 backdrop-blur-sm';
         modal.innerHTML = `
-            <div class="relative max-h-[92vh] max-w-5xl overflow-hidden rounded-2xl bg-slate-900 shadow-2xl ring-1 ring-white/15">
-                <div class="flex items-center justify-between border-b border-white/10 px-4 py-3 text-white">
+            <div class="relative max-h-[92vh] max-w-5xl overflow-hidden rounded-2xl bg-white shadow-2xl ring-1 ring-slate-900/10">
+                <div class="flex items-center justify-between border-b border-slate-100 px-4 py-3 text-slate-900">
                     <span id="lightbox-caption" class="text-sm font-semibold"></span>
-                    <button id="lightbox-close" type="button" class="rounded-lg bg-white/10 px-2.5 py-1 text-xs font-semibold hover:bg-white/20">닫기 ✕</button>
+                    <button id="lightbox-close" type="button" class="rounded-lg bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-700 hover:bg-slate-200 transition">닫기 ✕</button>
                 </div>
-                <div class="flex max-h-[82vh] items-center justify-center bg-black p-2">
-                    <img id="lightbox-img" src="" alt="" class="max-h-[78vh] w-auto rounded-lg object-contain">
+                <div class="flex max-h-[82vh] items-center justify-center bg-slate-50 p-2">
+                    <img id="lightbox-img" src="" alt="" class="max-h-[78vh] w-auto rounded-lg object-contain shadow-xs">
                 </div>
             </div>
         `;
