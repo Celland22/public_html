@@ -35,7 +35,11 @@
 <button type="button" class="scene-button" data-scene="5" aria-label="장면 6: 해결 실마리"><b>06</b><small>해결 실마리</small></button>
 </nav><div class="play-controls"><button id="play" class="action main">▶ 시작 / 재생</button><button id="pause" class="action">Ⅱ 일시정지</button><button id="stop" class="action">■ 종료</button></div></section>
 <div><div class="progress" id="progress" role="slider" tabindex="0" aria-label="재생 시각 이동" aria-valuemin="0" aria-valuemax="30" aria-valuenow="0" aria-valuetext="0초"><div id="progressFill"></div></div><div class="ticks"><span>00:00</span><span>00:05</span><span>00:10</span><span>00:15</span><span>00:20</span><span>00:25</span><span>00:30</span></div></div>
-<footer class="footer"><div><strong>수업용 가상 사례</strong> · 시각 그래프/박스 수량은 개념 설명용이며 실측 분석 결과가 아닙니다.</div><div class="shortcut">Space 재생/정지 · 1~6 장면 선택 · Esc 종료</div></footer>
+<footer class="footer"><div><strong>수업용 가상 사례</strong> · 30초 오리지널 Instrumental BGM 연동 (자체 제작 WAV)</div><div class="shortcut">Space 재생/정지 · 1~6 장면 선택 · Esc 종료</div></footer>
+<audio id="bgmAudio" preload="auto">
+  <source src="p4_ambient_bgm.wav" type="audio/wav">
+  <source src="../assets/audio/p4_ambient_bgm.wav" type="audio/wav">
+</audio>
 </main>
 <script>
 (()=>{'use strict';
@@ -47,7 +51,7 @@ const duration=30, scInfo=[
 ['두 가지 손실의 균형','발주량을 결정할 때는 폐기로 잃는 원가만 볼 수 없습니다. 재고가 부족해서 놓치는 판매 이익도 함께 고려해야 합니다. 두 손실을 함께 줄이는 것이 목표입니다.'],
 ['해결의 실마리','그렇다면 어떻게 해결할 수 있을까요? 수요를 더 정확하게 예측하고, Newsvendor 모형으로 폐기 비용과 품절로 인한 기회손실을 함께 고려해 발주량을 정하는 것이 한 가지 방향입니다. 과연 두 문제를 동시에 줄일 수 있을까요?']
 ];
-const $=id=>document.getElementById(id), visual=$('visual');let current=0,playing=false,lastStamp=null,muted=false,audio=null,prevScene=0;
+const $=id=>document.getElementById(id), visual=$('visual'), bgm=$('bgmAudio');let current=0,playing=false,lastStamp=null,muted=false,prevScene=0;
 const C={white:'#f5f8ff',muted:'#a8b7cd',coral:'#e68a86',amber:'#e1bd75',teal:'#77c6c8',soft:'#172842',line:'#34465e'};
 const cap=(v,a=0,b=1)=>Math.min(b,Math.max(a,v)), smooth=(x)=>{x=cap(x);return x*x*(3-2*x)}, rise=(t,a,b)=>smooth((t-a)/(b-a)), opacity=(n)=>cap(n).toFixed(3), f=n=>Number(n).toFixed(2);
 const text=(x,y,s,size=30,color=C.white,weight=700,anchor='middle',extra='')=>`<text x="${x}" y="${y}" text-anchor="${anchor}" font-size="${size}" font-weight="${weight}" fill="${color}" font-family="Pretendard,'Noto Sans KR','Malgun Gothic',sans-serif" ${extra}>${s}</text>`;
@@ -72,18 +76,82 @@ function scene5(t){let p=rise(t,1.4,3.7), swing=Math.sin(t*2.1)*19*(1-rise(t,3.5
 function scene6(t){let p=rise(t,0,1.6),q=rise(t,1.3,2.5),end=rise(t,2.35,3.55);let out=`${base('데이터로 더 나은 발주를 설계한다','NEXT STEP')}`;out+=`<g opacity="${opacity(1-end*.75)}">${box(101,208,998,290,'#14263a',18)}<path d="M178 447V248 M178 447H1030" stroke="#52677e" stroke-width="3"/><path d="M178 417Q303 389 397 407T605 365T822 352T1012 260" fill="none" stroke="#607c91" stroke-width="5" stroke-dasharray="11 10" opacity=".8"/><path d="M178 414Q305 398 410 394T625 349T834 304T1012 260" fill="none" stroke="${C.teal}" stroke-width="6" stroke-linecap="round" stroke-dasharray="1200" stroke-dashoffset="${f(1200*(1-p))}"/><g opacity="${opacity(p)}">${box(244,236,240,60,'#173c48',14,C.teal,2)}${text(364,274,'수요 예측',27,C.teal,820)}</g><g opacity="${opacity(q)}">${box(716,365,285,66,'#28384a',14,C.amber,2)}${text(858,407,'Newsvendor',29,C.amber,820)}</g></g>`;out+=`<g opacity="${opacity(end)}">${box(140,224,920,236,'#183147',25,'#3d6374',2)}${text(600,306,'폐기와 품절,',48,C.white,850)}${text(600,378,'동시에 줄일 수 있을까?',50,C.teal,900)}<path d="M420 414H780" stroke="${C.teal}" stroke-width="3" opacity=".6"/></g>`;return out}
 const funcs=[scene1,scene2,scene3,scene4,scene5,scene6];
 function sceneIndex(t){return t>=duration?5:Math.min(5,Math.floor(t/5))}
-function render(){const idx=sceneIndex(current),local=current-idx*5;visual.innerHTML=defs+funcs[idx](cap(local,0,5));$('stageNumber').textContent=`SCENE ${String(idx+1).padStart(2,'0')} / 06`; const seconds=Math.floor(current+1e-8);$('time').textContent=`00:${String(seconds).padStart(2,'0')} / 00:30`; $('progressFill').style.width=`${current/duration*100}%`;const progress=$('progress');progress.setAttribute('aria-valuenow',String(Math.round(current*10)/10));progress.setAttribute('aria-valuetext',`${Math.floor(current)}초`);$('scriptTitle').textContent=`${String(idx+1).padStart(2,'0')} / ${scInfo[idx][0]}`;$('scriptText').textContent=scInfo[idx][1];document.querySelectorAll('.scene-button').forEach((b,i)=>{b.classList.toggle('active',i===idx);b.setAttribute('aria-current',i===idx?'step':'false')});$('play').textContent=playing?'▶ 재생 중':'▶ 시작 / 재생';$('pause').disabled=!playing;if(idx!==prevScene){if(playing)soundTransition();prevScene=idx}}
-// Low-volume procedural sound: no external audio assets or network connection.
-function ensureAudio(){if(audio)return;const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;try{let ctx=new AC(), master=ctx.createGain();master.gain.value=0;master.connect(ctx.destination);let oscs=[];[146.83,220,293.66].forEach((freq,i)=>{let o=ctx.createOscillator(),g=ctx.createGain();o.type='sine';o.frequency.value=freq;g.gain.value=[.025,.014,.009][i];o.connect(g);g.connect(master);o.start();oscs.push(o)});audio={ctx,master,oscs}}catch(e){console.warn('오디오를 사용할 수 없습니다.',e)}}
-function audioGain(on){if(!audio)return;const now=audio.ctx.currentTime;audio.master.gain.cancelScheduledValues(now);audio.master.gain.setTargetAtTime(on&&!muted?.85:0,now,.09)}
-function soundTransition(){if(!audio||muted||!playing||audio.ctx.state!=='running')return;const c=audio.ctx,st=c.currentTime;let o=c.createOscillator(),g=c.createGain();o.type='sine';o.frequency.setValueAtTime(540,st);o.frequency.exponentialRampToValueAtTime(740,st+.14);g.gain.setValueAtTime(0,st);g.gain.linearRampToValueAtTime(.025,st+.025);g.gain.exponentialRampToValueAtTime(.0001,st+.18);o.connect(g);g.connect(c.destination);o.start(st);o.stop(st+.2)}
-async function play(){if(current>=duration)current=0;playing=true;lastStamp=null;ensureAudio();if(audio){try{await audio.ctx.resume()}catch(e){}audioGain(true)}render()}
-function pause(){playing=false;lastStamp=null;audioGain(false);render()}
-function stop(){playing=false;current=0;lastStamp=null;audioGain(false);render()}
-function seek(t){playing=false;current=cap(t,0,duration);lastStamp=null;audioGain(false);render()}
-function frame(stamp){if(playing){if(lastStamp!==null)current=Math.min(duration,current+(stamp-lastStamp)/1000);lastStamp=stamp;if(current>=duration){current=duration;playing=false;audioGain(false)}render()}requestAnimationFrame(frame)}
+function render(){const idx=sceneIndex(current),local=current-idx*5;visual.innerHTML=defs+funcs[idx](cap(local,0,5));$('stageNumber').textContent=`SCENE ${String(idx+1).padStart(2,'0')} / 06`; const seconds=Math.floor(current+1e-8);$('time').textContent=`00:${String(seconds).padStart(2,'0')} / 00:30`; $('progressFill').style.width=`${current/duration*100}%`;const progress=$('progress');progress.setAttribute('aria-valuenow',String(Math.round(current*10)/10));progress.setAttribute('aria-valuetext',`${Math.floor(current)}초`);$('scriptTitle').textContent=`${String(idx+1).padStart(2,'0')} / ${scInfo[idx][0]}`;$('scriptText').textContent=scInfo[idx][1];document.querySelectorAll('.scene-button').forEach((b,i)=>{b.classList.toggle('active',i===idx);b.setAttribute('aria-current',i===idx?'step':'false')});$('play').textContent=playing?'▶ 재생 중':'▶ 시작 / 재생';$('pause').disabled=!playing;if(idx!==prevScene){prevScene=idx}}
+// Instrumental BGM Audio Control with fallback
+async function playAudio(){
+    if(!bgm) return;
+    try {
+        bgm.currentTime = current;
+        bgm.muted = muted;
+        await bgm.play();
+    } catch(e) {
+        console.warn('BGM auto-play caught by browser policy (user interaction required):', e);
+    }
+}
+function pauseAudio(){
+    if(bgm) bgm.pause();
+}
+function stopAudio(){
+    if(bgm){
+        bgm.pause();
+        bgm.currentTime = 0;
+    }
+}
+
+async function play(){
+    if(current>=duration) current=0;
+    playing=true;
+    lastStamp=null;
+    await playAudio();
+    render();
+}
+function pause(){
+    playing=false;
+    lastStamp=null;
+    pauseAudio();
+    render();
+}
+function stop(){
+    playing=false;
+    current=0;
+    lastStamp=null;
+    stopAudio();
+    render();
+}
+function seek(t){
+    playing=false;
+    current=cap(t,0,duration);
+    lastStamp=null;
+    if(bgm){
+        bgm.pause();
+        bgm.currentTime = current;
+    }
+    render();
+}
+function frame(stamp){
+    if(playing){
+        if(bgm && !bgm.paused && bgm.currentTime > 0){
+            current = Math.min(duration, bgm.currentTime);
+        } else {
+            if(lastStamp!==null) current=Math.min(duration,current+(stamp-lastStamp)/1000);
+        }
+        lastStamp=stamp;
+        if(current>=duration){
+            current=duration;
+            playing=false;
+            stopAudio();
+        }
+        render();
+    }
+    requestAnimationFrame(frame);
+}
 $('play').addEventListener('click',play);$('pause').addEventListener('click',pause);$('stop').addEventListener('click',stop);document.querySelectorAll('.scene-button').forEach(btn=>btn.addEventListener('click',()=>seek(Number(btn.dataset.scene)*5)));
-$('mute').addEventListener('click',()=>{muted=!muted;$('mute').textContent=muted?'♫ 음소거':'♫ 소리 켜짐';$('mute').setAttribute('aria-pressed',String(muted));audioGain(playing)});
+$('mute').addEventListener('click',()=>{
+    muted=!muted;
+    $('mute').textContent=muted?'♫ 음소거':'♫ 소리 켜짐';
+    $('mute').setAttribute('aria-pressed',String(muted));
+    if(bgm) bgm.muted = muted;
+});
 $('fullscreen').addEventListener('click',()=>{if(document.fullscreenElement)document.exitFullscreen?.();else document.documentElement.requestFullscreen?.()});
 $('progress').addEventListener('click',e=>{const r=$('progress').getBoundingClientRect();seek(duration*(e.clientX-r.left)/r.width)});$('progress').addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();seek(current+(e.key==='ArrowRight'?1:-1))}else if(e.key==='Home'||e.key==='End'){e.preventDefault();seek(e.key==='Home'?0:duration)}});
 document.addEventListener('keydown',e=>{const tag=document.activeElement?.tagName;if(['INPUT','TEXTAREA'].includes(tag))return;if(e.code==='Space'&&tag!=='BUTTON'&&tag!=='A'){e.preventDefault();playing?pause():play()}else if(/^[1-6]$/.test(e.key)&&!e.ctrlKey&&!e.metaKey){seek((Number(e.key)-1)*5)}else if(e.key==='Escape'&&!document.fullscreenElement){stop()}});
