@@ -791,9 +791,11 @@ result_md_content = f"""# AI 스마트워크 PBL 문제 4(P4) 신선식품 수�
 
 {model_eval_df.to_markdown(index=False)}
 
+> *\\*주: 2026년 6월 테스트 세트에는 공휴일(`holiday_flag == 1`)이 0건이었습니다. 따라서 복합이벤트(프로모션+명절) 성능 지표는 모델의 극한 이벤트 적응력을 검증하기 위해 전체 6개월(10,860건) 중 복합 이벤트가 발생한 360건 전체를 대상으로 평가한 수치입니다.*
+
 - **기존 시스템 (Baseline)**: 6월 MAPE **18.76%**, MAE **35.82개**, RMSE **53.42개**, 6월 프로모션 MAPE **25.37%**, 전체 복합이벤트 편향 **-193.73개**.
-- **RandomForestRegressor**: 6월 MAPE **{rf_row['6월_MAPE(%)']:.2f}%**, MAE **{rf_row['6월_MAE(개)']:.2f}개**, RMSE **{rf_row['6월_RMSE(개)']:.2f}개**, 전체 복합이벤트 편향 **{rf_row['전체_복합이벤트_Bias(개)']:.2f}개**.
-- **HistGradientBoostingRegressor (최적 모델)**: 6월 MAPE **{hgb_row['6월_MAPE(%)']:.2f}%**, MAE **{hgb_row['6월_MAE(개)']:.2f}개**, RMSE **{hgb_row['6월_RMSE(개)']:.2f}개**, 전체 복합이벤트 편향 **{hgb_row['전체_복합이벤트_Bias(개)']:.2f}개**.
+- **RandomForestRegressor**: 6월 MAPE **{rf_row['6월_MAPE(%)']:.2f}%**, MAE **{rf_row['6월_MAE(개)']:.2f}개**, RMSE **{rf_row['6월_RMSE(개)']:.2f}개**, 전체 복합이벤트 편향 **{rf_row['전체_복합이벤트_Bias(개)']:.2f}개**. (MAPE 관점에서 전체 모델 중 가장 우수)
+- **HistGradientBoostingRegressor (최적 모델)**: 6월 MAPE **{hgb_row['6월_MAPE(%)']:.2f}%**, MAE **{hgb_row['6월_MAE(개)']:.2f}개**, RMSE **{hgb_row['6월_RMSE(개)']:.2f}개**, 전체 복합이벤트 편향 **{hgb_row['전체_복합이벤트_Bias(개)']:.2f}개**. (RMSE 및 극단치 오차 제어 관점에서 가장 우수)
 
 ### SARIMAX 모델 적합성 및 제외 사유
 - 대표 SKU인 `FC_이천`의 `SKU001`에 대해 SARIMAX(1,0,1)x(1,0,0,7) 적합 시 MAPE **{sarimax_sample_mape:.2f}%**, MAE **{sarimax_sample_mae:.2f}개**를 기록함.
@@ -805,8 +807,12 @@ result_md_content = f"""# AI 스마트워크 PBL 문제 4(P4) 신선식품 수�
 
 ## 6. 모델 선정 근거
 
-1. **오차 지표 종합 우수성**: HistGradientBoostingRegressor는 6월 테스트 세트에서 MAE **{hgb_row['6월_MAE(개)']:.2f}개**, RMSE **{hgb_row['6월_RMSE(개)']:.2f}개**로 전체 모델 중 가장 낮은 오차를 달성하였으며, 기존 시스템 대비 RMSE가 **{base_row['6월_RMSE(개)'] - hgb_row['6월_RMSE(개)']:.2f}개(32.9%)** 감소함.
-2. **이벤트 극단치 대응력**: 프로모션과 명절이 동시 발생할 때 기존 시스템의 편향(-193.73개)을 **{hgb_row['전체_복합이벤트_Bias(개)']:+.2f}개**로 획기적으로 축소하여 대규모 품절 리스크를 해소함.
+1. **Random Forest vs HistGradientBoosting 비교**:
+   - Random Forest는 6월 MAPE **{rf_row['6월_MAPE(%)']:.2f}%**로 상대 백분율 오차에서 가장 우수함.
+   - HistGradientBoosting은 6월 RMSE **{hgb_row['6월_RMSE(개)']:.2f}개** 및 MAE **{hgb_row['6월_MAE(개)']:.2f}개**로 절대 오차 및 대규모 극단치 오차에서 가장 우수함.
+2. **최종 모델 선정 이유 (RMSE 및 이벤트 편향 중심)**:
+   - 신선식품 물류에서 대규모 품절 및 폐기 손실을 유발하는 것은 일상적 평균 오차(MAPE)보다 **수요 급증 시의 극단적 예측 실패(Large Residuals)와 이벤트 편향**임.
+   - 큰 오차에 높은 페널티를 부과하는 **RMSE 지표에서 가장 우수하고(-32.9% 감축), 프로모션+명절 복합 이벤트 편향을 -193.73개에서 {hgb_row['전체_복합이벤트_Bias(개)']:+.2f}개로 정상화한 HistGradientBoosting을 최종 권장 모델로 채택함.**
 3. **운영 효율성**: 범주형 변수(One-Hot)와 결측치에 대한 강건성, 빠른 추론 속도(1,800건 기준 0.05초 미만)를 갖추어 대규모 SKU 발주 자동화에 가장 적합함.
 
 ---

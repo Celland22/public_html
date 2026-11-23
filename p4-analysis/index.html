@@ -314,16 +314,20 @@
                     </tbody>
                 </table>
             </div>
+            <div class="mt-2 text-[11px] text-slate-500 flex flex-col sm:flex-row sm:items-center justify-between gap-1 px-1">
+                <span>*주: 6월 테스트 세트에는 공휴일이 없어, 복합이벤트 지표는 모델의 극한 적응력 검증을 위해 전체 6개월(10,860건) 중 복합 이벤트 360건 전체를 대상으로 평가한 수치임.</span>
+                <span class="text-sky-700 font-semibold">RF: 최저 MAPE(14.52%) 강점 / HGB: 최저 RMSE(35.80) 및 복합 이벤트 극단치 제어 최적</span>
+            </div>
 
             <!-- Model Selection Insights -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
                 <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
-                    <strong class="text-slate-900 block text-sm">RMSE 32.9% 대폭 감축</strong>
-                    <p class="text-slate-600 mt-1">기존 53.42개에서 35.80개로 오차 극단치를 제거하여 대량 결품 및 과잉 입고 리스크를 사전에 차단했습니다.</p>
+                    <strong class="text-slate-900 block text-sm">RF vs HGB 장단점 대조</strong>
+                    <p class="text-slate-600 mt-1">Random Forest는 MAPE(14.52%)에서 가장 우수하며, HistGradientBoosting은 큰 오차에 페널티를 주는 RMSE(35.80개)에서 가장 우수합니다.</p>
                 </div>
                 <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
-                    <strong class="text-slate-900 block text-sm">복합 이벤트 극단치 추종</strong>
-                    <p class="text-slate-600 mt-1">프로모션과 명절 동시 발생 시 기존 시스템의 -193.7개 과소예측 편향을 -4.5개로 정상화하여 대형 품절을 완벽 방어했습니다.</p>
+                    <strong class="text-slate-900 block text-sm">최종 HGB 선정 이유 (RMSE 중심)</strong>
+                    <p class="text-slate-600 mt-1">신선식품 물류 위험은 평균 오차보다 극단적 결품에서 발생하므로, 대형 오차를 억제하는 RMSE 32.9% 감축 및 복합이벤트 편향(-4.5개)이 우수한 HGB를 최종 채택했습니다.</p>
                 </div>
                 <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
                     <strong class="text-slate-900 block text-sm">SARIMAX 한계 및 제외 사유</strong>
